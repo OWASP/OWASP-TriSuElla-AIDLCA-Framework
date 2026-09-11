@@ -29,7 +29,7 @@ enforcement_gates:
   ci_cd_pr_blocking: true
   dual_key_deployment: true
 
-# Multi-Cloud CSPM & Auditing Configuration (TRISU-CSPM)
+# Multi-Cloud Full-Spectrum CSPM & Auditing Configuration (TRISU-CSPM)
 cspm:
   enabled: true
   audit_interval: "continuous" # continuous, hourly, daily
@@ -44,27 +44,67 @@ cspm:
       cspm_engine: "SecurityHub"
       enforce_worm_locks: true
       strict_workload_iam: true
+      kspm_eks_private: true
+      dspm_rds_cmek: true
+      imdsv2_required: true
     azure:
       enabled: true
       cspm_engine: "DefenderForCloud"
       enforce_blob_immutability: true
       strict_managed_identities: true
+      kspm_aks_private: true
+      dspm_purview_audit: true
+      trusted_launch_required: true
     gcp:
       enabled: true
       cspm_engine: "SecurityCommandCenter"
       enforce_bucket_locks: true
       strict_workload_identity: true
+      kspm_gke_binary_auth: true
+      dspm_dlp_scan: true
+      shielded_vms_required: true
     alibaba_cloud:
       enabled: true
       cspm_engine: "CloudSecurityCenter"
       enforce_oss_compliance_mode: true
       strict_ram_roles_oidc: true
       actiontrail_multi_region: true
+      kspm_ack_private: true
+      dspm_polardb_tde: true
+      ecs_imdsv2_required: true
     oci:
       enabled: true
       cspm_engine: "CloudGuard"
       enforce_retention_rules: true
       strict_instance_principals: true
+      kspm_oke_private: true
+      dspm_data_safe: true
+      shielded_instances_required: true
+  posture_domains:
+    kspm:
+      enforce_private_control_plane: true
+      pod_security_standard: "Restricted"
+      require_image_signatures: true
+    dspm:
+      prohibit_public_database_endpoints: true
+      enforce_cmk_encryption_at_rest: true
+      require_daily_worm_backups: true
+    ai_cspm:
+      enforce_imdsv2_hop_limit_1: true
+      isolate_ai_model_endpoints: true
+      prohibit_plaintext_serverless_secrets: true
+    ciem:
+      revoke_dormant_credentials_days: 90
+      prohibit_wildcard_permissions: true
+      max_permissions_creep_index: 15
+    edge_waf:
+      enforce_waf_blocking_mode: true
+      owasp_core_rule_set: true
+      anti_ddos_protection: true
+    shift_left_iac:
+      enforce_ci_cd_preflight_scan: true
+      scanner_tools: ["checkov", "tfsec", "trivy"]
+      fail_on_severities: ["CRITICAL", "HIGH"]
   sovereign_geofencing:
     enabled: true
     allowed_regions:
@@ -73,4 +113,5 @@ cspm:
       gcp: ["asia-south1", "asia-south2"]
       alibaba_cloud: ["ap-south-1", "me-central-1"]
       oci: ["ap-hyderabad-1", "ap-mumbai-1"]
+
 

@@ -14,7 +14,7 @@ This document consolidates all TRISUELLA-AIDLCA rules, security checklists, and 
 | **Section 5** | Sensitive Data Security (DATA) | 10 |
 | **Section 6** | AI-DLCA Compliance (DLCA) | 15 |
 | **Section 7** | Infrastructure Security (INFRA) | 16 |
-| **Section 8** | Cloud Security & Multi-Cloud CSPM (CLOUD/CSPM) | 18 |
+| **Section 8** | Cloud Security & Multi-Cloud CSPM (CLOUD/CSPM) | 24 |
 | **Section 9** | Regional & Global Compliance | 41 |
 | **Section 10** | Privacy & Safety by Design | 10 |
 | **Section 11** | Testing & Verification Protocols | 10 |
@@ -30,7 +30,7 @@ This document consolidates all TRISUELLA-AIDLCA rules, security checklists, and 
 | **Section 21** | Model Context Protocol Security (MCP) | 6 |
 | **Section 22** | EU AI Act High-Risk Compliance (EUAI) | 7 |
 | **Section 23** | Agentic Identity & Token Delegation (AIAM) | 5 |
-| **GRAND TOTAL** | **Consolidated Rules & Checks** | **279** |
+| **GRAND TOTAL** | **Consolidated Rules & Checks** | **285** |
 
 ---
 
@@ -380,18 +380,36 @@ The framework enforces security across 5 distinct physical layers (Control → A
     - *Verification*: AWS CloudHSM / Azure Managed HSM / GCP Cloud HSM / Alibaba Cloud KMS Dedicated HSM verified.
 - **TRISU-CSPM-08 [HIGH]**: **Sovereign Region Isolation & Cross-Border Residency**. Policy-driven boundary enforcement restricting resources to authorized jurisdictions with automated build halts on prohibited regions.
     - *Verification*: SCP / Azure Policy / GCP Org Policy / Alibaba Cloud RAM Control Policy enforces approved regions only.
+- **TRISU-CSPM-09 [CRITICAL]**: **Kubernetes & Container Security Posture (KSPM)**. Private API server endpoints, immutable control-plane audit logs, admission controller guardrails, and non-root execution.
+    - *Verification*: EKS / AKS / GKE / ACK / OKE cluster scan validates 100% private endpoints, non-root execution, and image signature verification.
+- **TRISU-CSPM-10 [CRITICAL]**: **Cloud Database & Data Store Posture (DSPM)**. Zero public database endpoints, customer-managed key (CMK) encryption at rest/in-transit, and daily WORM backups with cross-region replication.
+    - *Verification*: RDS / Cosmos / Cloud SQL / PolarDB / Autonomous DB scan confirms zero public endpoints and CMK encryption active.
+- **TRISU-CSPM-11 [HIGH]**: **Compute, Serverless & AI/ML Workload Posture (AI-CSPM / CWPP)**. Mandatory IMDSv2, Shielded VMs, private VPC execution for serverless functions, and network isolation for AI/ML inference endpoints.
+    - *Verification*: 100% IMDSv2 enforcement on EC2/ECS/VMs; zero plaintext secrets in Lambda/Function Compute env vars; private SageMaker/Vertex/PAI endpoints.
+- **TRISU-CSPM-12 [HIGH]**: **Cloud Infrastructure Entitlement & Privilege Creep (CIEM)**. Continuous analysis stripping unused permissions (>90 days), eliminating privilege escalation vectors, and isolating root credentials.
+    - *Verification*: IAM Access Analyzer / Entra Permissions Management / RAM Analyzer confirms zero dormant credentials > 90d; PCI < 15.
+- **TRISU-CSPM-13 [HIGH]**: **Cloud Edge, WAF & Anti-DDoS Ingress Posture**. Multi-layered WAF (OWASP Core Rule Set) and managed Anti-DDoS protection shielding all public endpoints and inference APIs.
+    - *Verification*: AWS WAF + Shield / Azure WAF + DDoS / Cloud Armor / Alibaba WAF 3.0 + Anti-DDoS verified active in blocking mode.
+- **TRISU-CSPM-14 [HIGH]**: **Shift-Left Infrastructure-as-Code (IaC) Pre-Flight Scanning**. Mandatory static security scanning (Checkov/tfsec/Trivy) in CI/CD before Terraform, Bicep, ROS, or CloudFormation deployment.
+    - *Verification*: CI/CD pipeline pre-flight step halts build on any unmitigated [CRITICAL] or [HIGH] infrastructure misconfiguration.
 
 #### Multi-Cloud CSPM Matrix
 | Control Domain | AWS | Microsoft Azure | Google Cloud (GCP) | Alibaba Cloud (Aliyun) | Oracle Cloud (OCI) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **CSPM Engine** | Security Hub + Config | Defender for Cloud | Security Command Center | Cloud Security Center + Config | Cloud Guard |
-| **Workload IAM** | IAM Roles (IRSA/OIDC) | Entra Managed Identity | Workload Identity Fed | RAM Roles + RAM OIDC | Instance Principals |
-| **Storage WORM** | S3 Object Lock (Compliance) | Blob Immutability | Cloud Storage Bucket Lock | OSS WORM Compliance Mode | Retention Rules |
-| **Perimeter** | PrivateLink + Endpoints | Private Endpoints | VPC Service Controls | PrivateLink + PrivateZone | Service Gateway |
-| **Audit Trail** | CloudTrail (Multi-Region) | Activity Log + Analytics | Cloud Audit Logs (Sink) | ActionTrail (Multi-Region) + SLS | OCI Audit Service |
-| **Threat Detect** | GuardDuty + Macie | Defender Threat Protection | SCC Event Threat Detection | Cloud Security Center Anti-Ransomware | Threat Detector |
-| **HSM & Keys** | CloudHSM / KMS CMK | Key Vault Managed HSM | Cloud HSM / CMEK | KMS Dedicated HSM | Dedicated KMS |
-| **Sovereignty** | SCP `aws:RequestedRegion` | Policy `Allowed locations` | Org Policy `resourceLocations` | RAM Control Policy on Regions | Security Zones |
+| **1. CSPM Engine** | Security Hub + Config | Defender for Cloud | Security Command Center | Cloud Security Center + Cloud Config | Cloud Guard |
+| **2. Workload IAM** | IAM Roles (IRSA/OIDC) | Entra Managed Identities | Workload Identity Federation | RAM Roles + RAM OIDC Provider | Instance Principals |
+| **3. Storage WORM** | S3 Object Lock (Compliance) | Blob Immutable Storage | Cloud Storage Bucket Lock | OSS Retention Policy (WORM) | Object Retention Rules |
+| **4. Network Perimeter** | PrivateLink + VPC Endpoints | Private Endpoints + VNet | VPC Service Controls | PrivateLink + PrivateZone | Service Gateway + VCN |
+| **5. Audit Trail** | CloudTrail (Multi-Region) | Activity Log + Log Analytics | Cloud Audit Logs (Data/Admin) | ActionTrail (Multi-Region) + SLS | OCI Audit Service |
+| **6. Threat Detection** | GuardDuty + Macie | Defender Threat Protection | SCC Event Threat Detection | Cloud Security Center (Anti-Ransomware) | Cloud Guard Threat Detector |
+| **7. HSM & Keys** | AWS CloudHSM / KMS CMK | Key Vault Managed HSM | Cloud HSM / CMEK | KMS Dedicated HSM | OCI Dedicated KMS |
+| **8. Sovereignty Gate** | SCP `aws:RequestedRegion` | Azure Policy `Allowed locations` | Org Policy `resourceLocations` | RAM Control Policy on Regions | Security Zones Region Policy |
+| **9. KSPM (Containers)** | EKS Private + ECR Inspector | AKS Private + Defender ACR | GKE Private + Binary Auth | ACK Private + ACR Enterprise | OKE Private + OCIR Scan |
+| **10. DSPM (Databases)** | RDS Private + KMS + Macie | Azure SQL Private + Purview | Cloud SQL Private + DLP API | PolarDB Private + DSC | Autonomous DB + Data Safe |
+| **11. AI-CSPM / CWPP** | IMDSv2 + SageMaker VPC | Trusted Launch + Azure OpenAI | Shielded VM + Vertex AI VPC | ECS IMDSv2 + PAI VPC | Shielded VM + GenAI Gateway |
+| **12. CIEM (Entitlements)** | IAM Access Analyzer | Entra Permissions Management | IAM Recommender + PAM | RAM Governance + Analyzer | OCI IAM Domains + JIT |
+| **13. Edge, WAF & DDoS** | AWS WAF + Shield Advanced | Azure WAF + DDoS Protection | Cloud Armor + Adaptive DDoS | Cloud WAF 3.0 + Anti-DDoS | OCI WAF + DDoS Defense |
+| **14. Shift-Left IaC** | Checkov + cfn-guard | PSRule + Defender DevOps | GCV + Checkov | ROS Inspect + Checkov | OCI Resource Mgr + Checkov |
 
 ---
 

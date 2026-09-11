@@ -1,6 +1,6 @@
 # 🔱 OWASP TriSuElla-AIDLCA Framework
 > **AI-Driven Development Life Cycle & Autonomous Agent Governance (LLMSecOps)**  
-> **Version**: 2.5 | **Status**: Institutionalized | **Total Checks**: 279
+> **Version**: 2.5 | **Status**: Institutionalized | **Total Checks**: 285
 
 [![TriSuElla Gate](https://github.com/OWASP/TriSuElla-AIDLCA-Framework/actions/workflows/trisuella-gate.yml/badge.svg)](templates/.github/workflows/trisuella-gate.yml)
 [![Author: Bhaskar Puppala (PATEL)](https://img.shields.io/badge/Author-Bhaskar%20Puppala%20(PATEL)-blue.svg)](https://www.linkedin.com/in/bhaskerkpatel/)
