@@ -1,9 +1,9 @@
-# 📖 How to Use the OWASP TriSuElla-AIDLCA Framework (v3.0)
+# 📖 OWASP TriSuElla-AIDLCA Framework — Usage Guide (v3.0)
 
 > **AI-Driven Development Life Cycle & Autonomous Agent Governance (LLMSecOps)**  
 > **Version**: 3.0 | **Status**: Institutionalized | **Total Checks**: 285 | **Rules**: 184  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)  
-> **Detailed Docs**: [TRISUELLA-AIDLCA-Rules/docs/how-to-use.md](TRISUELLA-AIDLCA-Rules/docs/how-to-use.md)
+> **Detailed Docs**: [TRISUELLA-AIDLCA-Rules/docs/Usage-Guide.md](TRISUELLA-AIDLCA-Rules/docs/Usage-Guide.md)
 
 ---
 
@@ -121,7 +121,7 @@ For automated development pipelines, deploy the 8-agent zero-trust pipeline:
 - **Master Rules Specification (285 Checks)**: [TRISUELLA_MASTER_RULES_AND_CHECKS.md](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
 - **Detailed Developer Manual & Crosswalk**: [TRISUELLA-AIDLCA-Rules/FULL_README.md](TRISUELLA-AIDLCA-Rules/FULL_README.md)
 - **Framework Philosophy & Charter**: [TRISUELLA-AIDLCA-Rules/CHARTER.md](TRISUELLA-AIDLCA-Rules/CHARTER.md)
-- **Step-by-Step Integration Guide**: [TRISUELLA-AIDLCA-Rules/docs/how-to-use.md](TRISUELLA-AIDLCA-Rules/docs/how-to-use.md)
+- **Step-by-Step Integration Guide**: [TRISUELLA-AIDLCA-Rules/docs/Usage-Guide.md](TRISUELLA-AIDLCA-Rules/docs/Usage-Guide.md)
 - **Turnkey Prompt Library (28 Prompts)**: [TRISUELLA-AIDLCA-Rules/prompts/README.md](TRISUELLA-AIDLCA-Rules/prompts/README.md)
 - **Autonomous Multi-Agent Architecture**: [TRISUELLA-AIDLCAa/README.md](TRISUELLA-AIDLCAa/README.md)
 - **Visual Compliance Dashboard**: [tools/sisu-ui/index.html](tools/sisu-ui/index.html)

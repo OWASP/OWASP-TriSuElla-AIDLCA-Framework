@@ -103,7 +103,7 @@ This framework is **platform-agnostic** — copy it once, use it with any AI ass
 ```
 OWASP-TriSuElla-AIDLCA-FrameWork/
 ├── README.md                                    ← Main project entrypoint & quickstart (v3.0)
-├── HOW_TO_USE.md                                ← Turnkey setup & step-by-step usage guide
+├── Usage-Guide.md                                ← Turnkey setup & step-by-step usage guide
 ├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (285 checks, 184 rules)
 ├── ai-bom.json                                  ← Machine-readable CycloneDX AI v1.6 BoM
 ├── trisuella.config.yaml                        ← Declarative policy & CSPM manifest
@@ -231,7 +231,7 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
     │   └── compliance/                          ← DPDPA, GDPR, HIPAA, PCI compliance prompts
     │
     └── docs/                                    ← Developer and architectural documentation
-        ├── how-to-use.md                        ← Integration guide for all AI tools & IDEs
+        ├── Usage-Guide.md                       ← Integration guide for all AI tools & IDEs
         ├── faq.md                               ← 25+ frequently asked questions
         ├── benefits.md                          ← Benefits by role & 4 real-world scenarios
         ├── vibe-coding-guide.md                 ← Fast-track guide for vibe coders

@@ -1,4 +1,4 @@
-# How to Use the OWASP TriSuElla-AIDLCA Secure Development Framework (v3.0)
+# OWASP TriSuElla-AIDLCA Secure Development Framework — Usage Guide (v3.0)
 
 > **TriSuElla-AIDLCA SDF** — Security-First, AI-Native, Multi-Cloud Governed. From Idea to Production.  
 > **Version**: 3.0 | **Total Checks**: 285 | **Rule Identifiers**: 184  
@@ -225,7 +225,7 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
     │   └── compliance/                          ← DPDPA, GDPR, HIPAA, PCI compliance prompts
     │
     └── docs/                                    ← Developer and architectural documentation
-        ├── how-to-use.md                        ← Integration guide for all AI tools & IDEs (This File)
+        ├── Usage-Guide.md                       ← Integration guide for all AI tools & IDEs (This File)
         ├── faq.md                               ← 25+ frequently asked questions
         ├── benefits.md                          ← Benefits by role & 4 real-world scenarios
         ├── vibe-coding-guide.md                 ← Fast-track guide for vibe coders

@@ -82,6 +82,7 @@ This automatically scaffolds `.cursorrules`, `CLAUDE.md`, `.windsurfrules`, `.gi
 
 ## 📚 Documentation & Key References
 *   📖 **[Master Rules & Checks Reference (285 Checks)](../TRISUELLA_MASTER_RULES_AND_CHECKS.md)**
+*   📘 **[Framework Usage Guide (v3.0)](docs/Usage-Guide.md)**
 *   📜 **[Complete Rule Directory & Detailed Guide](FULL_README.md)**
 *   🏛️ **[Framework Charter & Philosophy](CHARTER.md)**
 *   🔌 **[Model Context Protocol Security (TRISU-MCP)](TRISUELLA-AIDLCA-rule-details/extensions/security/ai-agentic/mcp-security.md)**

@@ -100,7 +100,7 @@ python tools/trisu-cli/trisu_validator.py bom --output ai-bom.json
 ```
 OWASP-TriSuElla-AIDLCA-FrameWork/
 ├── README.md                              # Main project entrypoint & quickstart (v3.0)
-├── HOW_TO_USE.md                          # Comprehensive step-by-step usage guide
+├── Usage-Guide.md                         # Comprehensive step-by-step usage guide
 ├── TRISUELLA_MASTER_RULES_AND_CHECKS.md   # Unified master rulebook (285 checks, 184 rules)
 ├── ai-bom.json                            # Machine-readable CycloneDX AI v1.6 BoM
 ├── trisuella.config.yaml                  # Declarative policy & Multi-Cloud CSPM manifest
@@ -126,7 +126,7 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 │   ├── TRISUELLA-AIDLCA-rules/            # core-workflow.md (active agent prompt)
 │   ├── TRISUELLA-AIDLCA-rule-details/     # Modular extensions (MCP, EU AI, Zero Trust, CSPM)
 │   ├── prompts/                           # Turnkey prompt library (P, B, T, A, C series)
-│   └── docs/                              # Developer guides (how-to-use, faq, which-extensions)
+│   └── docs/                              # Developer guides (Usage-Guide, faq, which-extensions)
 ├── TRISUELLA-AIDLCAa/                     # 8-Stage Autonomous Multi-Agent System
 │   └── README.md                          # ZTP message protocol & Dual-Key HITL gates
 ├── TRISUELLA-AIDLCA-docs/                 # State tracker & crosswalk matrices
