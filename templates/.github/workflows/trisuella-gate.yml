@@ -8,7 +8,7 @@ on:
 
 jobs:
   trisuella-gate:
-    name: "Enforce TriSuElla v2.5 Gates"
+    name: "Enforce TriSuElla v3.0 Gates"
     runs-on: ubuntu-latest
 
     steps:
@@ -24,10 +24,18 @@ jobs:
         run: |
           python tools/trisu-cli/trisu_validator.py check
 
-      - name: Audit for Blocking [CRITICAL]/[HIGH] Findings
+      - name: Audit for Blocking [CRITICAL]/[HIGH] Findings & Generate SARIF
         run: |
-          python tools/trisu-cli/trisu_validator.py audit
+          python tools/trisu-cli/trisu_validator.py audit --sarif trisuella-audit.sarif
 
-      - name: Verify Rules Integrity
+      - name: Verify Rules Integrity (184 TRISU-* Identifiers)
         run: |
           python tools/trisu-cli/trisu_validator.py rules
+
+      - name: Upload SARIF Report to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: trisuella-audit.sarif
+          category: trisuella-security-gate
+
