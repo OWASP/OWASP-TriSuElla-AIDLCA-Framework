@@ -100,6 +100,7 @@ python tools/trisu-cli/trisu_validator.py bom --output ai-bom.json
 ```
 OWASP-TriSuElla-AIDLCA-FrameWork/
 ├── README.md                              # Main project entrypoint & quickstart (v3.0)
+├── HOW_TO_USE.md                          # Comprehensive step-by-step usage guide
 ├── TRISUELLA_MASTER_RULES_AND_CHECKS.md   # Unified master rulebook (285 checks, 184 rules)
 ├── ai-bom.json                            # Machine-readable CycloneDX AI v1.6 BoM
 ├── trisuella.config.yaml                  # Declarative policy & Multi-Cloud CSPM manifest
