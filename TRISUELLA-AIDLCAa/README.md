@@ -1,5 +1,5 @@
 # 🤖 TRISUELLA-AIDLCAa: Multi-Agent Autonomous Development & Governance System
-**Version**: 2.5 | **Status**: Production Architecture | **Pillars**: SISU, TILLIT, DUGNAD
+**Version**: 3.0 | **Status**: Production Architecture | **Pillars**: SISU, TILLIT, DUGNAD
 
 > **TRISUELLA-AIDLCAa** (AI-Driven Development Life Cycle Agents) is the automated multi-agent implementation of the TriSuElla framework. It translates the 285 governance rules and sequential lifecycle gates into a coordinated pipeline of specialized autonomous agents operating under a Zero-Trust orchestration fabric.
 
@@ -49,7 +49,7 @@ All inter-agent message exchanges MUST pass through the tamper-evident message e
 
 ```json
 {
-  "$schema": "https://trisuella.org/schemas/agent-envelope-v2.5.json",
+  "$schema": "https://trisuella.org/schemas/agent-envelope-v3.0.json",
   "envelope_id": "env_9f83a2c4-7b1e-4209-8431",
   "timestamp": "2026-04-01T12:00:00Z",
   "source_agent": {
@@ -95,7 +95,7 @@ Under the **DUGNAD** pillar, no agent possesses unilateral authority to deploy A
 
 ### Configuration Example (`trisuella-agents.yaml`)
 ```yaml
-version: "2.5"
+version: "3.0"
 orchestrator:
   mode: strict-zero-trust
   audit_file: "./audit.md"

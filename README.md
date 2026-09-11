@@ -1,6 +1,6 @@
 # 🔱 OWASP TriSuElla-AIDLCA Framework
 > **AI-Driven Development Life Cycle & Autonomous Agent Governance (LLMSecOps)**  
-> **Version**: 2.5 | **Status**: Institutionalized | **Total Checks**: 285
+> **Version**: 3.0 | **Status**: Institutionalized | **Total Checks**: 285
 
 [![TriSuElla Gate](https://github.com/OWASP/TriSuElla-AIDLCA-Framework/actions/workflows/trisuella-gate.yml/badge.svg)](templates/.github/workflows/trisuella-gate.yml)
 [![Author: Bhaskar Puppala (PATEL)](https://img.shields.io/badge/Author-Bhaskar%20Puppala%20(PATEL)-blue.svg)](https://www.linkedin.com/in/bhaskerkpatel/)
@@ -99,29 +99,38 @@ python tools/trisu-cli/trisu_validator.py bom --output ai-bom.json
 
 ```
 OWASP-TriSuElla-AIDLCA-FrameWork/
-├── README.md                              # Main project entrypoint & quickstart
-├── TRISUELLA_MASTER_RULES_AND_CHECKS.md   # Unified master rulebook (285 checks)
+├── README.md                              # Main project entrypoint & quickstart (v3.0)
+├── TRISUELLA_MASTER_RULES_AND_CHECKS.md   # Unified master rulebook (285 checks, 184 rules)
 ├── ai-bom.json                            # Machine-readable CycloneDX AI v1.6 BoM
+├── trisuella.config.yaml                  # Declarative policy & Multi-Cloud CSPM manifest
+├── CLAUDE.md & .cursorrules               # Local IDE workspace assistant rules
+├── LICENSE                                # Open-source Apache-2.0 license
 ├── templates/                             # Drop-in templates for all IDEs & CI/CD
 │   ├── .cursorrules                       # Cursor IDE rules
 │   ├── CLAUDE.md                          # Claude Code instructions
 │   ├── .windsurfrules                     # Windsurf rules
 │   ├── copilot-instructions.md            # GitHub Copilot instructions
-│   ├── trisuella.config.yaml              # Declarative policy manifest
+│   ├── trisuella.config.yaml              # Declarative policy & CSPM manifest
 │   ├── .pre-commit-config.yaml            # Git pre-commit hook
 │   └── .github/workflows/trisuella-gate.yml # GitHub Actions PR gate
 ├── tools/
-│   ├── trisu-cli/trisu_validator.py       # Gatekeeper CLI (check, audit, init, bom)
+│   ├── trisu-cli/trisu_validator.py       # Gatekeeper CLI (check, audit, init, bom, rules)
 │   └── sisu-ui/                           # Sisu Nexus visual compliance dashboard
+│       ├── index.html                     # Web UI dashboard
+│       ├── sisu-ui-design-spec.md         # UI architecture & KPIs spec
+│       └── sample-data/                   # Demo compliance & governance dataset
 ├── TRISUELLA-AIDLCA-Rules/                # Core specifications, workflows & prompts
 │   ├── README.md & CHARTER.md             # Philosophy, severity scale & charter
-│   ├── FULL_README.md                     # Comprehensive developer manual & changelog
+│   ├── FULL_README.md                     # Comprehensive manual, CSPM crosswalk & changelog
 │   ├── TRISUELLA-AIDLCA-rules/            # core-workflow.md (active agent prompt)
-│   ├── TRISUELLA-AIDLCA-rule-details/     # Modular extensions (MCP, EU AI, Zero Trust)
-│   └── prompts/                           # Turnkey prompt library (P, B, T, A, C series)
+│   ├── TRISUELLA-AIDLCA-rule-details/     # Modular extensions (MCP, EU AI, Zero Trust, CSPM)
+│   ├── prompts/                           # Turnkey prompt library (P, B, T, A, C series)
+│   └── docs/                              # Developer guides (how-to-use, faq, which-extensions)
 ├── TRISUELLA-AIDLCAa/                     # 8-Stage Autonomous Multi-Agent System
-│   └── README.md                          # ZTP message protocol & orchestration
+│   └── README.md                          # ZTP message protocol & Dual-Key HITL gates
 ├── TRISUELLA-AIDLCA-docs/                 # State tracker & crosswalk matrices
+│   ├── TRISUELLA-AIDLCA-state.md          # Runtime workflow state & extension tracking
+│   └── AICM-AIDLCA-Crosswalk.md           # CSA AICM v1.0.3 to TriSuElla crosswalk
 └── Data-Source/                           # Regulatory baselines (RBI, ISO 42001, CSA AICM)
 ```
 
@@ -140,4 +149,4 @@ TriSuElla operates on a strict **Binary Enforcement Principle**:
 - **LinkedIn**: [linkedin.com/in/bhaskerkpatel](https://www.linkedin.com/in/bhaskerkpatel/)
 - **Organization**: [OWASP TriSuElla Working Group](https://github.com/OWASP/OWASP-TriSuElla-AIDLCA-Framework)
 
-*v2.5 Institutionalized Release — Security-first, AI-native. Built for the era of Agentic Autonomy.*
+*v3.0 Institutionalized Release — Security-first, AI-native. Built for the era of Agentic Autonomy.*

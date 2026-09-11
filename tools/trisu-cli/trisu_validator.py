@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-TRISUELLA-AIDLCA Policy & Security Gate Validator (v2.5)
+TRISUELLA-AIDLCA Policy & Security Gate Validator (v3.0)
 Enforces blocking checks, audit log integrity, and framework compliance.
 Zero external dependencies (uses standard library only).
 """
@@ -21,7 +21,7 @@ if hasattr(sys.stdout, "reconfigure"):
 if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-VERSION = "2.5"
+VERSION = "3.0"
 __author__ = "Bhaskar Puppala (PATEL)"
 __linkedin__ = "https://www.linkedin.com/in/bhaskerkpatel/"
 
@@ -173,7 +173,7 @@ def cmd_audit(root_dir: Path, target_dir: Path = None, sarif_file: str = None) -
     return 0
 
 def cmd_init(target_dir: Path, framework_dir: Path) -> int:
-    """Scaffolds TriSuElla v2.5 templates and configuration into target project."""
+    """Scaffolds TriSuElla v3.0 templates and configuration into target project."""
     print(f"{Colors.BOLD}[*] Initializing TriSuElla-AIDLCA v{VERSION} in: {target_dir}{Colors.RESET}")
     templates_dir = framework_dir / "templates"
     
@@ -218,7 +218,7 @@ Last Audit: Clean
 """, encoding="utf-8")
         print(f"  {Colors.GREEN}✓{Colors.RESET} Created: audit.md")
 
-    print(f"\n{Colors.GREEN}{Colors.BOLD}SUCCESS: TriSuElla v2.5 initialized successfully!{Colors.RESET}")
+    print(f"\n{Colors.GREEN}{Colors.BOLD}SUCCESS: TriSuElla v3.0 initialized successfully!{Colors.RESET}")
     print("Next step: Run `python tools/trisu-cli/trisu_validator.py audit` to test compliance.")
     return 0
 

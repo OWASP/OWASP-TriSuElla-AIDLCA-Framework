@@ -1,5 +1,5 @@
 # 🔱 TriSuElla-AIDLCA Secure Development Framework
-> **Version**: 2.5 | **Status**: Institutionalized | **Checks**: 285  
+> **Version**: 3.0 | **Status**: Institutionalized | **Checks**: 285  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)  
 > **AI-Driven. Policy-Governed. Trustworthy by Design.**
 
@@ -74,7 +74,7 @@ This automatically scaffolds `.cursorrules`, `CLAUDE.md`, `.windsurfrules`, `.gi
 
 ### Option B: Direct AI Assistant Instruction
 1.  **Activate**: Tell your AI assistant (Cursor, Claude, Copilot, Windsurf):
-    > *"Follow the TRISUELLA-AIDLCA v2.5 workflow defined in TRISUELLA-AIDLCA-rules/core-workflow.md"*
+    > *"Follow the TRISUELLA-AIDLCA v3.0 workflow defined in TRISUELLA-AIDLCA-rules/core-workflow.md"*
 2.  **Initialize**: Describe what you want to build. The framework handles the rest.
 3.  **Enforce**: All code generated is automatically audited against the 20-item **Security Review Checklist** and 285 consolidated invariants.
 
@@ -92,4 +92,4 @@ This automatically scaffolds `.cursorrules`, `CLAUDE.md`, `.windsurfrules`, `.gi
 
 ---
 
-*v2.5 — Security-first, AI-native. Built for the era of Agentic Autonomy.*
+*v3.0 — Security-first, AI-native. Built for the era of Agentic Autonomy.*

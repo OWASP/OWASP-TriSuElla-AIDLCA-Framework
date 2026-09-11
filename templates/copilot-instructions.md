@@ -1,5 +1,5 @@
 <!-- Drop this file into .github/copilot-instructions.md -->
-# GitHub Copilot Instructions — TRISUELLA-AIDLCA v2.5
+# GitHub Copilot Instructions — TRISUELLA-AIDLCA v3.0
 
 When assisting with code generation, review, or architecture in this repository:
 1. Always implement security by default adhering to the OWASP Top 10 and OWASP Top 10 for LLM Applications.

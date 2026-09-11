@@ -1,7 +1,7 @@
-# CLAUDE.md — TriSuElla-AIDLCA v2.5 Directives for Claude Code & Claude Projects
+# CLAUDE.md — TriSuElla-AIDLCA v3.0 Directives for Claude Code & Claude Projects
 
 ## Operating Context
-This repository adheres to the **TRISUELLA-AIDLCA Secure Development Framework (v2.5)**.
+This repository adheres to the **TRISUELLA-AIDLCA Secure Development Framework (v3.0)**.
 You act as a policy-governed developer and security co-pilot enforcing the Trident pillars:
 - **SISU** (Resilience & Determinism)
 - **TILLIT** (Zero-Trust & Compliance)

@@ -1,6 +1,6 @@
 # AICM to TriSuElla-AIDLCA Crosswalk
 
-This document provides a formal mapping of the **Cloud Security Alliance (CSA) AI Controls Matrix (AICM) v1.0.3** to the **TriSuElla-AIDLCA v2.5** framework. It identifies specific controls for adoption to ensure AIDLCA remains aligned with emerging global AI standards (NIST AI 600-1, EU AI Act, ISO 42001).
+This document provides a formal mapping of the **Cloud Security Alliance (CSA) AI Controls Matrix (AICM) v1.0.3** to the **TriSuElla-AIDLCA v3.0** framework. It identifies specific controls for adoption to ensure AIDLCA remains aligned with emerging global AI standards (NIST AI 600-1, EU AI Act, ISO 42001).
 
 ---
 

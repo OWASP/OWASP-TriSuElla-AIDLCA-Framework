@@ -1,7 +1,7 @@
-# TriSuElla-AIDLCA Project Configuration (v2.5)
+# TriSuElla-AIDLCA Project Configuration (v3.0)
 # Place in repository root to customize policy enforcement
 
-version: "2.5"
+version: "3.0"
 project_name: "enterprise-ai-application"
 risk_tier: "Tier-1" # Tier-1 (High Assurance / Regulated), Tier-2 (Standard Enterprise), Tier-3 (Internal Prototype)
 
@@ -37,7 +37,7 @@ cspm:
     - "CIS-Level-2"
     - "NIST-SP-800-53-Rev5"
     - "ISO-27001-2022"
-    - "TRISU-CSPM-v2.5"
+    - "TRISU-CSPM-v3.0"
   providers:
     aws:
       enabled: true

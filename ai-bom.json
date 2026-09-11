@@ -1,28 +1,28 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:e215a657-7d93-403e-8b35-7d10c4d22a9c",
+  "serialNumber": "urn:uuid:84d3b2b3-d173-4a55-8346-d85d859cdcd6",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-09-11T19:38:53.563827+00:00",
+    "timestamp": "2026-09-11T19:50:54.900862+00:00",
     "tools": [
       {
         "vendor": "OWASP TriSuElla-AIDLCA",
         "name": "trisu-cli",
-        "version": "2.5"
+        "version": "3.0"
       }
     ],
     "component": {
       "type": "application",
       "name": "OWASP-TriSuElla-AIDLCA-FrameWork",
-      "version": "2.5"
+      "version": "3.0"
     }
   },
   "components": [
     {
       "type": "data",
       "name": "ai-agent-security-prompts",
-      "version": "2.5",
+      "version": "3.0",
       "description": "TriSuElla prompt template: TRISUELLA-AIDLCA-Rules\\prompts\\ai-agents\\ai-agent-security-prompts.md",
       "hashes": [
         {
@@ -40,7 +40,7 @@
     {
       "type": "data",
       "name": "secure-code-generation",
-      "version": "2.5",
+      "version": "3.0",
       "description": "TriSuElla prompt template: TRISUELLA-AIDLCA-Rules\\prompts\\build\\secure-code-generation.md",
       "hashes": [
         {
@@ -58,7 +58,7 @@
     {
       "type": "data",
       "name": "compliance-prompts",
-      "version": "2.5",
+      "version": "3.0",
       "description": "TriSuElla prompt template: TRISUELLA-AIDLCA-Rules\\prompts\\compliance\\compliance-prompts.md",
       "hashes": [
         {
@@ -76,7 +76,7 @@
     {
       "type": "data",
       "name": "requirements-and-threat-model",
-      "version": "2.5",
+      "version": "3.0",
       "description": "TriSuElla prompt template: TRISUELLA-AIDLCA-Rules\\prompts\\planning\\requirements-and-threat-model.md",
       "hashes": [
         {
@@ -94,7 +94,7 @@
     {
       "type": "data",
       "name": "security-testing",
-      "version": "2.5",
+      "version": "3.0",
       "description": "TriSuElla prompt template: TRISUELLA-AIDLCA-Rules\\prompts\\test\\security-testing.md",
       "hashes": [
         {
@@ -112,7 +112,7 @@
     {
       "type": "framework",
       "name": "TRISUELLA-AIDLCAa-Orchestrator",
-      "version": "2.5",
+      "version": "3.0",
       "description": "8-Stage Zero-Trust Autonomous Multi-Agent Development Pipeline",
       "properties": [
         {
@@ -124,7 +124,7 @@
     {
       "type": "application",
       "name": "TRISUELLA-Master-Rules",
-      "version": "2.5",
+      "version": "3.0",
       "description": "Consolidated Policy and Verification Ruleset",
       "properties": [
         {
