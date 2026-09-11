@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs grep *)",
+      "Bash(sort -t: -k2 -rn)"
+    ]
+  }
+}

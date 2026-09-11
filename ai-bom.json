@@ -1,0 +1,137 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:9cf2b859-234a-445c-aa79-786368a79ad5",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-09-11T18:55:15.406073+00:00",
+    "tools": [
+      {
+        "vendor": "OWASP TriSuElla-AIDLCA",
+        "name": "trisu-cli",
+        "version": "2.5"
+      }
+    ],
+    "component": {
+      "type": "application",
+      "name": "OWASP-TriSuElla-AIDLCA-FrameWork",
+      "version": "2.5"
+    }
+  },
+  "components": [
+    {
+      "type": "data",
+      "name": "ai-agent-security-prompts",
+      "version": "2.5",
+      "description": "TriSuElla prompt template: TRISUELLA-AIDLCA-Rules\\prompts\\ai-agents\\ai-agent-security-prompts.md",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "451c9400dec1524a8d3111b1e990d023b77903cf73fb84f1fdf17fe2af628420"
+        }
+      ],
+      "properties": [
+        {
+          "name": "trisuella:category",
+          "value": "system-prompt"
+        }
+      ]
+    },
+    {
+      "type": "data",
+      "name": "secure-code-generation",
+      "version": "2.5",
+      "description": "TriSuElla prompt template: TRISUELLA-AIDLCA-Rules\\prompts\\build\\secure-code-generation.md",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "11a7cb32d0b163813e021dbde0028b8a2e5008f9c9fd2dfb16a5ef6de040997c"
+        }
+      ],
+      "properties": [
+        {
+          "name": "trisuella:category",
+          "value": "system-prompt"
+        }
+      ]
+    },
+    {
+      "type": "data",
+      "name": "compliance-prompts",
+      "version": "2.5",
+      "description": "TriSuElla prompt template: TRISUELLA-AIDLCA-Rules\\prompts\\compliance\\compliance-prompts.md",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "eb2efeb11369da3b54873bc2e212743e7ec88452a4ef4aa8f29a030633e83d30"
+        }
+      ],
+      "properties": [
+        {
+          "name": "trisuella:category",
+          "value": "system-prompt"
+        }
+      ]
+    },
+    {
+      "type": "data",
+      "name": "requirements-and-threat-model",
+      "version": "2.5",
+      "description": "TriSuElla prompt template: TRISUELLA-AIDLCA-Rules\\prompts\\planning\\requirements-and-threat-model.md",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "5c1442d15cda0a0e13825367917cc1929c5792ba77ea8933bd61f574f9771c14"
+        }
+      ],
+      "properties": [
+        {
+          "name": "trisuella:category",
+          "value": "system-prompt"
+        }
+      ]
+    },
+    {
+      "type": "data",
+      "name": "security-testing",
+      "version": "2.5",
+      "description": "TriSuElla prompt template: TRISUELLA-AIDLCA-Rules\\prompts\\test\\security-testing.md",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "26b09810693c7d7841ef56a5aae1b2924242fa7d03da74e92cdbbf7c2ce36b79"
+        }
+      ],
+      "properties": [
+        {
+          "name": "trisuella:category",
+          "value": "system-prompt"
+        }
+      ]
+    },
+    {
+      "type": "framework",
+      "name": "TRISUELLA-AIDLCAa-Orchestrator",
+      "version": "2.5",
+      "description": "8-Stage Zero-Trust Autonomous Multi-Agent Development Pipeline",
+      "properties": [
+        {
+          "name": "trisuella:agents_count",
+          "value": "8"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "name": "TRISUELLA-Master-Rules",
+      "version": "2.5",
+      "description": "Consolidated Policy and Verification Ruleset",
+      "properties": [
+        {
+          "name": "trisuella:status",
+          "value": "Institutionalized"
+        }
+      ]
+    }
+  ]
+}

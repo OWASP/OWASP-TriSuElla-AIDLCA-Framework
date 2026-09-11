@@ -1,0 +1,30 @@
+# TriSuElla-AIDLCA Project Configuration (v2.5)
+# Place in repository root to customize policy enforcement
+
+version: "2.5"
+project_name: "enterprise-ai-application"
+risk_tier: "Tier-1" # Tier-1 (High Assurance / Regulated), Tier-2 (Standard Enterprise), Tier-3 (Internal Prototype)
+
+governance:
+  audit_file: "./audit.md"
+  state_file: "./TRISUELLA-AIDLCA-state.md"
+  blocking_severities:
+    - "CRITICAL"
+    - "HIGH"
+
+active_extensions:
+  base_security: true         # OWASP Top 10 API & Web Baseline
+  ai_agentic: true            # OWASP LLM Top 10, Semantic Guardrails, Tool-Use Sandboxing
+  sensitive_data: true        # PII Redaction, L0-L4 Data Classification
+  zero_trust: true            # SPIFFE/mTLS Workload Identity, Least Privilege
+  infra_cloud: true           # Container & Cloud Security Posture (CIS/NIST)
+  compliance:
+    dpdpa_india: true         # Digital Personal Data Protection Act (2023)
+    rbi_bfsi: false           # Reserve Bank of India AI & Cyber Resilience Directives
+    gdpr_eu: false            # EU General Data Protection Regulation
+    iso_42001: true           # Artificial Intelligence Management System (AIMS)
+
+enforcement_gates:
+  pre_commit: true
+  ci_cd_pr_blocking: true
+  dual_key_deployment: true

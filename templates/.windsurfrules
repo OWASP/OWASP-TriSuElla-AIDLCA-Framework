@@ -1,0 +1,12 @@
+# Windsurf Rules — TRISUELLA-AIDLCA v2.5
+# Place in workspace root or Windsurf global rules
+
+framework: TRISUELLA-AIDLCA-v2.5
+pillars: [SISU, TILLIT, DUGNAD]
+
+rules:
+  - "Follow workflow in TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rules/core-workflow.md"
+  - "Treat [CRITICAL] and [HIGH] security findings as blocking gates"
+  - "Never embed raw API credentials or tokens in code or configs"
+  - "All database queries must use parameterized statements or ORMs with SQL injection defenses"
+  - "Maintain session continuity by reading TRISUELLA-AIDLCA-state.md at task inception"

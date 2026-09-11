@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sisu | Codespace Explorer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #05070a;
+            --sidebar-color: rgba(10, 15, 25, 0.8);
+            --accent-glow: rgba(100, 150, 255, 0.3);
+            --nordic-blue: #4a9eff;
+            --nordic-purple: #9d50bb;
+            --text-primary: #e0e6ed;
+            --text-secondary: #94a3b8;
+            --glass-bg: rgba(20, 25, 40, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glow-color: 0, 110, 255;
+            --shadow-primary: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(15, 20, 40, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(30, 10, 50, 0.4) 0%, transparent 50%);
+        }
+
+        .app-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 80px;
+            background: var(--sidebar-color);
+            border-right: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            z-index: 100;
+            transition: width 0.3s ease;
+        }
+
+        .sidebar:hover {
+            width: 200px;
+        }
+
+        .logo-container {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .logo {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--nordic-blue), var(--nordic-purple));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            box-shadow: 0 0 15px rgba(var(--glow-color), 0.5);
+        }
+
+        .nav-item {
+            width: 100%;
+            padding: 15px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .sidebar:hover .nav-item {
+            flex-direction: row;
+            padding-left: 20px;
+            align-items: center;
+        }
+
+        .nav-text {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.6;
+            display: block;
+        }
+
+        .sidebar:hover .nav-text {
+            font-size: 14px;
+            margin-left: 15px;
+            opacity: 1;
+        }
+
+        .nav-item.active {
+            color: var(--nordic-blue);
+            background: rgba(var(--glow-color), 0.1);
+            border-right: 3px solid var(--nordic-blue);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header {
+            height: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            background: rgba(5, 7, 10, 0.4);
+        }
+
+        .search-bar {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 8px 15px;
+            width: 350px;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input {
+            background: none;
+            border: none;
+            color: white;
+            margin-left: 10px;
+            width: 100%;
+            outline: none;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 30px;
+            position: relative;
+            z-index: 10;
+            overflow-y: auto;
+        }
+
+        /* Tabs Mockup Area */
+        .tab-view {
+            display: none;
+            height: 100%;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Explorer Tab: Graph Visualization */
+        .explorer-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
+            height: calc(100vh - 150px);
+        }
+
+        .file-tree {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .node-graph-canvas {
+            background: rgba(10, 15, 30, 0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mock-graph {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        /* UI Cards - Cyber Nordic Aesthetic */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow-primary);
+            margin-bottom: 20px;
+        }
+
+        .glow-text {
+            color: var(--nordic-blue);
+            text-shadow: 0 0 10px rgba(var(--glow-color), 0.5);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Mock Terminal Panel */
+        .terminal-overlay {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 450px;
+            height: 250px;
+            background: rgba(5, 5, 10, 0.95);
+            border: 1px solid var(--nordic-blue);
+            border-radius: 12px;
+            padding: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            box-shadow: 0 0 30px rgba(0, 110, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            z-index: 50;
+        }
+
+        /* Codeblock Styling */
+        pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            border-left: 4px solid var(--nordic-purple);
+            overflow-x: auto;
+        }
+
+        /* Buttons */
+        .btn-premium {
+            background: linear-gradient(135deg, var(--nordic-blue), var(--nordic-purple));
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 12px;
+        }
+
+        .btn-premium:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(var(--glow-color), 0.4);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--glass-border);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--nordic-blue);
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <div class="logo-container">
+                <div class="logo">S</div>
+            </div>
+            <div class="nav-item active" onclick="switchTab('explorer')">
+                <span>📁</span>
+                <div class="nav-text">Explorer</div>
+            </div>
+            <div class="nav-item" onclick="switchTab('analysis')">
+                <span>📊</span>
+                <div class="nav-text">Analysis</div>
+            </div>
+            <div class="nav-item" onclick="switchTab('chat')">
+                <span>💬</span>
+                <div class="nav-text">Chat</div>
+            </div>
+            <div class="nav-item" onclick="switchTab('terminal')">
+                <span>⌨️</span>
+                <div class="nav-text">Terminal</div>
+            </div>
+            <div style="flex: 1;"></div>
+            <div class="nav-item" onclick="switchTab('settings')">
+                <span>⚙️</span>
+                <div class="nav-text">Settings</div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <header class="header">
+                <div>
+                    <h2 class="glow-text">SISU <span style="font-weight: 300; opacity: 0.7;">| Codespace Explorer</span></h2>
+                </div>
+                <div class="search-bar">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Search codespace assets...">
+                </div>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <span style="font-size: 12px; opacity: 0.6;">Status: Autonomous Mode</span>
+                    <div style="width: 8px; height: 8px; border-radius: 50%; background: #4caf50; box-shadow: 0 0 8px #4caf50;"></div>
+                    <button class="btn-premium">Scan Repository</button>
+                </div>
+            </header>
+
+            <div class="content-area">
+                
+                <!-- EXPLORER TAB -->
+                <div id="explorer" class="tab-view active">
+                    <div class="explorer-container">
+                        <div class="file-tree">
+                            <h4 style="margin-bottom: 20px; font-size: 14px; opacity: 0.8;">REPOSITORY TREE</h4>
+                            <div style="font-size: 13px; line-height: 2;">
+                                <div>📁 .github</div>
+                                <div>📁 src</div>
+                                <div style="padding-left: 15px;">📁 components</div>
+                                <div style="padding-left: 30px;">📄 GraphView.py</div>
+                                <div style="padding-left: 30px;">📄 Sidebar.py</div>
+                                <div style="padding-left: 15px;">📁 engine</div>
+                                <div style="padding-left: 30px;">📄 SisuBrain.py</div>
+                                <div style="padding-left: 15px;">📄 main.py</div>
+                                <div>📁 TRISUELLA-AIDLCA-rules</div>
+                                <div>📄 README.md</div>
+                                <div>📄 requirements.txt</div>
+                            </div>
+                        </div>
+                        <div class="node-graph-canvas">
+                            <!-- Background Image Mockup -->
+                            <img src="../sisu_ui_mockup_1774877853043.png" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.4;" alt="Node Graph Background">
+                            
+                            <div style="position: absolute; top: 30px; left: 30px; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; border: 1px solid var(--glass-border);">
+                                <h3 class="glow-text">ACTIVE NODE: SisuBrain.py</h3>
+                                <p style="font-size: 12px; opacity: 0.7;">Central logic hub for autonomous execution.</p>
+                                <div style="margin-top: 10px; display: flex; gap: 10px;">
+                                    <span style="background: rgba(74, 158, 255, 0.2); border: 1px solid var(--nordic-blue); padding: 2px 8px; border-radius: 4px; font-size: 10px;">98% COVERAGE</span>
+                                    <span style="background: rgba(157, 80, 187, 0.2); border: 1px solid var(--nordic-purple); padding: 2px 8px; border-radius: 4px; font-size: 10px;">PILLAR: SISU</span>
+                                </div>
+                            </div>
+
+                            <!-- Floating Graph Element Simulation -->
+                            <div style="position: absolute; border: 2px solid var(--nordic-blue); width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(74, 158, 255, 0.4);">
+                                <div style="text-align: center;">
+                                    <div style="font-size: 24px;">🧠</div>
+                                    <div style="font-size: 10px; font-weight: bold;">BRAIN</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ANALYSIS TAB -->
+                <div id="analysis" class="tab-view">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="glass-card">
+                            <h3 class="glow-text" style="margin-bottom: 20px;">SECURITY ANALYSIS</h3>
+                            <pre><code style="color: #4affff;"># Static Analysis Hook
+def validate_pillar_compliance(code_chunk):
+    """
+    Ensures Sisu-level logic doesn't bypass 
+    Tillit security governors.
+    """
+    if "bypass_auth" in code_chunk:
+        raise ComplianceViolation("Zero Trust Enforcement Triggered")
+    return True</code></pre>
+                        </div>
+                        <div class="glass-card">
+                            <h3 class="glow-text" style="margin-bottom: 20px;">PILLAR HEALTH</h3>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                <span>SISU (Execution)</span>
+                                <span style="color: #4caf50;">94%</span>
+                            </div>
+                            <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px;">
+                                <div style="width: 94%; height: 100%; background: var(--nordic-blue); box-shadow: 0 0 10px var(--nordic-blue);"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SETTINGS TAB -->
+                <div id="settings" class="tab-view">
+                    <div class="glass-card" style="max-height: 500px; overflow-y: auto;">
+                        <h2 class="glow-text" style="border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; margin-bottom: 20px;">TRISUELLA FRAMEWORK CHARTER</h2>
+                        
+                        <div style="margin-bottom: 30px; border-left: 3px solid var(--nordic-blue); padding-left: 20px;">
+                            <h4 style="color: var(--nordic-blue); margin-bottom: 10px;">SYMBOLISM & ORIGIN</h4>
+                            <p style="font-size: 13px; line-height: 1.6; opacity: 0.8; margin-bottom: 10px;">
+                                The name <strong>TriSuElla</strong> represents the convergence of three foundational forces, inspired by the <strong>Trishula</strong> (Trident).
+                            </p>
+                            <p style="font-size: 12px; opacity: 0.7; font-style: italic;">
+                                "Power comes not from one capability, but from the balance of three: Balance, Control, and Direction."
+                            </p>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 30px;">
+                            <div class="glass-card" style="padding: 15px; border-color: rgba(255, 95, 86, 0.3);">
+                                <h4 style="color: #ff5f56; font-size: 14px; margin-bottom: 10px;">🔴 SISU</h4>
+                                <p style="font-size: 11px; opacity: 0.7;">Autonomous, precise, and modular execution through AI agents across the full lifecycle.</p>
+                            </div>
+                            <div class="glass-card" style="padding: 15px; border-color: rgba(74, 158, 255, 0.3);">
+                                <h4 style="color: #4a9eff; font-size: 14px; margin-bottom: 10px;">🔵 TILLIT</h4>
+                                <p style="font-size: 11px; opacity: 0.7;">Zero Trust, regulatory compliance (GDPR/HIPAA), and responsible AI oversight.</p>
+                            </div>
+                            <div class="glass-card" style="padding: 15px; border-color: rgba(76, 175, 80, 0.3);">
+                                <h4 style="color: #4caf50; font-size: 14px; margin-bottom: 10px;">🟢 DUGNAD</h4>
+                                <p style="font-size: 11px; opacity: 0.7;">Multi-agent coordination and human-in-the-loop collaborative intelligence.</p>
+                            </div>
+                        </div>
+
+                        <h4 style="color: var(--nordic-blue); margin-bottom: 10px;">GOVERNANCE MODEL</h4>
+                        <p style="font-size: 12px; margin-bottom: 15px; opacity: 0.8;">Enforced through: Policy-as-Code, Zero Trust IAM, Risk-Based Models, and Continuous Monitoring.</p>
+
+                        <h4 style="color: var(--nordic-blue); margin-bottom: 10px;">CORE PURPOSE</h4>
+                        <p style="font-size: 13px; line-height: 1.6; opacity: 0.8; font-style: italic; background: rgba(var(--glow-color), 0.05); padding: 15px; border-radius: 8px;">
+                            "TriSuElla exists to ensure that AI-driven development is executed with integrated governance, security, compliance, trust, and collaboration—enabling autonomous systems."
+                        </p>
+
+                        <h4 style="color: var(--nordic-blue); margin-top: 20px; margin-bottom: 10px;">RULES VS GUIDELINES</h4>
+                        <div style="font-size: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div>
+                                <span style="color: #ff5f56; font-weight: bold;">🔴 RULES (Mandatory)</span>: Block execution upon violation. Covers security and compliance.
+                            </div>
+                            <div>
+                                <span style="color: #ffbd2e; font-weight: bold;">🟡 GUIDELINES (Advisory)</span>: Guide optimization and best practices. Can be overridden with justification.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Terminal Mockup -->
+            <div class="terminal-overlay">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">
+                    <span style="color: var(--nordic-blue); font-weight: bold; font-size: 11px;">SISU CORE TERMINAL</span>
+                    <div style="display: flex; gap: 5px;">
+                        <span style="width: 8px; height: 8px; background: #ff5f56; border-radius: 50%;"></span>
+                        <span style="width: 8px; height: 8px; background: #ffbd2e; border-radius: 50%;"></span>
+                        <span style="width: 8px; height: 8px; background: #27c93f; border-radius: 50%;"></span>
+                    </div>
+                </div>
+                <div style="flex: 1; overflow-y: auto; color: #a0aec0;">
+                    <div>$ sisu --analyze-all</div>
+                    <div style="color: #4caf50;">[STATUS] Synchronizing with TriSuElla Pillars...</div>
+                    <div>[INFO] Scanning workspace-root/src/engine/SisuBrain.py</div>
+                    <div>[INFO] Found 14 function nodes, 3 critical dependency paths.</div>
+                    <div style="color: var(--nordic-purple);">[TILLIT] Compliance Check Passed (HIPAA/GDPR Active)</div>
+                    <div>$ <span style="width: 8px; display: inline-block; height: 15px; background: white; vertical-align: middle; animation: blink 1s infinite;"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab-view').forEach(view => {
+                view.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Set active tab
+            document.getElementById(tabId).classList.add('active');
+            
+            // Highlight nav item (this is a simple implementation)
+            const items = document.querySelectorAll('.nav-text');
+            items.forEach(text => {
+                if(text.innerText.toLowerCase() === tabId) {
+                    text.parentElement.classList.add('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

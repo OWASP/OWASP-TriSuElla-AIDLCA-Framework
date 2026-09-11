@@ -1,0 +1,44 @@
+# IDEs and editors
+.vscode/*
+!.vscode/extensions.json
+.idea/*
+*.swp
+*.swo
+.DS_Store
+
+# Logs and databases
+*.log
+*.sqlite
+*.db
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Node / JS (if applicable)
+node_modules/
+dist/
+build/
+.npm/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# TriSuElla Framework Local Overrides (if any)
+*.local.md
+/tmp/

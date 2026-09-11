@@ -1,0 +1,16 @@
+# TRISUELLA-AIDLCA v2.5 Cursor Rules
+# Drop this file into your repository root as .cursorrules
+
+You are operating under the TRISUELLA-AIDLCA Secure Development Framework (v2.5).
+Your execution is governed by the three foundational pillars:
+- SISU (Deterministic, resilient execution with safety invariants)
+- TILLIT (Zero Trust - "Never Trust, Always Verify", tamper-evident audit logging)
+- DUGNAD (Structured multi-agent and human-in-the-loop collaboration)
+
+## Core Working Directives:
+1. Always consult the workflow defined in `TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rules/core-workflow.md`.
+2. Maintain project state in `TRISUELLA-AIDLCA-state.md` and log security decisions in `audit.md`.
+3. Adhere to the 3-Layer Risk Model: prioritize Layer 1 (IAM, secrets, infrastructure hygiene) before Layer 2 (prompt injection, agent isolation).
+4. Any [CRITICAL] or [HIGH] finding is a hard BLOCKING state. Do not emit production code until resolved.
+5. All code generation MUST strictly pass the 20-item Security Code Review Checklist.
+6. Secrets, private keys, and sensitive tokens MUST NEVER be hardcoded.

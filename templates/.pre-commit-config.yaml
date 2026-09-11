@@ -1,0 +1,12 @@
+# TriSuElla-AIDLCA Pre-commit Hook Configuration (v2.5)
+# Install: pip install pre-commit && pre-commit install
+
+repos:
+  - repo: local
+    hooks:
+      - id: trisuella-audit
+        name: TriSuElla Blocking Gate Audit
+        entry: python tools/trisu-cli/trisu_validator.py audit
+        language: system
+        pass_filenames: false
+        always_run: true
