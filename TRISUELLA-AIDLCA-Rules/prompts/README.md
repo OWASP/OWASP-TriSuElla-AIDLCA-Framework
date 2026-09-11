@@ -66,4 +66,4 @@ Instead of manually evaluating prompts, you can generate an automated CycloneDX 
 python tools/trisu-cli/trisu_validator.py bom --output ai-bom.json
 ```
 
-## Total: 28+ prompts across 5 categories | Mapped to 258 Master Invariants
+## Total: 28+ prompts across 5 categories | Mapped to 285 Master Invariants

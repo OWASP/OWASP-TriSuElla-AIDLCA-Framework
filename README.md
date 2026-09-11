@@ -42,7 +42,7 @@ graph TD
 
 ---
 
-## 📊 Summary of Master Rules & Checks (258 Total)
+## 📊 Summary of Master Rules & Checks (285 Total)
 
 All rules are consolidated in [TRISUELLA_MASTER_RULES_AND_CHECKS.md](TRISUELLA_MASTER_RULES_AND_CHECKS.md):
 
@@ -53,13 +53,14 @@ All rules are consolidated in [TRISUELLA_MASTER_RULES_AND_CHECKS.md](TRISUELLA_M
 | **3** | AI & Agentic Security (`TRISU-SEC`) | 22 | OWASP LLM Top 10, Tool Sandboxing |
 | **4** | Zero Trust Architecture (`TRISU-TRUST`) | 14 | CISA ZT Maturity Model, NIST SP 800-207 |
 | **5** | Sensitive Data Security (`TRISU-DATA`) | 10 | DPDPA (India), GDPR, HIPAA, L0–L4 Classification |
-| **6–8** | DLCA, Infra (`TRISU-INFRA`), Cloud (`TRISU-CLOUD`) | 41 | CIS Benchmarks, NIST SP 800-210, Kubernetes |
-| **9–10** | Regional Compliance & Privacy by Design | 43 | Art. 25 GDPR, RBI Cyber Resilience, NIST SSDF |
+| **6–8** | DLCA, Infra (`TRISU-INFRA`), Cloud & Multi-Cloud CSPM (`TRISU-CLOUD`/`CSPM`) | 55 | CIS Benchmarks, Multi-Cloud CSPM (AWS, Azure, GCP, Alibaba, OCI) |
+| **9–10** | Regional Compliance & Privacy by Design | 51 | Art. 25 GDPR, RBI Cyber Resilience, NIST SSDF |
 | **11–13**| Testing, Checklists & CI/CD Gates | 45 | Garak, PyRIT, SAST, 20-Item Review Checklist |
 | **14–20**| Tooling, Maturity Model, KPIs & RBI Sutras | 40 | Sisu-UI, RBI 7 Sutras, ISO 42001 AIMS |
 | **21** | **Model Context Protocol Security (`TRISU-MCP`)** | **6** | MCP Schema Sanitization, Recursion Bounds, HITL |
 | **22** | **EU AI Act High-Risk Compliance (`TRISU-EUAI`)** | **7** | EU Regulation 2024/1689 (Articles 9–15, CE Gate) |
-| **TOTAL**| **Consolidated Invariants** | **258** | **Mandatory Blocking for [CRITICAL]/[HIGH]** |
+| **23** | **Agentic Identity & Token Delegation (`TRISU-AIAM`)** | **5** | RFC 8693 Token Exchange, SPIFFE/mTLS, Ephemeral Keys |
+| **TOTAL**| **Consolidated Invariants** | **285** | **Mandatory Blocking for [CRITICAL]/[HIGH]** |
 
 ---
 
@@ -99,7 +100,7 @@ python tools/trisu-cli/trisu_validator.py bom --output ai-bom.json
 ```
 OWASP-TriSuElla-AIDLCA-FrameWork/
 ├── README.md                              # Main project entrypoint & quickstart
-├── TRISUELLA_MASTER_RULES_AND_CHECKS.md   # Unified master rulebook (258 checks)
+├── TRISUELLA_MASTER_RULES_AND_CHECKS.md   # Unified master rulebook (285 checks)
 ├── ai-bom.json                            # Machine-readable CycloneDX AI v1.6 BoM
 ├── templates/                             # Drop-in templates for all IDEs & CI/CD
 │   ├── .cursorrules                       # Cursor IDE rules

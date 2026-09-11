@@ -76,12 +76,12 @@ This automatically scaffolds `.cursorrules`, `CLAUDE.md`, `.windsurfrules`, `.gi
 1.  **Activate**: Tell your AI assistant (Cursor, Claude, Copilot, Windsurf):
     > *"Follow the TRISUELLA-AIDLCA v2.5 workflow defined in TRISUELLA-AIDLCA-rules/core-workflow.md"*
 2.  **Initialize**: Describe what you want to build. The framework handles the rest.
-3.  **Enforce**: All code generated is automatically audited against the 20-item **Security Review Checklist** and 258 consolidated invariants.
+3.  **Enforce**: All code generated is automatically audited against the 20-item **Security Review Checklist** and 285 consolidated invariants.
 
 ---
 
 ## 📚 Documentation & Key References
-*   📖 **[Master Rules & Checks Reference (258 Checks)](../TRISUELLA_MASTER_RULES_AND_CHECKS.md)**
+*   📖 **[Master Rules & Checks Reference (285 Checks)](../TRISUELLA_MASTER_RULES_AND_CHECKS.md)**
 *   📜 **[Complete Rule Directory & Detailed Guide](FULL_README.md)**
 *   🏛️ **[Framework Charter & Philosophy](CHARTER.md)**
 *   🔌 **[Model Context Protocol Security (TRISU-MCP)](TRISUELLA-AIDLCA-rule-details/extensions/security/ai-agentic/mcp-security.md)**
