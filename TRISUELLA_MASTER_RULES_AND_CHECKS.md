@@ -15,7 +15,7 @@ This document consolidates all TRISUELLA-AIDLCA rules, security checklists, and 
 | **Section 6** | AI-DLCA Compliance (DLCA) | 15 |
 | **Section 7** | Infrastructure Security (INFRA) | 16 |
 | **Section 8** | Cloud Security (CLOUD) | 10 |
-| **Section 9** | Regional & Global Compliance | 33 |
+| **Section 9** | Regional & Global Compliance | 41 |
 | **Section 10** | Privacy & Safety by Design | 10 |
 | **Section 11** | Testing & Verification Protocols | 10 |
 | **Section 12** | Mandatory Security Checklist | 16 |
@@ -29,7 +29,8 @@ This document consolidates all TRISUELLA-AIDLCA rules, security checklists, and 
 | **Section 20** | Responsible AI Sutras (RBI) | 7 |
 | **Section 21** | Model Context Protocol Security (MCP) | 6 |
 | **Section 22** | EU AI Act High-Risk Compliance (EUAI) | 7 |
-| **GRAND TOTAL** | **Consolidated Rules & Checks** | **258** |
+| **Section 23** | Agentic Identity & Token Delegation (AIAM) | 5 |
+| **GRAND TOTAL** | **Consolidated Rules & Checks** | **271** |
 
 ---
 
@@ -365,82 +366,100 @@ The framework enforces security across 5 distinct physical layers (Control → A
 ---
 
 ## ⚖️ Section 9: Regional & Global Compliance
-*Regional & Industry Controls*
+*Regional & Industry Controls, Global Governance, and Regulatory Standards*
+
+### Global Governance & Auditor Alignment (TRISU-COMP)
+- **TRISU-COMP-01 [CRITICAL]**: **Formal Accountability Policy & Governance**. Consolidated governance policies defining roles, decision boundaries, and annual policy review cycles for autonomous systems.
+    - *Verification*: Documented policy signed by management; annual review evidence archived.
+- **TRISU-COMP-02 [CRITICAL]**: **Mandatory Independent Assessments**. Annual independent third-party audit of high-risk autonomous systems against recognized international frameworks.
+    - *Verification*: Signed independent audit report with active remediation SLAs (< 48h for [CRITICAL]).
+- **TRISU-COMP-03 [HIGH]**: **Risk-Triggered Auditor Engagement**. Significant architectural, data source, or tool boundary changes automatically trigger independent out-of-band risk assessments.
+    - *Verification*: Architecture change log triggers pre-promotion sign-off from risk/audit officer.
+- **TRISU-COMP-04 [HIGH]**: **Regulatory & Legal Traceability**. Living Compliance Traceability Matrix (CTM) mapping system operations to statutory obligations and 6-hour incident reporting rules.
+    - *Verification*: CTM reviewed quarterly; statutory incident reporting playbook verified.
+- **TRISU-COMP-05 [MEDIUM]**: **Consolidated Audit Lifecycle Management**. End-to-end audit lifecycle pipeline with cryptographically hashed, non-repudiable evidence collection.
+    - *Verification*: Evidence artifacts in audit portal contain verifiable SHA-256 hashes.
+- **TRISU-COMP-06 [CRITICAL]**: **Data Stewardship & Mandatory Retention**. Automated data sensitivity tagging (L0-L4) with mandatory 5-year retention of autonomous decision trails.
+    - *Verification*: Database tables tagged with sensitivity; retention triggers verified in WORM storage.
+- **TRISU-COMP-07 [HIGH]**: **Global Resilience & Disaster Readiness**. Business Impact Analysis (BIA) and annual simulated disaster exercises for cognitive logic and agentic failure modes.
+    - *Verification*: BIA documentation and annual disaster recovery test report archived.
+- **TRISU-COMP-08 [HIGH]**: **Platform Observability & Log Integrity**. Universal cloud and platform audit logging across control and data planes, stored in tamper-proof dedicated security vaults with automated integrity verification.
+    - *Verification*: Audit logging enabled in all regions; out-of-band destination verified; integrity checks active.
 
 ### India DPDPA (2023)
-- **COMP-DPDPA-01 [CRITICAL]**: **Data Localization & Sovereignty**. Residency enforcement for personal data.
+- **TRISU-COMP-DPDPA-01 [CRITICAL]**: **Data Localization & Sovereignty**. Residency enforcement for personal data.
     - *Verification*: Data residency audit report confirms all PII resides in Indian regions; egress filters block cross-border PII transfer.
-- **COMP-DPDPA-02 [CRITICAL]**: **Notice & Consent Workflow**. Clear purpose specification and machine-readable consent records.
+- **TRISU-COMP-DPDPA-02 [CRITICAL]**: **Notice & Consent Workflow**. Clear purpose specification and machine-readable consent records.
     - *Verification*: Consent Management Platform (CMP) audit trail shows valid consent for 100% of processed data.
-- **COMP-DPDPA-03 [HIGH]**: **Data Fiduciary Obligations**. Accountability for processing and Record of Processing Activities (RoPA) maintained.
+- **TRISU-COMP-DPDPA-03 [HIGH]**: **Data Fiduciary Obligations**. Accountability for processing and Record of Processing Activities (RoPA) maintained.
     - *Verification*: Quarterly RoPA review signed by DPO; data lineage maps to approved processing purposes.
-- **COMP-DPDPA-04 [HIGH]**: **Data Subject Rights**. Automated workflows for Access, Correction, and Erasure within 30 days.
+- **TRISU-COMP-DPDPA-04 [HIGH]**: **Data Subject Rights**. Automated workflows for Access, Correction, and Erasure within 30 days.
     - *Verification*: 'Right to be Forgotten' ticket resolution time < 30 days; automated erasure script logs success.
-- **COMP-DPDPA-05 [HIGH]**: **Data Quality**. Accuracy and consistency requirements with automated validation at ingestion.
+- **TRISU-COMP-DPDPA-05 [HIGH]**: **Data Quality**. Accuracy and consistency requirements with automated validation at ingestion.
     - *Verification*: Schema validation and quality score checks in the data pipeline; records with low quality scores are rejected.
-- **COMP-DPDPA-06 [CRITICAL]**: **Security Safeguards**. AES-256 at rest, TLS 1.2+ in transit, and HSM-backed root-of-trust.
+- **TRISU-COMP-DPDPA-06 [CRITICAL]**: **Security Safeguards**. AES-256 at rest, TLS 1.2+ in transit, and HSM-backed root-of-trust.
     - *Verification*: Annual cryptographic audit; KMS key usage logs show 100% encryption for personal data.
-- **COMP-DPDPA-07 [HIGH]**: **Accountability**. Appointment of Data Protection Officer (DPO) with board-level reporting line.
+- **TRISU-COMP-DPDPA-07 [HIGH]**: **Accountability**. Appointment of Data Protection Officer (DPO) with board-level reporting line.
     - *Verification*: DPO appointment letter and Board meeting minutes showing DPO attendance and reporting.
-- **COMP-DPDPA-08 [CRITICAL]**: **Personal Data Breach Reporting**. Notification to DPBI within 72 hours via automated pipeline.
+- **TRISU-COMP-DPDPA-08 [CRITICAL]**: **Personal Data Breach Reporting**. Notification to DPBI within 72 hours via automated pipeline.
     - *Verification*: Incident response playbook includes DPBI notification step; tested in annual tabletop exercise.
 
 ### India BFSI (CERT-In / RBI / SEBI)
-- **IND-BFSI-01 [CRITICAL]**: **6-Hour Incident Reporting**. Automated CERT-In alerting pipeline with tamper-evident evidence.
+- **TRISU-IND-BFSI-01 [CRITICAL]**: **6-Hour Incident Reporting**. Automated CERT-In alerting pipeline with tamper-evident evidence.
     - *Verification*: SIEM alert triggers an automated draft notification for CERT-In within 15 minutes of a 'CRITICAL' event.
-- **IND-BFSI-02 [CRITICAL]**: **5-Year Data Retention**. WORM-compliant storage for CERT-In / RBI / IT Act forensic logs.
+- **TRISU-IND-BFSI-02 [CRITICAL]**: **5-Year Data Retention**. WORM-compliant storage for CERT-In / RBI / IT Act forensic logs.
     - *Verification*: Storage bucket policy set to 'Compliance Mode' with 1825-day retention period; deletion attempts blocked.
-- **IND-BFSI-03 [HIGH]**: **Bi-Annual Cyber Security Audit**. Conducted by an independent CERT-In empanelled auditor.
+- **TRISU-IND-BFSI-03 [HIGH]**: **Bi-Annual Cyber Security Audit**. Conducted by an independent CERT-In empanelled auditor.
     - *Verification*: Audit report from empanelled firm archived; remediation of all 'HIGH' findings completed within 30 days.
-- **IND-BFSI-04 [CRITICAL]**: **4-Hour Incident Reporting for SEBI**. Automated escalation for Exchanges/Brokers/AMCs.
+- **TRISU-IND-BFSI-04 [CRITICAL]**: **4-Hour Incident Reporting for SEBI**. Automated escalation for Exchanges/Brokers/AMCs.
     - *Verification*: SEBI-specific alerting workflow in the Incident Response platform; end-to-end test successful.
-- **IND-BFSI-05 [CRITICAL]**: **72-Hour Breach Notification**. To DPBI under DPDP Act with full forensic package.
+- **TRISU-IND-BFSI-05 [CRITICAL]**: **72-Hour Breach Notification**. To DPBI under DPDP Act with full forensic package.
     - *Verification*: Forensic collection script automated; package includes evidence logs, impact analysis, and remediation steps.
-- **IND-BFSI-06 [CRITICAL]**: **Data Localisation**. Critical financial/PII data must reside within India per RBI/IRDAI mandate.
+- **TRISU-IND-BFSI-06 [CRITICAL]**: **Data Localisation**. Critical financial/PII data must reside within India per RBI/IRDAI mandate.
     - *Verification*: Geo-location checks on all database nodes; cloud region restricted to Mumbai/Hyderabad.
-- **IND-BFSI-07 [HIGH]**: **2-Year Log Retention**. For Telecom/DoT sectors with NTP-synchronised timestamps.
+- **TRISU-IND-BFSI-07 [HIGH]**: **2-Year Log Retention**. For Telecom/DoT sectors with NTP-synchronised timestamps.
     - *Verification*: NTP sync check active on all servers; log retention policy verified in the central log account.
-- **IND-BFSI-08 [HIGH]**: **Board Governance**. AI/Cybersecurity policy as a standing Board agenda item (quarterly review).
+- **TRISU-IND-BFSI-08 [HIGH]**: **Board Governance**. AI/Cybersecurity policy as a standing Board agenda item (quarterly review).
     - *Verification*: Board meeting agenda items and signed minutes confirming policy review and approval.
-- **IND-BFSI-09 [HIGH]**: **Supply Chain Risk**. Mandatory third-party security assessment before vendor onboarding.
+- **TRISU-IND-BFSI-09 [HIGH]**: **Supply Chain Risk**. Mandatory third-party security assessment before vendor onboarding.
     - *Verification*: Signed Vendor Security Assessment (VSA) for every third-party service in the AI supply chain.
-- **IND-BFSI-10 [HIGH]**: **VAPT Standards**. Quarterly ASV scans for BFSI and annual Red Team for High-Risk systems.
+- **TRISU-IND-BFSI-10 [HIGH]**: **VAPT Standards**. Quarterly ASV scans for BFSI and annual Red Team for High-Risk systems.
     - *Verification*: Quarterly VAPT report and Red Team summary signed by the CISO; all findings tracked in Jira.
 
 ### EU GDPR (General Data Protection Regulation)
-- **COMP-GDPR-01 [CRITICAL]**: **Right to Erasure (Article 17)**. Automated, irreversible deletion with cryptographic proof.
+- **TRISU-COMP-GDPR-01 [CRITICAL]**: **Right to Erasure (Article 17)**. Automated, irreversible deletion with cryptographic proof.
     - *Verification*: Deletion log showing successful 'hard delete' of user records across all databases and backups.
-- **COMP-GDPR-02 [HIGH]**: **Data Protection by Design (Article 25)**. Mandatory TRISU-DESIGN mapping for all new systems.
+- **TRISU-COMP-GDPR-02 [HIGH]**: **Data Protection by Design (Article 25)**. Mandatory TRISU-DESIGN mapping for all new systems.
     - *Verification*: Every new service launch requires a 'Privacy-by-Design' checklist approval from the DPO.
-- **COMP-GDPR-03 [CRITICAL]**: **Breach Notification (Article 33)**. 72-hour supervisory authority reporting via automated pipeline.
+- **TRISU-COMP-GDPR-03 [CRITICAL]**: **Breach Notification (Article 33)**. 72-hour supervisory authority reporting via automated pipeline.
     - *Verification*: Data protection authority (DPA) contact list and reporting templates pre-configured in the IR platform.
-- **COMP-GDPR-04 [HIGH]**: **DPIA**. Required for any high-risk AI processing (profiling, automated decisions).
+- **TRISU-COMP-GDPR-04 [HIGH]**: **DPIA**. Required for any high-risk AI processing (profiling, automated decisions).
     - *Verification*: Signed DPIA report for every model performing automated decision-making on individuals.
-- **COMP-GDPR-05 [HIGH]**: **DPO Accountability**. Independent DPO with direct board access and contact published publicly.
+- **TRISU-COMP-GDPR-05 [HIGH]**: **DPO Accountability**. Independent DPO with direct board access and contact published publicly.
     - *Verification*: DPO contact info in privacy policy; evidence of DPO independent resource allocation.
 
 ### US HIPAA (Health Insurance Portability & Accountability)
-- **COMP-HIPAA-01 [CRITICAL]**: **PHI Isolation**. Dedicated VPC/account with no cross-contamination from non-PHI workloads.
+- **TRISU-COMP-HIPAA-01 [CRITICAL]**: **PHI Isolation**. Dedicated VPC/account with no cross-contamination from non-PHI workloads.
     - *Verification*: VPC Flow Logs confirm zero traffic between PHI and non-PHI subnets; account-level isolation.
-- **COMP-HIPAA-02 [CRITICAL]**: **Audit Logging**. Immutable WORM logs of all ePHI access, modification, and export events.
+- **TRISU-COMP-HIPAA-02 [CRITICAL]**: **Audit Logging**. Immutable WORM logs of all ePHI access, modification, and export events.
     - *Verification*: S3 Object Lock active on HIPAA log buckets; monthly audit log review signed by Compliance Officer.
-- **COMP-HIPAA-03 [CRITICAL]**: **BAA Coverage**. Signed BAA required with every AI model provider handling ePHI.
+- **TRISU-COMP-HIPAA-03 [CRITICAL]**: **BAA Coverage**. Signed BAA required with every AI model provider handling ePHI.
     - *Verification*: Legal repository contains current, signed Business Associate Agreements for all AI vendors.
-- **COMP-HIPAA-04 [CRITICAL]**: **Encryption Invariants**. AES-256 at rest and TLS 1.3 minimum in transit for all ePHI.
+- **TRISU-COMP-HIPAA-04 [CRITICAL]**: **Encryption Invariants**. AES-256 at rest and TLS 1.3 minimum in transit for all ePHI.
     - *Verification*: CloudHSM/KMS audit confirms 100% encryption coverage; non-TLS 1.3 traffic dropped at gateway.
-- **COMP-HIPAA-05 [HIGH]**: **Disaster Recovery**. Quarterly tested ePHI restoration with documented RTO/RPO adherence.
+- **TRISU-COMP-HIPAA-05 [HIGH]**: **Disaster Recovery**. Quarterly tested ePHI restoration with documented RTO/RPO adherence.
     - *Verification*: Recovery Time Objective (RTO) < 4 hours verified in the last recovery simulation.
 
 ### PCI-DSS v4.0 (Payment Card Industry Security)
-- **COMP-PCI-01 [CRITICAL]**: **CDE Segmentation**. Verified physical/logical isolation of Cardholder Data Environment.
+- **TRISU-COMP-PCI-01 [CRITICAL]**: **CDE Segmentation**. Verified physical/logical isolation of Cardholder Data Environment.
     - *Verification*: Annual penetration test report confirms zero 'leakage' into the CDE from non-compliant zones.
-- **COMP-PCI-02 [CRITICAL]**: **PAN Masking**. Primary Account Number masked to last 4 digits in all non-CDE displays.
+- **TRISU-COMP-PCI-02 [CRITICAL]**: **PAN Masking**. Primary Account Number masked to last 4 digits in all non-CDE displays.
     - *Verification*: Automated UI/API scan checks for unmasked PANs; zero findings in the last release scan.
-- **COMP-PCI-03 [HIGH]**: **Tokenization**. Irreversible tokens used in all AI transaction pipelines touching card data.
+- **TRISU-COMP-PCI-03 [HIGH]**: **Tokenization**. Irreversible tokens used in all AI transaction pipelines touching card data.
     - *Verification*: Code review confirms no raw PAN storage; tokenization service used for all cognitive processing.
-- **COMP-PCI-04 [HIGH]**: **Vulnerability Scanning**. Quarterly ASV scans and annual internal penetration test of CDE.
+- **TRISU-COMP-PCI-04 [HIGH]**: **Vulnerability Scanning**. Quarterly ASV scans and annual internal penetration test of CDE.
     - *Verification*: Passing ASV scan report submitted to the acquiring bank every quarter.
-- **COMP-PCI-05 [CRITICAL]**: **CDE Access Control**. Phishing-resistant MFA (FIDO2) required for all CDE access.
+- **TRISU-COMP-PCI-05 [CRITICAL]**: **CDE Access Control**. Phishing-resistant MFA (FIDO2) required for all CDE access.
     - *Verification*: Duo/Okta audit logs confirm 100% FIDO2 usage for admin access to the CDE.
 
 ---
@@ -474,25 +493,25 @@ The framework enforces security across 5 distinct physical layers (Control → A
 ## 🧪 Section 11: Testing & Verification Protocols
 *Prove system invariants using mathematical/logical property definitions*
 
-- **TEST-01 [CRITICAL]**: **Property Identification & Invariant Mapping**. Round-trip and idempotence properties defined for all critical operations.
+- **TRISU-TEST-01 [CRITICAL]**: **Property Identification & Invariant Mapping**. Round-trip and idempotence properties defined for all critical operations.
     - *Tools*: Hypothesis (Python), fast-check (JS), QuickCheck (Haskell).
-- **TEST-02 [HIGH]**: **Domain-Specific Generator Integrity**. Realistic edge-case data generators covering boundary conditions.
+- **TRISU-TEST-02 [HIGH]**: **Domain-Specific Generator Integrity**. Realistic edge-case data generators covering boundary conditions.
     - *Tools*: Hypothesis strategies, Faker, Schemathesis (OpenAPI-driven).
-- **TEST-03 [CRITICAL]**: **Deterministic Reproducibility**. Seed-based replay ensuring failures are always reproducible.
+- **TRISU-TEST-03 [CRITICAL]**: **Deterministic Reproducibility**. Seed-based replay ensuring failures are always reproducible.
     - *Tools*: `@given(settings=settings(deriving=seed))` in Hypothesis; recorded seeds logged per CI run.
-- **TEST-04 [HIGH]**: **Stateful Verification**. Model-based testing comparing system behavior against a reference state machine.
+- **TRISU-TEST-04 [HIGH]**: **Stateful Verification**. Model-based testing comparing system behavior against a reference state machine.
     - *Tools*: Hypothesis Stateful, ScalaCheck Stateful, TLA+.
-- **TEST-05 [HIGH]**: **Regression Pinning**. Discovered failures converted to permanent regression examples and re-run on every build.
+- **TRISU-TEST-05 [HIGH]**: **Regression Pinning**. Discovered failures converted to permanent regression examples and re-run on every build.
     - *Tools*: Hypothesis `@example` decorator; dedicated regression test suite in CI.
-- **TEST-06 [HIGH]**: **Fuzzing Invariants**. Stress testing with randomized, malformed, and boundary inputs.
+- **TRISU-TEST-06 [HIGH]**: **Fuzzing Invariants**. Stress testing with randomized, malformed, and boundary inputs.
     - *Tools*: libFuzzer, AFL++, Atheris (Python), Radamsa.
-- **TEST-07 [HIGH]**: **Performance Invariants**. Latency and throughput bounds verified under peak load conditions.
+- **TRISU-TEST-07 [HIGH]**: **Performance Invariants**. Latency and throughput bounds verified under peak load conditions.
     - *Tools*: Locust, k6, Gatling; p99 latency thresholds defined and enforced.
-- **TEST-08 [HIGH]**: **Resource Leak Proofs**. Memory and handle stability verified during long-running and concurrent tests.
+- **TRISU-TEST-08 [HIGH]**: **Resource Leak Proofs**. Memory and handle stability verified during long-running and concurrent tests.
     - *Tools*: Valgrind (C/C++), tracemalloc (Python), JVM heap profiler.
-- **TEST-09 [HIGH]**: **Race Condition Proofs**. Concurrent safety properties verified under multi-threaded execution.
+- **TRISU-TEST-09 [HIGH]**: **Race Condition Proofs**. Concurrent safety properties verified under multi-threaded execution.
     - *Tools*: Helgrind/ThreadSanitizer, Go race detector (`-race` flag).
-- **TEST-10 [HIGH]**: **Shrinking Precision**. Automated reduction of failure inputs to the minimal reproducible case.
+- **TRISU-TEST-10 [HIGH]**: **Shrinking Precision**. Automated reduction of failure inputs to the minimal reproducible case.
     - *Tools*: Hypothesis built-in shrinker; custom shrinkers for domain-specific types.
 
 ---
@@ -743,6 +762,22 @@ The framework includes specialized tooling to visualize and enforce governance i
     - *Verification*: UI audit validates active AI interaction disclaimer and C2PA/provenance metadata in generated media.
 - **TRISU-EUAI-07 [CRITICAL]**: **Human Oversight & Fail-Safe Override (Art. 14)**. Dedicated interfaces enabling natural persons to oversee, intervene in, or immediately halt system operations.
     - *Verification*: Live test confirms software/physical emergency stop button halts inference pipeline within 2 seconds.
+
+---
+
+## 🆔 Section 23: Agentic Workload Identity & Token Delegation (TRISU-AIAM)
+*Zero-Trust Non-Human Identity (NHI), RFC 8693 Token Exchange, and Ephemeral Delegation Chains*
+
+- **TRISU-AIAM-01 [CRITICAL]**: **Cryptographic Workload Identity**. Every agent process or container instance MUST possess a verifiable SPIFFE ID (`spiffe://<domain>/sa/<role>/<id>`) with automated X.509 SVID rotation every 60 minutes and enforced mTLS.
+    - *Verification*: Agent handshake logs verify mutual TLS and valid SPIFFE SVID; unsigned connections rejected at runtime.
+- **TRISU-AIAM-02 [CRITICAL]**: **Attenuated Token Delegation (RFC 8693)**. Parent agents MUST NOT pass primary authorization tokens to subagents. Downscoped Subagent Tokens (DST) with explicit actor claims (`act`), minimal resource scopes, and strict audience (`aud`) bounds are mandatory.
+    - *Verification*: Token inspection confirms `act` claim present, scope narrowed, and audience restricted to target tool server.
+- **TRISU-AIAM-03 [HIGH]**: **Ephemeral Credential Lifespans**. Subagent delegation tokens MUST enforce a maximum Time-to-Live (TTL) of 15 minutes with automated just-in-time revocation on parent process completion or failure.
+    - *Verification*: Expired token replay test returns HTTP 401; backchannel revocation webhook triggered on agent task completion.
+- **TRISU-AIAM-04 [HIGH]**: **Immutable Delegation Chain Attestation**. Every inter-agent action MUST append the full cryptographically signed delegation chain (user -> parent agent -> subagent -> tool) to the tamper-evident audit trail.
+    - *Verification*: `audit.md` contains signed delegation sequence with trace ID and SHA-256 signature for every execution step.
+- **TRISU-AIAM-05 [CRITICAL]**: **Confused Deputy & Lateral Escalation Defense**. Subagents are cryptographically quarantined from requesting permission escalations or cross-boundary tool executions outside their assigned delegation envelope.
+    - *Verification*: Penetration test simulating subagent privilege escalation returns immediate security halt and alerts SIEM.
 
 ---
 
