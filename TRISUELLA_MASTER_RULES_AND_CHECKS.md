@@ -14,7 +14,7 @@ This document consolidates all TRISUELLA-AIDLCA rules, security checklists, and 
 | **Section 5** | Sensitive Data Security (DATA) | 10 |
 | **Section 6** | AI-DLCA Compliance (DLCA) | 15 |
 | **Section 7** | Infrastructure Security (INFRA) | 16 |
-| **Section 8** | Cloud Security (CLOUD) | 10 |
+| **Section 8** | Cloud Security & Multi-Cloud CSPM (CLOUD/CSPM) | 18 |
 | **Section 9** | Regional & Global Compliance | 41 |
 | **Section 10** | Privacy & Safety by Design | 10 |
 | **Section 11** | Testing & Verification Protocols | 10 |
@@ -30,7 +30,7 @@ This document consolidates all TRISUELLA-AIDLCA rules, security checklists, and 
 | **Section 21** | Model Context Protocol Security (MCP) | 6 |
 | **Section 22** | EU AI Act High-Risk Compliance (EUAI) | 7 |
 | **Section 23** | Agentic Identity & Token Delegation (AIAM) | 5 |
-| **GRAND TOTAL** | **Consolidated Rules & Checks** | **271** |
+| **GRAND TOTAL** | **Consolidated Rules & Checks** | **279** |
 
 ---
 
@@ -362,6 +362,36 @@ The framework enforces security across 5 distinct physical layers (Control → A
     - *Verification*: CloudTrail/Log Analytics configured to forward to a dedicated 'Log Archive' account with cross-account write-only access.
 - **TRISU-CLOUD-10 [HIGH]**: **Cost Governance**. Real-time alerting for anomalous spend indicative of 'wallet-exhaustion' or agent runaway.
     - *Verification*: Cloud Budget alerts set at 110% of expected daily spend; Slack notification fires on breach.
+
+### Multi-Cloud CSPM & Auditing Standard (TRISU-CSPM)
+- **TRISU-CSPM-01 [CRITICAL]**: **Multi-Cloud CSPM & CIS Benchmark Compliance**. Continuous automated posture scanning across AWS, Azure, GCP, Alibaba Cloud, and OCI with zero unaddressed critical misconfigurations.
+    - *Verification*: Security Hub / Defender / SCC / Alibaba Cloud Security Center report shows 100% adherence to CIS Level 2.
+- **TRISU-CSPM-02 [CRITICAL]**: **Non-Human Identity & RAM/IAM Auditing**. Strict prohibition of static access keys for automated workloads; mandatory OIDC, RAM Roles, and Managed Identities with session TTL ≤ 60m.
+    - *Verification*: Credential report confirms zero active AccessKey pairs for AI service accounts across all cloud tenants.
+- **TRISU-CSPM-03 [CRITICAL]**: **Object Storage Posture & Ransomware WORM Defense**. Account-level block on public access, customer-managed encryption (CMK), and immutable WORM compliance locks on model weights and audit logs.
+    - *Verification*: S3 Object Lock / Azure Blob Immutability / GCP Bucket Lock / Alibaba Cloud OSS Compliance Mode active.
+- **TRISU-CSPM-04 [CRITICAL]**: **Network Perimeter & Cloud Security Zones**. Private endpoint routing and micro-segmentation for all AI training clusters and inference APIs; zero 0.0.0.0/0 ingress.
+    - *Verification*: AWS PrivateLink / Azure Private Endpoints / GCP VPC Service Controls / Alibaba Cloud PrivateLink & PrivateZone verified.
+- **TRISU-CSPM-05 [CRITICAL]**: **Audit Trail Aggregation & Tamper Defense**. Multi-region control- and data-plane activity logging delivered to isolated, WORM-protected central audit vaults.
+    - *Verification*: CloudTrail / Azure Activity Log / GCP Cloud Audit / Alibaba Cloud ActionTrail multi-region logs active with hash validation.
+- **TRISU-CSPM-06 [HIGH]**: **Automated Misconfiguration Remediation**. High-fidelity drift detection triggers automated rollback or isolation playbooks within 5 minutes of security policy violation.
+    - *Verification*: GuardDuty / Defender / SCC / Alibaba Cloud Security Operations automated remediation test passes.
+- **TRISU-CSPM-07 [HIGH]**: **Cloud Key Management & HSM Root-of-Trust**. FIPS 140-2/3 Level 3 Hardware Security Modules backing all Level 3/4 sensitive data and model weight encryption keys.
+    - *Verification*: AWS CloudHSM / Azure Managed HSM / GCP Cloud HSM / Alibaba Cloud KMS Dedicated HSM verified.
+- **TRISU-CSPM-08 [HIGH]**: **Sovereign Region Isolation & Cross-Border Residency**. Policy-driven boundary enforcement restricting resources to authorized jurisdictions with automated build halts on prohibited regions.
+    - *Verification*: SCP / Azure Policy / GCP Org Policy / Alibaba Cloud RAM Control Policy enforces approved regions only.
+
+#### Multi-Cloud CSPM Matrix
+| Control Domain | AWS | Microsoft Azure | Google Cloud (GCP) | Alibaba Cloud (Aliyun) | Oracle Cloud (OCI) |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **CSPM Engine** | Security Hub + Config | Defender for Cloud | Security Command Center | Cloud Security Center + Config | Cloud Guard |
+| **Workload IAM** | IAM Roles (IRSA/OIDC) | Entra Managed Identity | Workload Identity Fed | RAM Roles + RAM OIDC | Instance Principals |
+| **Storage WORM** | S3 Object Lock (Compliance) | Blob Immutability | Cloud Storage Bucket Lock | OSS WORM Compliance Mode | Retention Rules |
+| **Perimeter** | PrivateLink + Endpoints | Private Endpoints | VPC Service Controls | PrivateLink + PrivateZone | Service Gateway |
+| **Audit Trail** | CloudTrail (Multi-Region) | Activity Log + Analytics | Cloud Audit Logs (Sink) | ActionTrail (Multi-Region) + SLS | OCI Audit Service |
+| **Threat Detect** | GuardDuty + Macie | Defender Threat Protection | SCC Event Threat Detection | Cloud Security Center Anti-Ransomware | Threat Detector |
+| **HSM & Keys** | CloudHSM / KMS CMK | Key Vault Managed HSM | Cloud HSM / CMEK | KMS Dedicated HSM | Dedicated KMS |
+| **Sovereignty** | SCP `aws:RequestedRegion` | Policy `Allowed locations` | Org Policy `resourceLocations` | RAM Control Policy on Regions | Security Zones |
 
 ---
 

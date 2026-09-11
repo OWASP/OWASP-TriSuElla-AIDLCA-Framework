@@ -1,5 +1,5 @@
 # TRISUELLA-AIDLCA Prompt Template Library
-> **Version**: 2.5 | **Status**: Production Library | **Mapped Checks**: 271  
+> **Version**: 2.5 | **Status**: Production Library | **Mapped Checks**: 279  
 > **TRISUELLA-AIDLCA SDF** — Security-first, AI-native. From idea to production.
 
 Copy-paste ready prompts for every stage of the TRISUELLA-AIDLCA workflow. Use these with any AI coding assistant — Claude, ChatGPT, Copilot Chat, Cursor, Windsurf — to get structured, security-aware outputs.

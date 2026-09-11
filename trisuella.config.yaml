@@ -28,3 +28,49 @@ enforcement_gates:
   pre_commit: true
   ci_cd_pr_blocking: true
   dual_key_deployment: true
+
+# Multi-Cloud CSPM & Auditing Configuration (TRISU-CSPM)
+cspm:
+  enabled: true
+  audit_interval: "continuous" # continuous, hourly, daily
+  compliance_benchmarks:
+    - "CIS-Level-2"
+    - "NIST-SP-800-53-Rev5"
+    - "ISO-27001-2022"
+    - "TRISU-CSPM-v2.5"
+  providers:
+    aws:
+      enabled: true
+      cspm_engine: "SecurityHub"
+      enforce_worm_locks: true
+      strict_workload_iam: true
+    azure:
+      enabled: true
+      cspm_engine: "DefenderForCloud"
+      enforce_blob_immutability: true
+      strict_managed_identities: true
+    gcp:
+      enabled: true
+      cspm_engine: "SecurityCommandCenter"
+      enforce_bucket_locks: true
+      strict_workload_identity: true
+    alibaba_cloud:
+      enabled: true
+      cspm_engine: "CloudSecurityCenter"
+      enforce_oss_compliance_mode: true
+      strict_ram_roles_oidc: true
+      actiontrail_multi_region: true
+    oci:
+      enabled: true
+      cspm_engine: "CloudGuard"
+      enforce_retention_rules: true
+      strict_instance_principals: true
+  sovereign_geofencing:
+    enabled: true
+    allowed_regions:
+      aws: ["ap-south-1", "ap-south-2"]
+      azure: ["centralindia", "southindia"]
+      gcp: ["asia-south1", "asia-south2"]
+      alibaba_cloud: ["ap-south-1", "me-central-1"]
+      oci: ["ap-hyderabad-1", "ap-mumbai-1"]
+
