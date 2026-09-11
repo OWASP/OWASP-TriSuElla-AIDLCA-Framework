@@ -3,7 +3,8 @@
 > **Version**: 2.5 | **Status**: Institutionalized | **Total Checks**: 271
 
 [![TriSuElla Gate](https://github.com/OWASP/TriSuElla-AIDLCA-Framework/actions/workflows/trisuella-gate.yml/badge.svg)](templates/.github/workflows/trisuella-gate.yml)
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Author: Bhaskar Puppala (PATEL)](https://img.shields.io/badge/Author-Bhaskar%20Puppala%20(PATEL)-blue.svg)](https://www.linkedin.com/in/bhaskerkpatel/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2.svg?logo=linkedin)](https://www.linkedin.com/in/bhaskerkpatel/)
 [![Standards: ISO 42001 / DPDPA / EU AI Act](https://img.shields.io/badge/Standards-ISO%2042001%20%7C%20EU%20AI%20Act%20%7C%20DPDPA-green.svg)](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
 [![BOM: CycloneDX AI v1.6](https://img.shields.io/badge/AI--BoM-CycloneDX%20v1.6-purple.svg)](ai-bom.json)
 
@@ -129,5 +130,13 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 TriSuElla operates on a strict **Binary Enforcement Principle**:
 - **`[CRITICAL]` / `[HIGH]`**: **Atomic Stop Gate**. Execution halts immediately. Code generation and deployment pipelines block until remediated.
 - **`[MEDIUM]` / `[LOW]`**: Advisory. Requires documented justification and signed human steward acceptance in `audit.md`.
+
+---
+
+## 👤 Author & Project Leadership
+
+- **Author & Framework Architect**: **Bhaskar Puppala (PATEL)**
+- **LinkedIn**: [linkedin.com/in/bhaskerkpatel](https://www.linkedin.com/in/bhaskerkpatel/)
+- **Organization**: [OWASP TriSuElla Working Group](https://github.com/OWASP/OWASP-TriSuElla-AIDLCA-Framework)
 
 *v2.5 Institutionalized Release — Security-first, AI-native. Built for the era of Agentic Autonomy.*

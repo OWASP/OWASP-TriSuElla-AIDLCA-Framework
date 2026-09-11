@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:477e271c-9d60-4f00-a7a4-d3eb9bf7e937",
+  "serialNumber": "urn:uuid:7df88dcd-ed6d-4863-9ff2-223c62a30bb3",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-09-11T19:23:02.013879+00:00",
+    "timestamp": "2026-09-11T19:25:16.674652+00:00",
     "tools": [
       {
         "vendor": "OWASP TriSuElla-AIDLCA",

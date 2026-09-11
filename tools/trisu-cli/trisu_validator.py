@@ -22,6 +22,8 @@ if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 VERSION = "2.5"
+__author__ = "Bhaskar Puppala (PATEL)"
+__linkedin__ = "https://www.linkedin.com/in/bhaskerkpatel/"
 
 class Colors:
     RED = "\033[91m"

@@ -19,6 +19,7 @@ The name **TriSuElla** represents the convergence of three foundational forces, 
 **TRISUELLA-AIDLCA (AI-Driven Development Life Cycle)** — A modern methodology for software development that integrates generative AI throughout every stage of the building process: from threat modeling and requirements, through design, code generation, security testing, deployment, and incident response.
 
 **Version**: 2.5
+**Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)
 **Last Updated**: 2026-04-01
 **Status**: Production-ready (Institutionalized)
 **Total Consolidated Checks**: 271 (across 24 sections)

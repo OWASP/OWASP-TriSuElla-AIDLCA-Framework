@@ -1,5 +1,6 @@
 # 🔱 TriSuElla-AIDLCA Secure Development Framework
 > **Version**: 2.5 | **Status**: Institutionalized | **Checks**: 271  
+> **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)  
 > **AI-Driven. Policy-Governed. Trustworthy by Design.**
 
 **TriSuElla** is the foundational governance framework for AI-driven development. It ensures that AI agents operate within secure, compliant, and human-aligned boundaries across the entire software lifecycle.

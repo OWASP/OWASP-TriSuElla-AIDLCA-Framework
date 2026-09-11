@@ -1,5 +1,5 @@
 # 🔱 TRISUELLA-AIDLCA: Master Rules & Checks Reference
-**Version**: 2.5 | **Status**: Institutionalized | **Pillars**: SISU, TILLIT, DUGNAD
+**Version**: 2.5 | **Status**: Institutionalized | **Author**: Bhaskar Puppala (PATEL) ([LinkedIn](https://www.linkedin.com/in/bhaskerkpatel/)) | **Pillars**: SISU, TILLIT, DUGNAD
 
 This document consolidates all TRISUELLA-AIDLCA rules, security checklists, and testing protocols into a single reference for secure AI-driven development.
 
