@@ -10,7 +10,7 @@ This document consolidates all TRISUELLA-AIDLCA rules, security checklists, and 
 | **Section 1** | Core Lifecycle (LLMSecOps) | 12 |
 | **Section 2** | Security Baseline (BASE) | 15 |
 | **Section 3** | AI & Agentic Security (SEC) | 22 |
-| **Section 4** | Zero Trust Architecture (TRUST) | 14 |
+| **Section 4** | Zero Trust Architecture & Code (TRUST/ZTC) | 20 |
 | **Section 5** | Sensitive Data Security (DATA) | 10 |
 | **Section 6** | AI-DLCA Compliance (DLCA) | 15 |
 | **Section 7** | Infrastructure Security (INFRA) | 16 |
@@ -30,7 +30,7 @@ This document consolidates all TRISUELLA-AIDLCA rules, security checklists, and 
 | **Section 21** | Model Context Protocol Security (MCP) | 6 |
 | **Section 22** | EU AI Act High-Risk Compliance (EUAI) | 7 |
 | **Section 23** | Agentic Identity & Token Delegation (AIAM) | 5 |
-| **GRAND TOTAL** | **Consolidated Rules & Checks** | **285** |
+| **GRAND TOTAL** | **Consolidated Rules & Checks** | **291** |
 
 ---
 
@@ -229,6 +229,22 @@ The **TRISUELLA** framework establishes a unique architectural and governance mo
     - *Verification*: Crypto inventory complete; PQC-ready library (liboqs/BoringSSL-PQ) in test environment.
 - **TRISU-TRUST-14 [HIGH]**: **Confidential Computing**. Use of TEEs (Firecracker/gVisor) for model weights in-use.
     - *Verification*: Model inference runs inside attested TEE; remote attestation report stored per run.
+
+### In-Code Zero Trust Invariants (TRISU-ZTC)
+*Never Trust Internal Boundaries: NIST SP 800-207 / OWASP ASVS Alignment*
+
+- **TRISU-ZTC-01 [CRITICAL]**: **Explicit In-Code Boundary Validation**. Every internal function, module, service endpoint, and AI agent tool MUST validate its inputs (type, schema, length, and bounds) independently; no implicit trust of upstream components.
+    - *Verification*: `trisu_validator.py audit` scans for unparameterized inputs and raw string concatenation in internal calls.
+- **TRISU-ZTC-02 [CRITICAL]**: **Scoped Object-Level Authorization**. Every database query, cache lookup, file retrieval, and data mutation MUST explicitly bind and filter on the authenticated caller's tenant and user context (BOLA/IDOR prevention).
+    - *Verification*: Data access code audited for mandatory tenancy and ownership scoping on all SELECT/UPDATE/DELETE operations.
+- **TRISU-ZTC-03 [HIGH]**: **Zero Ambient Credentials & Memory Zeroization**. Source code MUST NOT hold global ambient static credentials in memory; keys retrieved just-in-time via short-lived tokens and scrubbed from RAM after use.
+    - *Verification*: Static secret scanning confirms zero exposed API keys or private keys in repository code.
+- **TRISU-ZTC-04 [CRITICAL]**: **Deterministic Fail-Closed Execution Invariant**. All security gates, policy evaluations, and internal exception handlers MUST fail closed; naked `except: pass` or error swallowing is strictly prohibited.
+    - *Verification*: AST and regex auditing flags all naked `except: pass` statements in application code.
+- **TRISU-ZTC-05 [CRITICAL]**: **Banned Insecure Deserialization & Dynamic Execution**. Dynamic code execution (`eval()`, `exec()`, `new Function()`) and unsafe object deserialization (`pickle.loads()`, `yaml.load()` without SafeLoader) are strictly prohibited.
+    - *Verification*: Automated SAST scan flags all instances of `eval`, `exec`, `pickle.loads`, or unsafe deserializers.
+- **TRISU-ZTC-06 [HIGH]**: **Continuous In-Code Audit Telemetry**. Every state-altering function, privilege escalation, data deletion, financial transaction, and autonomous AI agent tool execution MUST emit an immutable, structured audit event before executing.
+    - *Verification*: Audit logging verified on all mutating endpoints and agent dispatchers.
 
 ---
 

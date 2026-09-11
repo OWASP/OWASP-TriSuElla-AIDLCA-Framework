@@ -1,7 +1,7 @@
 # 🤖 TRISUELLA-AIDLCAa: Multi-Agent Autonomous Development & Governance System
 **Version**: 3.0 | **Status**: Production Architecture | **Pillars**: SISU, TILLIT, DUGNAD
 
-> **TRISUELLA-AIDLCAa** (AI-Driven Development Life Cycle Agents) is the automated multi-agent implementation of the TriSuElla framework. It translates the 285 governance rules and sequential lifecycle gates into a coordinated pipeline of specialized autonomous agents operating under a Zero-Trust orchestration fabric.
+> **TRISUELLA-AIDLCAa** (AI-Driven Development Life Cycle Agents) is the automated multi-agent implementation of the TriSuElla framework. It translates the 291 governance rules and sequential lifecycle gates into a coordinated pipeline of specialized autonomous agents operating under a Zero-Trust orchestration fabric.
 
 ---
 
@@ -123,4 +123,4 @@ agents:
 ## 📚 Architectural Standards & Invariants
 - 🔐 **Agentic Identity & Delegation**: See [TRISU-AIAM](../TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rule-details/extensions/security/zero-trust/agentic-iam.md) for RFC 8693 token exchange and SPIFFE/mTLS workload identity specifications.
 - 🔌 **Tool & MCP Sandboxing**: See [TRISU-MCP](../TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rule-details/extensions/security/ai-agentic/mcp-security.md) for runtime tool sandboxing and parameter sanitization.
-- 📋 **Master Governance Reference**: Consult [TRISUELLA_MASTER_RULES_AND_CHECKS.md](../TRISUELLA_MASTER_RULES_AND_CHECKS.md) (285 Checks) and [CHARTER.md](../TRISUELLA-AIDLCA-Rules/CHARTER.md).
+- 📋 **Master Governance Reference**: Consult [TRISUELLA_MASTER_RULES_AND_CHECKS.md](../TRISUELLA_MASTER_RULES_AND_CHECKS.md) (291 Checks) and [CHARTER.md](../TRISUELLA-AIDLCA-Rules/CHARTER.md).

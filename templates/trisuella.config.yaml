@@ -113,5 +113,12 @@ cspm:
       gcp: ["asia-south1", "asia-south2"]
       alibaba_cloud: ["ap-south-1", "me-central-1"]
       oci: ["ap-hyderabad-1", "ap-mumbai-1"]
-
-
+# Application-Level Zero Trust Code Invariants (TRISU-ZTC)
+zero_trust_code:
+  enabled: true
+  enforce_explicit_boundary_validation: true    # TRISU-ZTC-01
+  require_object_level_authorization: true      # TRISU-ZTC-02 (BOLA/IDOR prevention)
+  prohibit_ambient_credentials: true            # TRISU-ZTC-03
+  enforce_fail_closed_execution: true           # TRISU-ZTC-04
+  disallow_insecure_deserialization: true       # TRISU-ZTC-05 (banning eval/exec/pickle)
+  require_in_code_audit_telemetry: true         # TRISU-ZTC-06

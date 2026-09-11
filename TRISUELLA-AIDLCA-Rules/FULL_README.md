@@ -22,7 +22,7 @@ The name **TriSuElla** represents the convergence of three foundational forces, 
 **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)
 **Last Updated**: 2026-04-01
 **Status**: Production-ready (Institutionalized)
-**Total Consolidated Checks**: 285 (across 24 sections)
+**Total Consolidated Checks**: 291 (across 24 sections)
 
 ---
 
@@ -104,7 +104,7 @@ This framework is **platform-agnostic** — copy it once, use it with any AI ass
 OWASP-TriSuElla-AIDLCA-FrameWork/
 ├── README.md                                    ← Main project entrypoint & quickstart (v3.0)
 ├── Usage-Guide.md                                ← Turnkey setup & step-by-step usage guide
-├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (285 checks, 184 rules)
+├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (291 checks, 190 rules)
 ├── ai-bom.json                                  ← Machine-readable CycloneDX AI v1.6 BoM
 ├── trisuella.config.yaml                        ← Declarative policy & CSPM manifest
 ├── CLAUDE.md & .cursorrules                     ← Workspace rules for Claude Code & Cursor
@@ -344,7 +344,7 @@ Closes the loop from code to running production system with full observability a
 
 ## 🛡️ Security Coverage & Consolidated Invariants
 
-The framework enforces **285 consolidated checks** across 24 sections with **184 unique TRISU-* rule identifiers**, combining built-in lifecycle gates, modular extensions, and multi-cloud posture standards:
+The framework enforces **291 consolidated checks** across 24 sections with **190 unique TRISU-* rule identifiers**, combining built-in lifecycle gates, modular extensions, and multi-cloud posture standards:
 
 | Extension / Domain | Rules | What It Covers | Primary Standards |
 |---|---|---|---|
@@ -361,7 +361,7 @@ The framework enforces **285 consolidated checks** across 24 sections with **184
 | **EU AI Act High-Risk Compliance (TRISU-EUAI)** | 7 | Risk Management (Art. 9), Data Governance (Art. 10), Technical Docs (Art. 11), Automatic Logging (Art. 12), Transparency (Art. 13), Human Oversight (Art. 14), Accuracy & Cybersecurity (Art. 15) | EU Regulation 2024/1689 |
 | **Agentic Identity & Token Delegation (TRISU-AIAM)** | 5 | Ephemeral subagent tokens, RFC 8693 Token Exchange, SPIFFE/mTLS workload identity, blast radius containment, non-exportable cryptographic attestations | RFC 8693, SPIFFE/SPIRE, NIST SP 800-204 |
 
-**Grand Total: 285 Consolidated Checks | 184 Unique TRISU-* Rule Identifiers**
+**Grand Total: 291 Consolidated Checks | 190 Unique TRISU-* Rule Identifiers**
 
 ### Built-in Security (no extension needed)
 
@@ -524,7 +524,7 @@ Ready-to-use prompts for every stage of the TRISUELLA-AIDLCA workflow. Copy, fil
 ## 🔄 Changelog
 
 ### v2.5 (2026-04-01) - Institutionalized Release
-- **Unified Master Rulebook** — Consolidated **285 rules and checks** across 24 categories with **184 unique TRISU-* rule identifiers** into `TRISUELLA_MASTER_RULES_AND_CHECKS.md`.
+- **Unified Master Rulebook** — Consolidated **291 rules and checks** across 24 categories with **190 unique TRISU-* rule identifiers** into `TRISUELLA_MASTER_RULES_AND_CHECKS.md`.
 - **Full-Spectrum Multi-Cloud CSPM & Auditing Standard (`TRISU-CSPM`)** — Institutionalized 14 enterprise-grade CSPM controls across the top 5 cloud providers (**AWS**, **Microsoft Azure**, **Google Cloud Platform**, **Alibaba Cloud (Aliyun)**, and **Oracle Cloud Infrastructure**):
   - `TRISU-CSPM-01` to `TRISU-CSPM-08`: Continuous CSPM & CIS Level 2 scanning, Workload IAM & Non-Human Identity (NHI) federation, Storage WORM compliance locks, Private network perimeter isolation, Tamper-evident multi-region audit trails, Automated drift remediation, Dedicated Cloud HSM / CMK key management, and Sovereign region geofencing.
   - `TRISU-CSPM-09` to `TRISU-CSPM-14`: Kubernetes Security Posture Management (**KSPM** - EKS/AKS/GKE/ACK/OKE), Database & Data Store Posture (**DSPM** - RDS/Cosmos/Cloud SQL/PolarDB/Autonomous DB), Compute & AI/ML Workload Posture (**AI-CSPM / CWPP** - IMDSv2, SageMaker/Azure OpenAI/Vertex/PAI/GenAI), Cloud Infrastructure Entitlements (**CIEM** - dormant credential revocation & PCI < 15), Cloud Edge WAF & Anti-DDoS Ingress, and Shift-Left Infrastructure-as-Code (**IaC**) pre-flight scanning.

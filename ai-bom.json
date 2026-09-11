@@ -1,136 +1,90 @@
 {
+  "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:84d3b2b3-d173-4a55-8346-d85d859cdcd6",
+  "serialNumber": "urn:uuid:6f9c2d18-8420-4a87-b651-7f912e4b85c1",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-09-11T19:50:54.900862+00:00",
+    "timestamp": "2026-09-11T20:14:45.229890+00:00",
     "tools": [
       {
-        "vendor": "OWASP TriSuElla-AIDLCA",
-        "name": "trisu-cli",
+        "vendor": "OWASP",
+        "name": "TriSuElla-AIDLCA Gate Validator",
         "version": "3.0"
+      }
+    ],
+    "authors": [
+      {
+        "name": "Bhaskar Puppala (PATEL)",
+        "role": "Lead Architect"
       }
     ],
     "component": {
       "type": "application",
-      "name": "OWASP-TriSuElla-AIDLCA-FrameWork",
-      "version": "3.0"
+      "name": "TriSuElla-Governed-AI-System",
+      "version": "3.0",
+      "properties": [
+        {
+          "name": "trisuella:risk_tier",
+          "value": "tier_2"
+        },
+        {
+          "name": "trisuella:governance_pillar",
+          "value": "TILLIT"
+        },
+        {
+          "name": "trisuella:dual_key_hitl",
+          "value": "enabled"
+        }
+      ]
     }
   },
   "components": [
     {
-      "type": "data",
-      "name": "ai-agent-security-prompts",
-      "version": "3.0",
-      "description": "TriSuElla prompt template: TRISUELLA-AIDLCA-Rules\\prompts\\ai-agents\\ai-agent-security-prompts.md",
-      "hashes": [
-        {
-          "alg": "SHA-256",
-          "content": "451c9400dec1524a8d3111b1e990d023b77903cf73fb84f1fdf17fe2af628420"
-        }
-      ],
-      "properties": [
-        {
-          "name": "trisuella:category",
-          "value": "system-prompt"
-        }
-      ]
+      "type": "machine-learning-model",
+      "name": "primary-reasoning-agent-llm",
+      "version": "claude-3-5-sonnet-20241022",
+      "supplier": {
+        "name": "Anthropic"
+      },
+      "modelCard": {
+        "modelParameters": {
+          "task": "autonomous-software-engineering"
+        },
+        "inputs": [
+          {
+            "format": "structured-json-prompt"
+          }
+        ],
+        "outputs": [
+          {
+            "format": "code-diff-and-sarif"
+          }
+        ]
+      }
     },
     {
       "type": "data",
-      "name": "secure-code-generation",
+      "name": "trisuella-master-rules",
       "version": "3.0",
-      "description": "TriSuElla prompt template: TRISUELLA-AIDLCA-Rules\\prompts\\build\\secure-code-generation.md",
-      "hashes": [
-        {
-          "alg": "SHA-256",
-          "content": "11a7cb32d0b163813e021dbde0028b8a2e5008f9c9fd2dfb16a5ef6de040997c"
-        }
-      ],
+      "description": "291 consolidated security, privacy, and zero trust governance rules",
       "properties": [
         {
-          "name": "trisuella:category",
-          "value": "system-prompt"
+          "name": "trisuella:total_checks",
+          "value": "291"
+        },
+        {
+          "name": "trisuella:unique_rules",
+          "value": "190"
         }
       ]
-    },
+    }
+  ],
+  "dependencies": [
     {
-      "type": "data",
-      "name": "compliance-prompts",
-      "version": "3.0",
-      "description": "TriSuElla prompt template: TRISUELLA-AIDLCA-Rules\\prompts\\compliance\\compliance-prompts.md",
-      "hashes": [
-        {
-          "alg": "SHA-256",
-          "content": "eb2efeb11369da3b54873bc2e212743e7ec88452a4ef4aa8f29a030633e83d30"
-        }
-      ],
-      "properties": [
-        {
-          "name": "trisuella:category",
-          "value": "system-prompt"
-        }
-      ]
-    },
-    {
-      "type": "data",
-      "name": "requirements-and-threat-model",
-      "version": "3.0",
-      "description": "TriSuElla prompt template: TRISUELLA-AIDLCA-Rules\\prompts\\planning\\requirements-and-threat-model.md",
-      "hashes": [
-        {
-          "alg": "SHA-256",
-          "content": "5c1442d15cda0a0e13825367917cc1929c5792ba77ea8933bd61f574f9771c14"
-        }
-      ],
-      "properties": [
-        {
-          "name": "trisuella:category",
-          "value": "system-prompt"
-        }
-      ]
-    },
-    {
-      "type": "data",
-      "name": "security-testing",
-      "version": "3.0",
-      "description": "TriSuElla prompt template: TRISUELLA-AIDLCA-Rules\\prompts\\test\\security-testing.md",
-      "hashes": [
-        {
-          "alg": "SHA-256",
-          "content": "26b09810693c7d7841ef56a5aae1b2924242fa7d03da74e92cdbbf7c2ce36b79"
-        }
-      ],
-      "properties": [
-        {
-          "name": "trisuella:category",
-          "value": "system-prompt"
-        }
-      ]
-    },
-    {
-      "type": "framework",
-      "name": "TRISUELLA-AIDLCAa-Orchestrator",
-      "version": "3.0",
-      "description": "8-Stage Zero-Trust Autonomous Multi-Agent Development Pipeline",
-      "properties": [
-        {
-          "name": "trisuella:agents_count",
-          "value": "8"
-        }
-      ]
-    },
-    {
-      "type": "application",
-      "name": "TRISUELLA-Master-Rules",
-      "version": "3.0",
-      "description": "Consolidated Policy and Verification Ruleset",
-      "properties": [
-        {
-          "name": "trisuella:status",
-          "value": "Institutionalized"
-        }
+      "ref": "primary-reasoning-agent-llm",
+      "dependsOn": [
+        "trisuella-master-rules"
       ]
     }
   ]

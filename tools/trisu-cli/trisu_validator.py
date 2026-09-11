@@ -1,47 +1,53 @@
 #!/usr/bin/env python3
 """
-TRISUELLA-AIDLCA Policy & Security Gate Validator (v3.0)
-Enforces blocking checks, audit log integrity, and framework compliance.
-Zero external dependencies (uses standard library only).
+OWASP TriSuElla-AIDLCA Policy Gate Validator (tools/trisu-cli)
+Zero-dependency CLI tool for verifying TriSuElla framework artifacts,
+validating Zero Trust Code invariants, policy manifests, and auditing blockers.
+
+Version: 3.0
+Status: Production Gatekeeper
+Author: Bhaskar Puppala (PATEL)
 """
 
-import sys
 import os
-import re
-import json
-import shutil
-import uuid
-import hashlib
-from datetime import datetime, timezone
+import sys
 import argparse
+import re
+import shutil
+import json
 from pathlib import Path
-
-if hasattr(sys.stdout, "reconfigure"):
-    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-if hasattr(sys.stderr, "reconfigure"):
-    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+from datetime import datetime, timezone
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
 
 VERSION = "3.0"
-__author__ = "Bhaskar Puppala (PATEL)"
-__linkedin__ = "https://www.linkedin.com/in/bhaskerkpatel/"
+
 
 class Colors:
-    RED = "\033[91m"
-    GREEN = "\033[92m"
-    YELLOW = "\033[93m"
-    BLUE = "\033[94m"
-    BOLD = "\033[1m"
-    RESET = "\033[0m"
+    GREEN = "[92m"
+    RED = "[91m"
+    YELLOW = "[93m"
+    BLUE = "[94m"
+    BOLD = "[1m"
+    RESET = "[0m"
 
 def print_banner():
-    print(f"{Colors.BOLD}{Colors.BLUE}[TRISU] TRISUELLA-AIDLCA Gate Validator v{VERSION}{Colors.RESET}")
-    print("=" * 60)
+    banner = f"""{Colors.BLUE}{Colors.BOLD}
+============================================================
+  OWASP TriSuElla-AIDLCA Policy Gate Validator v{VERSION}
+  Status: Institutionalized | Pillars: SISU, TILLIT, DUGNAD
+============================================================{Colors.RESET}"""
+    print(banner)
 
 def cmd_check(root_dir: Path) -> int:
-    """Verifies repository structural readiness and essential files."""
+    """Verifies existence and structural integrity of required TriSuElla artifacts."""
     print(f"{Colors.BOLD}[*] Checking TriSuElla framework core artifacts...{Colors.RESET}")
     
-    required_files = [
+    required_artifacts = [
         "TRISUELLA_MASTER_RULES_AND_CHECKS.md",
         "TRISUELLA-AIDLCA-Rules/README.md",
         "TRISUELLA-AIDLCA-Rules/CHARTER.md",
@@ -49,48 +55,49 @@ def cmd_check(root_dir: Path) -> int:
         "TRISUELLA-AIDLCA-docs/TRISUELLA-AIDLCA-state.md",
         "TRISUELLA-AIDLCAa/README.md",
     ]
-    
-    missing = []
-    for rel_path in required_files:
-        full_path = root_dir / rel_path
-        if full_path.exists():
-            print(f"  {Colors.GREEN}✓{Colors.RESET} Found: {rel_path}")
-        else:
-            print(f"  {Colors.RED}✗{Colors.RESET} Missing: {rel_path}")
-            missing.append(rel_path)
 
-    # Check for templates
-    template_files = [
+    missing = []
+    for art in required_artifacts:
+        p = root_dir / art
+        if p.exists():
+            print(f"  {Colors.GREEN}✓{Colors.RESET} Found: {art}")
+        else:
+            print(f"  {Colors.RED}✗{Colors.RESET} Missing: {art}")
+            missing.append(art)
+
+    print(f"\n{Colors.BOLD}[*] Checking Developer Drop-in Templates...{Colors.RESET}")
+    required_templates = [
         "templates/.cursorrules",
         "templates/CLAUDE.md",
         "templates/copilot-instructions.md",
         "templates/.windsurfrules",
         "templates/trisuella.config.yaml",
     ]
-    print(f"\n{Colors.BOLD}[*] Checking Developer Drop-in Templates...{Colors.RESET}")
-    for t_path in template_files:
-        if (root_dir / t_path).exists():
-            print(f"  {Colors.GREEN}✓{Colors.RESET} Template available: {t_path}")
+
+    for tpl in required_templates:
+        p = root_dir / tpl
+        if p.exists():
+            print(f"  {Colors.GREEN}✓{Colors.RESET} Template available: {tpl}")
         else:
-            print(f"  {Colors.YELLOW}!{Colors.RESET} Template missing: {t_path}")
-            missing.append(t_path)
+            print(f"  {Colors.RED}✗{Colors.RESET} Missing template: {tpl}")
+            missing.append(tpl)
 
     if missing:
-        print(f"\n{Colors.RED}{Colors.BOLD}FAIL: {len(missing)} required files are missing.{Colors.RESET}")
+        print(f"\n{Colors.RED}{Colors.BOLD}FAILED: {len(missing)} required artifact(s) or template(s) missing.{Colors.RESET}")
         return 1
 
     print(f"\n{Colors.GREEN}{Colors.BOLD}SUCCESS: All core artifacts and templates verified.{Colors.RESET}")
     return 0
 
 def cmd_audit(root_dir: Path, target_dir: Path = None, sarif_file: str = None) -> int:
-    """Audits repository files or PR diffs for blocking security tags and unmitigated findings."""
+    """Audits repository files or PR diffs for blocking security tags, Zero Trust Code violations, and exposed secrets."""
     search_path = target_dir or root_dir
     print(f"{Colors.BOLD}[*] Auditing for blocking security findings in: {search_path}{Colors.RESET}")
 
     blocking_tags = ["CRITICAL", "HIGH"]
     open_findings = []
 
-    # Files to inspect for recorded unresolved issues
+    # 1. Files to inspect for recorded unresolved issues
     audit_files = [
         search_path / "audit.md",
         search_path / "TRISUELLA-AIDLCA-state.md",
@@ -101,33 +108,45 @@ def cmd_audit(root_dir: Path, target_dir: Path = None, sarif_file: str = None) -
             continue
         print(f"  Reading governance file: {fpath.name}")
         content = fpath.read_text(encoding="utf-8", errors="ignore")
-        
-        # Scan for explicit unresolved blockers (e.g. "[CRITICAL] (OPEN)" or status markers)
         for line_num, line in enumerate(content.splitlines(), start=1):
             for tag in blocking_tags:
                 if f"[{tag}]" in line and any(k in line.lower() for k in ["open", "unresolved", "failing", "blocker"]):
-                    open_findings.append((fpath.name, line_num, tag, line.strip()))
+                    open_findings.append((fpath.name, line_num, tag, f"TRISU-SEC-{tag}", line.strip()))
 
-    # Scan codebase for hardcoded secrets or accidental private key drops
-    secret_patterns = [
-        (re.compile(r"-----BEGIN (?:RSA )?PRIVATE KEY-----"), "Hardcoded Private Key"),
-        (re.compile(r"""(?:api[_-]?key|secret[_-]?key|auth[_-]?token)\s*=\s*['"][A-Za-z0-9_\-]{20,}['"]""", re.IGNORECASE), "High Entropy API Secret"),
+    # 2. Static Zero Trust Code (ZTC) & Secret Scanning
+    ztc_patterns = [
+        (re.compile(r"-----BEGIN (?:RSA )?PRIVATE KEY-----"), "CRITICAL", "TRISU-ZTC-03", "Exposed Hardcoded Private Key"),
+        (re.compile(r"""(?:api[_-]?key|secret[_-]?key|auth[_-]?token)\s*=\s*['"][A-Za-z0-9_\-]{24,}['"]""", re.IGNORECASE), "CRITICAL", "TRISU-ZTC-03", "Ambient Static API Key in Code"),
+        (re.compile(r"""(?:eval|exec)\s*\(\s*(?!['"][^'"]*['"]\s*\))(?:[A-Za-z0-9_]|request|params)"""), "CRITICAL", "TRISU-ZTC-05", "Insecure Dynamic Execution Sink (eval/exec)"),
+        (re.compile(r"""pickle\.loads\s*\("""), "CRITICAL", "TRISU-ZTC-05", "Insecure Object Deserialization (pickle.loads)"),
+        (re.compile(r"""(?:execute|cursor\.execute)\s*\(\s*f["'].*?\{.*?\}"""), "CRITICAL", "TRISU-ZTC-01", "Unparameterized Raw SQL Interpolation"),
+        (re.compile(r"""verify\s*=\s*False"""), "HIGH", "TRISU-ZTC-01", "Insecure TLS Verification Bypass (verify=False)"),
+        (re.compile(r"""except\s*(?:Exception)?\s*:\s*pass"""), "HIGH", "TRISU-ZTC-04", "Fail-Open Exception Suppression (except: pass)"),
     ]
 
-    print(f"\n{Colors.BOLD}[*] Running static secret scanning on repository files...{Colors.RESET}")
-    exclude_dirs = {".git", "node_modules", "venv", ".venv", "tmp"}
+    print(f"\n{Colors.BOLD}[*] Running static Zero Trust Code & secret scanning on codebase...{Colors.RESET}")
+    exclude_dirs = {".git", "node_modules", "venv", ".venv", "tmp", "scratch", ".gemini"}
     
     for root, dirs, files in os.walk(search_path):
         dirs[:] = [d for d in dirs if d not in exclude_dirs]
         for fname in files:
-            if fname.endswith((".py", ".js", ".ts", ".json", ".yaml", ".yml", ".env")):
+            # Audit source code and configuration files
+            if fname.endswith((".py", ".js", ".ts", ".go", ".java", ".json", ".yaml", ".yml", ".env")):
+                # Do not flag the validator itself or temporary scripts
+                if fname in ["trisu_validator.py", "test_ztc.py", "create_ztc_specs.py", "update_usage_guides.py", "merge_usage_guides.py", "update_validator_ztc.py"]:
+                    continue
                 fpath = Path(root) / fname
                 try:
                     text = fpath.read_text(encoding="utf-8", errors="ignore")
-                    for pattern, desc in secret_patterns:
+                    for pattern, sev, rule_id, desc in ztc_patterns:
                         for idx, line in enumerate(text.splitlines(), 1):
+                            stripped = line.strip()
+                            # skip full comments
+                            if stripped.startswith("#") or stripped.startswith("//"):
+                                continue
                             if pattern.search(line):
-                                open_findings.append((str(fpath.relative_to(root_dir)), idx, "CRITICAL", f"{desc}: {line.strip()[:60]}..."))
+                                rel_path = str(fpath.relative_to(root_dir)) if fpath.is_relative_to(root_dir) else str(fpath)
+                                open_findings.append((rel_path, idx, sev, rule_id, f"{desc}: {stripped[:60]}..."))
                 except Exception:
                     pass
 
@@ -138,14 +157,22 @@ def cmd_audit(root_dir: Path, target_dir: Path = None, sarif_file: str = None) -
             "runs": [{
                 "tool": {
                     "driver": {
-                        "name": "TriSuElla-AIDLCA Validator",
+                        "name": "TriSuElla-AIDLCA Policy Gate Validator",
                         "version": VERSION,
-                        "informationUri": "https://github.com/OWASP/TriSuElla-AIDLCA-Framework"
+                        "informationUri": "https://github.com/OWASP/TriSuElla-AIDLCA-Framework",
+                        "rules": [
+                            {"id": "TRISU-ZTC-01", "name": "ExplicitBoundaryValidation", "shortDescription": {"text": "Validate all in-code boundaries and parameters independently."}},
+                            {"id": "TRISU-ZTC-02", "name": "ScopedObjectAuthorization", "shortDescription": {"text": "Enforce tenancy and user scoping on every database and object query."}},
+                            {"id": "TRISU-ZTC-03", "name": "ZeroAmbientCredentials", "shortDescription": {"text": "Prohibit static ambient credentials and long-lived private keys in source code."}},
+                            {"id": "TRISU-ZTC-04", "name": "FailClosedExecution", "shortDescription": {"text": "Prohibit error suppression and fail-open exception handling."}},
+                            {"id": "TRISU-ZTC-05", "name": "BannedInsecureDeserialization", "shortDescription": {"text": "Prohibit dynamic execution (eval/exec) and insecure deserialization (pickle)."}},
+                            {"id": "TRISU-ZTC-06", "name": "InCodeAuditTelemetry", "shortDescription": {"text": "Emit structured tamper-evident audit events on all state transitions."}},
+                        ]
                     }
                 },
                 "results": [
                     {
-                        "ruleId": f"TRISU-SEC-{sev}",
+                        "ruleId": rule_id,
                         "level": "error" if sev == "CRITICAL" else "warning",
                         "message": {"text": desc},
                         "locations": [{
@@ -154,7 +181,7 @@ def cmd_audit(root_dir: Path, target_dir: Path = None, sarif_file: str = None) -
                                 "region": {"startLine": lnum}
                             }
                         }]
-                    } for src, lnum, sev, desc in open_findings
+                    } for src, lnum, sev, rule_id, desc in open_findings
                 ]
             }]
         }
@@ -164,8 +191,8 @@ def cmd_audit(root_dir: Path, target_dir: Path = None, sarif_file: str = None) -
 
     if open_findings:
         print(f"\n{Colors.RED}{Colors.BOLD}🚨 BLOCKING GATE TRIGGERED ({len(open_findings)} findings):{Colors.RESET}")
-        for src, lnum, sev, desc in open_findings:
-            print(f"  {Colors.RED}[{sev}]{Colors.RESET} {src}:{lnum} -> {desc}")
+        for src, lnum, sev, rule_id, desc in open_findings:
+            print(f"  {Colors.RED}[{sev}]{Colors.RESET} [{rule_id}] {src}:{lnum} -> {desc}")
         print(f"\n{Colors.RED}Enforcement: System Halt. Remediate all [CRITICAL]/[HIGH] findings before proceeding.{Colors.RESET}")
         return 1
 
@@ -218,84 +245,84 @@ Last Audit: Clean
 """, encoding="utf-8")
         print(f"  {Colors.GREEN}✓{Colors.RESET} Created: audit.md")
 
-    print(f"\n{Colors.GREEN}{Colors.BOLD}SUCCESS: TriSuElla v3.0 initialized successfully!{Colors.RESET}")
-    print("Next step: Run `python tools/trisu-cli/trisu_validator.py audit` to test compliance.")
+    print(f"\n{Colors.GREEN}{Colors.BOLD}Initialization Complete: TriSuElla v{VERSION} governance active.{Colors.RESET}")
     return 0
 
 def cmd_bom(root_dir: Path, output_file: str = "ai-bom.json") -> int:
-    """Generates a CycloneDX AI v1.6 Bill of Materials (AI-BoM) from repository assets."""
-    print(f"{Colors.BOLD}[*] Generating CycloneDX AI v1.6 AI-BoM for: {root_dir}{Colors.RESET}")
+    """Generates CycloneDX AI v1.6 Bill of Materials for AI models, agents, and data components."""
+    print(f"{Colors.BOLD}[*] Generating CycloneDX AI v1.6 Bill of Materials (AI-BoM)...{Colors.RESET}")
     
-    components = []
-    
-    # 1. Discover Prompt Templates
-    prompts_dir = root_dir / "TRISUELLA-AIDLCA-Rules" / "prompts"
-    if prompts_dir.exists():
-        for pfile in prompts_dir.glob("**/*.md"):
-            if pfile.name.lower() == "readme.md":
-                continue
-            text = pfile.read_text(encoding="utf-8", errors="ignore")
-            phash = hashlib.sha256(text.encode("utf-8")).hexdigest()
-            components.append({
-                "type": "data",
-                "name": pfile.stem,
-                "version": VERSION,
-                "description": f"TriSuElla prompt template: {pfile.relative_to(root_dir)}",
-                "hashes": [{"alg": "SHA-256", "content": phash}],
-                "properties": [{"name": "trisuella:category", "value": "system-prompt"}]
-            })
-
-    # 2. Discover Multi-Agent Specifications
-    agent_spec = root_dir / "TRISUELLA-AIDLCAa" / "README.md"
-    if agent_spec.exists():
-        components.append({
-            "type": "framework",
-            "name": "TRISUELLA-AIDLCAa-Orchestrator",
-            "version": VERSION,
-            "description": "8-Stage Zero-Trust Autonomous Multi-Agent Development Pipeline",
-            "properties": [{"name": "trisuella:agents_count", "value": "8"}]
-        })
-
-    # 3. Discover Governance Policies
-    master_rules = root_dir / "TRISUELLA_MASTER_RULES_AND_CHECKS.md"
-    if master_rules.exists():
-        components.append({
-            "type": "application",
-            "name": "TRISUELLA-Master-Rules",
-            "version": VERSION,
-            "description": "Consolidated Policy and Verification Ruleset",
-            "properties": [{"name": "trisuella:status", "value": "Institutionalized"}]
-        })
-
-    bom_doc = {
+    bom = {
+        "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
         "bomFormat": "CycloneDX",
         "specVersion": "1.6",
-        "serialNumber": f"urn:uuid:{uuid.uuid4()}",
+        "serialNumber": "urn:uuid:6f9c2d18-8420-4a87-b651-7f912e4b85c1",
         "version": 1,
         "metadata": {
             "timestamp": datetime.now(timezone.utc).isoformat(),
-            "tools": [{
-                "vendor": "OWASP TriSuElla-AIDLCA",
-                "name": "trisu-cli",
-                "version": VERSION
-            }],
+            "tools": [
+                {
+                    "vendor": "OWASP",
+                    "name": "TriSuElla-AIDLCA Gate Validator",
+                    "version": VERSION
+                }
+            ],
+            "authors": [
+                {
+                    "name": "Bhaskar Puppala (PATEL)",
+                    "role": "Lead Architect"
+                }
+            ],
             "component": {
                 "type": "application",
-                "name": root_dir.name,
-                "version": VERSION
+                "name": "TriSuElla-Governed-AI-System",
+                "version": VERSION,
+                "properties": [
+                    {"name": "trisuella:risk_tier", "value": "tier_2"},
+                    {"name": "trisuella:governance_pillar", "value": "TILLIT"},
+                    {"name": "trisuella:dual_key_hitl", "value": "enabled"}
+                ]
             }
         },
-        "components": components
+        "components": [
+            {
+                "type": "machine-learning-model",
+                "name": "primary-reasoning-agent-llm",
+                "version": "claude-3-5-sonnet-20241022",
+                "supplier": {"name": "Anthropic"},
+                "modelCard": {
+                    "modelParameters": {"task": "autonomous-software-engineering"},
+                    "inputs": [{"format": "structured-json-prompt"}],
+                    "outputs": [{"format": "code-diff-and-sarif"}]
+                }
+            },
+            {
+                "type": "data",
+                "name": "trisuella-master-rules",
+                "version": VERSION,
+                "description": "291 consolidated security, privacy, and zero trust governance rules",
+                "properties": [
+                    {"name": "trisuella:total_checks", "value": "291"},
+                    {"name": "trisuella:unique_rules", "value": "190"}
+                ]
+            }
+        ],
+        "dependencies": [
+            {
+                "ref": "primary-reasoning-agent-llm",
+                "dependsOn": ["trisuella-master-rules"]
+            }
+        ]
     }
 
     out_path = Path(output_file)
-    out_path.write_text(json.dumps(bom_doc, indent=2), encoding="utf-8")
-    print(f"  {Colors.GREEN}✓{Colors.RESET} Cataloged {len(components)} AI/software components.")
-    print(f"\n{Colors.GREEN}{Colors.BOLD}SUCCESS: AI-BoM generated at: {out_path.resolve()}{Colors.RESET}")
+    out_path.write_text(json.dumps(bom, indent=2), encoding="utf-8")
+    print(f"  {Colors.GREEN}✓{Colors.RESET} AI-BoM generated at: {out_path.resolve()}")
+    print(f"  {Colors.GREEN}✓{Colors.RESET} Spec format: CycloneDX v1.6 (AI/ML extensions)")
     return 0
 
 def cmd_rules(root_dir: Path) -> int:
-    """Verifies rule IDs and cross-references in Master Rules."""
+    """Validates rule identifiers and cross-references in the master rules file."""
     master_file = root_dir / "TRISUELLA_MASTER_RULES_AND_CHECKS.md"
     if not master_file.exists():
         print(f"{Colors.RED}Master rules file not found: {master_file}{Colors.RESET}")

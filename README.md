@@ -1,6 +1,6 @@
 # 🔱 OWASP TriSuElla-AIDLCA Framework
 > **AI-Driven Development Life Cycle & Autonomous Agent Governance (LLMSecOps)**  
-> **Version**: 3.0 | **Status**: Institutionalized | **Total Checks**: 285
+> **Version**: 3.0 | **Status**: Institutionalized | **Total Checks**: 291
 
 [![TriSuElla Gate](https://github.com/OWASP/TriSuElla-AIDLCA-Framework/actions/workflows/trisuella-gate.yml/badge.svg)](templates/.github/workflows/trisuella-gate.yml)
 [![Author: Bhaskar Puppala (PATEL)](https://img.shields.io/badge/Author-Bhaskar%20Puppala%20(PATEL)-blue.svg)](https://www.linkedin.com/in/bhaskerkpatel/)
@@ -42,7 +42,7 @@ graph TD
 
 ---
 
-## 📊 Summary of Master Rules & Checks (285 Total)
+## 📊 Summary of Master Rules & Checks (291 Total)
 
 All rules are consolidated in [TRISUELLA_MASTER_RULES_AND_CHECKS.md](TRISUELLA_MASTER_RULES_AND_CHECKS.md):
 
@@ -60,7 +60,7 @@ All rules are consolidated in [TRISUELLA_MASTER_RULES_AND_CHECKS.md](TRISUELLA_M
 | **21** | **Model Context Protocol Security (`TRISU-MCP`)** | **6** | MCP Schema Sanitization, Recursion Bounds, HITL |
 | **22** | **EU AI Act High-Risk Compliance (`TRISU-EUAI`)** | **7** | EU Regulation 2024/1689 (Articles 9–15, CE Gate) |
 | **23** | **Agentic Identity & Token Delegation (`TRISU-AIAM`)** | **5** | RFC 8693 Token Exchange, SPIFFE/mTLS, Ephemeral Keys |
-| **TOTAL**| **Consolidated Invariants** | **285** | **Mandatory Blocking for [CRITICAL]/[HIGH]** |
+| **TOTAL**| **Consolidated Invariants** | **291** | **Mandatory Blocking for [CRITICAL]/[HIGH]** |
 
 ---
 
@@ -101,7 +101,7 @@ python tools/trisu-cli/trisu_validator.py bom --output ai-bom.json
 OWASP-TriSuElla-AIDLCA-FrameWork/
 ├── README.md                              # Main project entrypoint & quickstart (v3.0)
 ├── Usage-Guide.md                         # Comprehensive step-by-step usage guide
-├── TRISUELLA_MASTER_RULES_AND_CHECKS.md   # Unified master rulebook (285 checks, 184 rules)
+├── TRISUELLA_MASTER_RULES_AND_CHECKS.md   # Unified master rulebook (291 checks, 190 rules)
 ├── ai-bom.json                            # Machine-readable CycloneDX AI v1.6 BoM
 ├── trisuella.config.yaml                  # Declarative policy & Multi-Cloud CSPM manifest
 ├── CLAUDE.md & .cursorrules               # Local IDE workspace assistant rules

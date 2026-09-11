@@ -1,7 +1,7 @@
 # 📖 OWASP TriSuElla-AIDLCA Framework — Comprehensive Master Usage Guide (v3.0)
 
 > **AI-Driven Development Life Cycle & Autonomous Agent Governance (LLMSecOps)**  
-> **Version**: 3.0 | **Status**: Institutionalized | **Total Checks**: 285 | **Rules**: 184  
+> **Version**: 3.0 | **Status**: Institutionalized | **Total Checks**: 291 | **Rules**: 190  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)  
 
 ---
@@ -64,6 +64,95 @@ For autonomous software factories using specialized AI agents:
 1. Deploy the 8-stage pipeline (`Planner`, `Designer`, `Builder`, `Tester`, `Releaser`, `Deployer`, `Monitor`, `Improver`).
 2. Agents communicate via **TRISU-ZTP** zero-trust JSON envelopes.
 3. Every deployment action requires signed **Dual-Key Human-in-the-Loop (HITL)** cryptographic approval before container push or cloud infrastructure modification.
+
+---
+
+---
+
+## 🔒 Zero Trust Code (ZTC) Principles & Auditing Invariants
+
+While traditional Zero Trust operates at the perimeter and network tiers (mTLS, firewalls, SSO), **Zero Trust Code (ZTC)** enforces *"Never Trust, Always Verify"* and *"Assume Breach"* **directly inside the application logic, memory structures, and agent dispatchers**.
+
+### The 6 Core Invariants of Zero Trust Code
+
+| Rule ID | Severity | Invariant Name | Application Rule | Blocking Audit Mechanism |
+| :--- | :--- | :--- | :--- | :--- |
+| **TRISU-ZTC-01** | `[CRITICAL]` | **Explicit Boundary Validation** | Every internal function and microservice independently validates all input parameters (type, schema, length, bounds). Upstream trust is banned. | AST/Regex scanning for raw dict indexing and unparameterized internal calls |
+| **TRISU-ZTC-02** | `[CRITICAL]` | **Scoped Object Authorization** | Every database query, cache lookup, and data mutation explicitly binds the authenticated `tenant_id` and `user_id` (prevents BOLA/IDOR). | Query AST auditing for mandatory tenant and ownership predicate scoping |
+| **TRISU-ZTC-03** | `[HIGH]` | **Zero Ambient Credentials** | Code never retains ambient long-lived secrets in memory. Ephemeral tokens are retrieved JIT and memory is cryptographically zeroized after use. | Static entropy and credential scanner flags static keys in source files |
+| **TRISU-ZTC-04** | `[CRITICAL]` | **Deterministic Fail-Closed** | All security decisions and exception handlers default to DENY. Naked `except: pass` or error swallowing is strictly prohibited. | Linter detects naked exception suppression and fail-open fallbacks |
+| **TRISU-ZTC-05** | `[CRITICAL]` | **Banned Dynamic Deserialization** | Dynamic code execution (`eval`, `exec`) and unsafe deserialization (`pickle.loads`, unsafe YAML) are strictly banned across all tiers. | Static scanner flags dangerous execution sinks in application and agent code |
+| **TRISU-ZTC-06** | `[HIGH]` | **In-Code Audit Telemetry** | Every privileged mutation, data deletion, or agent tool dispatch emits an immutable, structured audit event with caller identity and payload hash. | Verification of audit hook correlation on mutating endpoints |
+
+### Zero Trust Code Implementation Patterns
+
+#### Pattern 1: Explicit Boundary Validation vs Implicit Trust (TRISU-ZTC-01)
+```python
+# ❌ INSECURE (Implicit Trust: assumes upstream gateway checked parameters)
+def update_balance_internal(data):
+    db.execute(f"UPDATE accounts SET balance = balance + {data['delta']} WHERE id = {data['account_id']}")
+
+# ✅ SECURE (Zero Trust Code: validates boundary, uses typed schema & parameterization)
+from pydantic import BaseModel, Field, UUID4
+from decimal import Decimal
+
+class BalanceAdjustment(BaseModel):
+    account_id: UUID4
+    delta: Decimal = Field(..., max_digits=12, decimal_places=2)
+
+def update_balance_internal(data: dict, session: AuthenticatedSession):
+    validated = BalanceAdjustment.model_validate(data)
+    db.execute(
+        update(Account)
+        .where(Account.id == validated.account_id, Account.tenant_id == session.tenant_id)
+        .values(balance=Account.balance + validated.delta)
+    )
+```
+
+#### Pattern 2: Scoped Object-Level Authorization (TRISU-ZTC-02)
+```python
+# ❌ INSECURE: BOLA / IDOR vulnerability (any authenticated user can access any document)
+@app.get("/documents/{doc_id}")
+def get_doc(doc_id: str):
+    return db.query(Document).filter(Document.id == doc_id).first()
+
+# ✅ SECURE: Zero Trust Code (binds query strictly to caller tenant & ownership)
+@app.get("/documents/{doc_id}")
+def get_doc(doc_id: str, current_user: User = Depends(get_authenticated_user)):
+    doc = db.query(Document).filter(
+        Document.id == doc_id,
+        Document.tenant_id == current_user.tenant_id,
+        Document.owner_id == current_user.id
+    ).first()
+    if not doc:
+        raise HTTPException(status_code=404, detail="Document not found")
+    return doc
+```
+
+#### Pattern 3: Deterministic Fail-Closed Exception Handling (TRISU-ZTC-04)
+```python
+# ❌ INSECURE: Fail-open error suppression
+def check_permission(user_id, resource):
+    try:
+        return policy_client.is_allowed(user_id, resource)
+    except Exception:
+        return True # Fatal security fault! Grants access on network/engine failure
+
+# ✅ SECURE: Zero Trust Code (Fail-closed invariant)
+def check_permission(user_id, resource) -> bool:
+    try:
+        return policy_client.is_allowed(user_id, resource)
+    except Exception as exc:
+        audit_logger.critical("Authorization engine unreachable: %s", exc)
+        return False # Mandatory DENY on failure
+```
+
+### Static Auditing via `trisu_validator.py`
+Run the local CLI to audit your codebase against Zero Trust Code invariants:
+```bash
+python tools/trisu-cli/trisu_validator.py audit
+```
+Any instance of insecure dynamic execution (`TRISU-ZTC-05`), fail-open error suppression (`TRISU-ZTC-04`), unparameterized SQL interpolation (`TRISU-ZTC-01`), or ambient credentials (`TRISU-ZTC-03`) will trigger an immediate **System Halt (exit code 1)**.
 
 ---
 
@@ -331,7 +420,7 @@ python tools/trisu-cli/trisu_validator.py check
 ```text
 ======================================================================
   OWASP TriSuElla-AIDLCA Policy Gate Validator v3.0
-  Framework Status: Institutionalized | Checks: 285 | Rules: 184
+  Framework Status: Institutionalized | Checks: 291 | Rules: 190
 ======================================================================
 [*] Checking TriSuElla Framework artifacts and configuration...
   ✓ Configuration manifest present: trisuella.config.yaml
@@ -607,7 +696,7 @@ The `TRISUELLA-AIDLCA-Rules/prompts/` directory contains 28 production-ready pro
 OWASP-TriSuElla-AIDLCA-FrameWork/
 ├── README.md                                    ← Main project entrypoint & quickstart (v3.0)
 ├── Usage-Guide.md                               ← Canonical, comprehensive master usage guide (This File)
-├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (285 checks, 184 rules)
+├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (291 checks, 190 rules)
 ├── ai-bom.json                                  ← Machine-readable CycloneDX AI v1.6 BoM
 ├── trisuella.config.yaml                        ← Declarative policy & CSPM manifest
 ├── CLAUDE.md & .cursorrules                     ← Workspace rules for Claude Code & Cursor
@@ -703,7 +792,7 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 
 ## 📚 Key Reference Documents
 
-- **Master Rules Specification (285 Checks, 184 Rules)**: [TRISUELLA_MASTER_RULES_AND_CHECKS.md](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
+- **Master Rules Specification (291 Checks, 190 Rules)**: [TRISUELLA_MASTER_RULES_AND_CHECKS.md](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
 - **Detailed Developer Manual & CSPM Crosswalk**: [TRISUELLA-AIDLCA-Rules/FULL_README.md](TRISUELLA-AIDLCA-Rules/FULL_README.md)
 - **Framework Philosophy & Charter**: [TRISUELLA-AIDLCA-Rules/CHARTER.md](TRISUELLA-AIDLCA-Rules/CHARTER.md)
 - **Turnkey Prompt Library (28 Prompts)**: [TRISUELLA-AIDLCA-Rules/prompts/README.md](TRISUELLA-AIDLCA-Rules/prompts/README.md)
