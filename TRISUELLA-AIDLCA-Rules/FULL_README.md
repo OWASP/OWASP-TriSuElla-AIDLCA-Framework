@@ -214,15 +214,13 @@ TRISUELLA-AIDLCA-secure-rules/
 │       │       └── zero-trust.opt-in.md
 │       │
 │       ├── cloud-security/
-│       │   ├── cloud-security.md                  ← 10 cloud security rules (platform-agnostic)
-│       │   │                                         AWS, Azure, GCP, Kubernetes, serverless,
-│       │   │                                         multi-cloud, and hybrid setups
-│       │   │                                         IAM least privilege, storage security,
-│       │   │                                         network perimeter, compute + container hardening,
-│       │   │                                         cloud secrets, audit logging + alerting,
-│       │   │                                         IaC security scanning, data encryption + KMS,
-│       │   │                                         account / tenant hygiene, secure CI/CD pipeline
-│       │   │                                         Maps to: CIS Benchmarks, OWASP Cloud-Native Top 10
+│       │   ├── cloud-security.md                  ← 24 cloud security & multi-cloud CSPM rules
+│       │   │                                         AWS, Azure, GCP, Alibaba Cloud (Aliyun), OCI
+│       │   │                                         Part A: 10 platform-agnostic cloud rules
+│       │   │                                         Part B: 14 multi-cloud CSPM auditing standards
+│       │   │                                         KSPM, DSPM, AI-CSPM/CWPP, CIEM, Edge WAF,
+│       │   │                                         Shift-Left IaC, Storage WORM, HSM, Sovereignty
+│       │   │                                         Maps to: CIS Level 2, NIST SP 800-53, ISO 27001
 │       │   └── cloud-security.opt-in.md
 │       │
 │       ├── compliance/
@@ -509,14 +507,19 @@ Ready-to-use prompts for every stage of the TRISUELLA-AIDLCA workflow. Copy, fil
 ## 🔄 Changelog
 
 ### v2.5 (2026-04-01) - Institutionalized Release
-- **Unified Master Rulebook** — Consolidated 245 rules and checks across 20 categories into `TRISUELLA_MASTER_RULES_AND_CHECKS.md`.
+- **Unified Master Rulebook** — Consolidated **285 rules and checks** across 24 categories with **184 unique TRISU-* rule identifiers** into `TRISUELLA_MASTER_RULES_AND_CHECKS.md`.
+- **Full-Spectrum Multi-Cloud CSPM & Auditing Standard (`TRISU-CSPM`)** — Institutionalized 14 enterprise-grade CSPM controls across the top 5 cloud providers (**AWS**, **Microsoft Azure**, **Google Cloud Platform**, **Alibaba Cloud (Aliyun)**, and **Oracle Cloud Infrastructure**):
+  - `TRISU-CSPM-01` to `TRISU-CSPM-08`: Continuous CSPM & CIS Level 2 scanning, Workload IAM & Non-Human Identity (NHI) federation, Storage WORM compliance locks, Private network perimeter isolation, Tamper-evident multi-region audit trails, Automated drift remediation, Dedicated Cloud HSM / CMK key management, and Sovereign region geofencing.
+  - `TRISU-CSPM-09` to `TRISU-CSPM-14`: Kubernetes Security Posture Management (**KSPM** - EKS/AKS/GKE/ACK/OKE), Database & Data Store Posture (**DSPM** - RDS/Cosmos/Cloud SQL/PolarDB/Autonomous DB), Compute & AI/ML Workload Posture (**AI-CSPM / CWPP** - IMDSv2, SageMaker/Azure OpenAI/Vertex/PAI/GenAI), Cloud Infrastructure Entitlements (**CIEM** - dormant credential revocation & PCI < 15), Cloud Edge WAF & Anti-DDoS Ingress, and Shift-Left Infrastructure-as-Code (**IaC**) pre-flight scanning.
+  - Comprehensive **14-Domain Technical Crosswalk Matrix** providing exact operational parity across all 5 major CSPs.
 - **Three Pillars & 3-Layer Risk Model** — Formalized SISU, TILLIT, and DUGNAD with the Cyber Residual Risk Floor (70%/20%/10% loss distribution).
 - **Automated Tooling (`tools/trisu-cli`)** — Implemented zero-dependency Python CLI (`trisu_validator.py`):
   - `init`: Instant project scaffolding of templates, state tracking, and CI gates.
   - `check`: Automated structural artifact verification.
   - `audit`: Blocking security checks, secret scanning, and native **OASIS SARIF 2.1.0** export for GitHub Code Scanning.
-  - `rules`: Rule ID index integrity validation.
-- **Developer Drop-in Templates (`templates/`)** — Created ready-to-use configurations: `.cursorrules`, `CLAUDE.md`, `.windsurfrules`, `copilot-instructions.md`, `trisuella.config.yaml`, and `.pre-commit-config.yaml`.
+  - `bom`: Automated CycloneDX AI v1.6 AI-BoM generator.
+  - `rules`: Rule ID index integrity validation (184 unique TRISU-* identifiers).
+- **Developer Drop-in Templates (`templates/`)** — Created ready-to-use configurations: `.cursorrules`, `CLAUDE.md`, `.windsurfrules`, `copilot-instructions.md`, `trisuella.config.yaml` (with granular `cspm` and `posture_domains` blocks), and `.pre-commit-config.yaml`.
 - **CI/CD Enforcement Gates** — Added automated GitHub Actions workflow (`.github/workflows/trisuella-gate.yml`) to enforce blocking `[CRITICAL]` checks on pull requests.
 - **Multi-Agent Architecture (`TRISUELLA-AIDLCAa`)** — Published formal 8-agent zero-trust autonomous development taxonomy, ZTP message envelope, and Dual-Key HITL gates.
 - **Tools Promotion** — Promoted SISU-UI governance dashboard to `tools/sisu-ui/` and structured sample data into `tools/sisu-ui/sample-data/`.
