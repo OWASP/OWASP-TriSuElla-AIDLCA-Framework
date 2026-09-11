@@ -3,7 +3,6 @@
 > **AI-Driven Development Life Cycle & Autonomous Agent Governance (LLMSecOps)**  
 > **Version**: 3.0 | **Status**: Institutionalized | **Total Checks**: 285 | **Rules**: 184  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)  
-> **Canonical Repositories**: [thundel/TriSuElla-AIDLCA-Framework](https://github.com/thundel/TriSuElla-AIDLCA-Framework) | [OWASP/OWASP-TriSuElla-AIDLCA-Framework](https://github.com/OWASP/OWASP-TriSuElla-AIDLCA-Framework)
 
 ---
 
