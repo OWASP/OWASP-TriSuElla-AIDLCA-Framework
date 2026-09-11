@@ -1,9 +1,9 @@
-# 📖 OWASP TriSuElla-AIDLCA Framework — Comprehensive Usage Guide (v3.0)
+# 📖 OWASP TriSuElla-AIDLCA Framework — Comprehensive Master Usage Guide (v3.0)
 
 > **AI-Driven Development Life Cycle & Autonomous Agent Governance (LLMSecOps)**  
 > **Version**: 3.0 | **Status**: Institutionalized | **Total Checks**: 285 | **Rules**: 184  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)  
-> **Repository**: [thundel/TriSuElla-AIDLCA-Framework](https://github.com/thundel/TriSuElla-AIDLCA-Framework) | [OWASP/OWASP-TriSuElla-AIDLCA-Framework](https://github.com/OWASP/OWASP-TriSuElla-AIDLCA-Framework)
+> **Canonical Repositories**: [thundel/TriSuElla-AIDLCA-Framework](https://github.com/thundel/TriSuElla-AIDLCA-Framework) | [OWASP/OWASP-TriSuElla-AIDLCA-Framework](https://github.com/OWASP/OWASP-TriSuElla-AIDLCA-Framework)
 
 ---
 
@@ -13,30 +13,98 @@ The **OWASP TriSuElla-AIDLCA Framework** is an enterprise-grade, policy-as-code 
 
 Rooted in three Nordic and Finnish governance pillars:
 - 🔴 **SISU (Resilience & Execution)**: Deterministic execution, automated crash recovery, non-negotiable safety invariants, and strict state rollbacks.
-- 🔵 **TILLIT (Trust, Zero-Trust & Compliance)**: Mutual cryptographic authentication, non-human identity (NHI) federation, multi-cloud CSPM, and statutory compliance (DPDPA-2023, GDPR, EU AI Act, RBI Cyber Resilience, HIPAA, PCI-DSS).
+- 🔵 **TILLIT (Trust, Zero-Trust & Compliance)**: Mutual cryptographic authentication, non-human identity (NHI) federation, multi-cloud CSPM, and statutory compliance (DPDPA-2023, GDPR, EU AI Act, RBI Cyber Resilience, HIPAA, PCI-DSS, SOC 2).
 - 🟢 **DUGNAD (Collaboration & Orchestration)**: Multi-agent coordination with **Dual-Key Human-in-the-Loop (HITL)** approval gates before irreversible actions.
 
-The framework bridges the gap between fast-paced **vibe coding** and stringent **enterprise DevSecOps**, operating across 3 development phases:
-1. **Phase 1: Inception** (Workspace scan, requirements gathering, STRIDE/STRIDE-AI threat modeling).
-2. **Phase 2: Construction** (Secure system design, policy-governed code generation with a 20-item security checklist, SAST/DAST/secret audits, AI red-teaming).
-3. **Phase 3: Operations** (CI/CD PR gating, safe canary deployments, multi-cloud CSPM drift remediation, and immutable incident playbooks).
+The framework bridges the gap between fast-paced **vibe coding** and stringent **enterprise DevSecOps**, operating seamlessly across 3 development phases:
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                        TRISUELLA-AIDLCA v3.0                           │
+├───────────────────┬────────────────────────────┬───────────────────────┤
+│ Phase 1: INCEPTION│ Phase 2: CONSTRUCTION      │ Phase 3: OPERATIONS   │
+│ (Plan & Model)    │ (Design, Code & Verify)    │ (Deploy & Observe)    │
+├───────────────────┼────────────────────────────┼───────────────────────┤
+│ • Workspace Scan  │ • Functional Design        │ • CI/CD PR Gates      │
+│ • Requirements    │ • NFR & Cloud Architecture │ • Safe Deployment Plan│
+│ • STRIDE Threat   │ • Secrets by Design        │ • Observability Setup │
+│   Modeling (DREAD)│ • Code Gen + 20-Item Review│ • Incident Playbooks  │
+│ • User Stories    │ • SAST/DAST/Secret Scans   │ • Automated Drift     │
+│ • Unit Planning   │ • PyRIT / Garak AI Tests   │   Remediation         │
+└───────────────────┴────────────────────────────┴───────────────────────┘
+```
+
+---
+
+## 🎯 4 Integration Patterns by Use Case
+
+### Pattern A: Vibe Coding & Solo Prototyping
+For rapid, iterative prototyping with Cursor, Windsurf, or Claude:
+1. Drop `.cursorrules` or `CLAUDE.md` into your workspace.
+2. Start chatting: *"Follow TriSuElla-AIDLCA v3.0 rules. We are building [Project Description]."*
+3. The AI co-pilot automatically conducts threat modeling, enforces input sanitization, and runs the **20-Item Security Review Checklist** at the end of each code generation turn.
+
+### Pattern B: Enterprise Engineering Teams
+For shared team repositories and Git-based workflows:
+1. Commit `trisuella.config.yaml` to the repo root.
+2. Install pre-commit hooks via `pre-commit install` (blocks commits containing unredacted API keys or failing checks).
+3. Commit `.github/workflows/trisuella-gate.yml`. Pull Requests automatically run `trisu_validator.py audit` and block merges if `[CRITICAL]` or `[HIGH]` checks fail.
+
+### Pattern C: Multi-Cloud Infrastructure & CSPM Auditing
+For cloud-native deployments across AWS, Azure, GCP, Alibaba Cloud, and OCI:
+1. Reference `TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rule-details/extensions/security/cloud-security/cloud-security.md`.
+2. Enforce the 14 **TRISU-CSPM** controls:
+   - **KSPM**: Private K8s API servers and admission controllers (EKS, AKS, GKE, ACK, OKE).
+   - **DSPM**: Private endpoints, TLS 1.3, TDE encryption (RDS, Cosmos, Cloud SQL, PolarDB, Autonomous DB).
+   - **AI-CSPM / CWPP**: IMDSv2, private VPC perimeter for model endpoints (SageMaker, Azure OpenAI, Vertex AI, PAI, OCI GenAI).
+   - **CIEM**: Revocation of dormant credentials and excessive permissions.
+   - **Shift-Left IaC**: Pre-merge Terraform, Bicep, and CloudFormation scanning.
+
+### Pattern D: Autonomous Multi-Agent Factory (`TRISUELLA-AIDLCAa`)
+For autonomous software factories using specialized AI agents:
+1. Deploy the 8-stage pipeline (`Planner`, `Designer`, `Builder`, `Tester`, `Releaser`, `Deployer`, `Monitor`, `Improver`).
+2. Agents communicate via **TRISU-ZTP** zero-trust JSON envelopes.
+3. Every deployment action requires signed **Dual-Key Human-in-the-Loop (HITL)** cryptographic approval before container push or cloud infrastructure modification.
+
+---
+
+## ☁️ Multi-Cloud CSPM & Auditing Matrix (`TRISU-CSPM`)
+
+The framework enforces 14 enterprise-grade Cloud Security Posture Management (CSPM) controls across the top 5 cloud providers:
+
+| Control ID / Domain | AWS | Microsoft Azure | Google Cloud (GCP) | Alibaba Cloud (Aliyun) | Oracle Cloud (OCI) |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **TRISU-CSPM-01: Continuous CSPM & CIS** | Security Hub (CIS L2) | Defender for Cloud | SCC Premium | Security Center Enterprise | Cloud Guard & Security Zones |
+| **TRISU-CSPM-02: Workload IAM / NHI** | Roles Anywhere / OIDC | Workload Identity | Workload Identity Fed | RAM Role SSO / OIDC | Workload Principals |
+| **TRISU-CSPM-03: Storage WORM Lock** | S3 Object Lock (Compliance) | Blob Immutability Policy | GCS Bucket Lock | OSS WORM Retention Policy | Object Storage Retention Rules |
+| **TRISU-CSPM-04: Zero-Trust Perimeter** | PrivateLink & VPC Endpoints | Private Link / Endpoints | Private Service Connect | VPC PrivateZone / PrivateLink | Service Gateway / Endpoints |
+| **TRISU-CSPM-05: Tamper-Evident Audit** | CloudTrail Multi-Region | Azure Monitor Logs | Cloud Audit Logs (Admin+Data) | ActionTrail Multi-Region | Audit Service (365-day) |
+| **TRISU-CSPM-06: Drift Self-Healing** | Config Conformance Packs | Policy DeployIfNotExists | Eventarc + Cloud Functions | Cloud Config Auto-Remediation | Event Service + Functions |
+| **TRISU-CSPM-07: Dedicated HSM / CMEK** | KMS (CMEK) / CloudHSM | Key Vault Managed HSM | Cloud KMS / Cloud HSM | KMS Hardware HSM | Vault Dedicated KMS (FIPS L3) |
+| **TRISU-CSPM-08: Sovereignty Geofencing** | SCP `aws:RequestedRegion` | Policy `allowed-locations` | Org Policy `resourceLocations`| Resource Mgmt Control Policy | Security Zones Region Policy |
+| **TRISU-CSPM-09: KSPM (Kubernetes)** | EKS (Private Endpoint) | AKS (Private Cluster) | GKE (Private Cluster) | ACK (Private Cluster) | OKE (Private API Server) |
+| **TRISU-CSPM-10: DSPM (Databases)** | RDS/Aurora (Private VPC) | Azure SQL/Cosmos DB | Cloud SQL/Spanner (Private IP) | PolarDB/ApsaraDB (VPC White) | Autonomous DB (Private IP) |
+| **TRISU-CSPM-11: AI-CSPM / CWPP** | SageMaker Private VPC | Azure OpenAI Private Link | Vertex AI VPC SC | PAI Private Link | OCI GenAI Private Endpoints |
+| **TRISU-CSPM-12: CIEM (Entitlements)** | IAM Access Analyzer | Entra Permissions Mgmt | IAM Recommender | RAM ActionTrail Analyzer | IAM Policy Recommender |
+| **TRISU-CSPM-13: Edge WAF & Anti-DDoS** | AWS WAF v2 + Shield Adv | Azure WAF v2 + DDoS | Cloud Armor (L7 WAF) | WAF 3.0 + Anti-DDoS Pro | OCI WAF + DDoS Protection |
+| **TRISU-CSPM-14: Shift-Left IaC Scan** | Checkov / cfn-guard | Checkov / Bicep Linter | Checkov / KICS / gcloud | Checkov / Terraform Alibaba | Checkov / OCI TF Validator |
 
 ---
 
 ## 🛠️ Step 1: Framework Setup into Your Development IDE of Choice
 
-TriSuElla-AIDLCA is designed to be completely platform-agnostic and supports every major modern AI development environment.
+TriSuElla-AIDLCA is designed to be completely platform-agnostic and supports every modern AI development environment.
 
 ### 1.1 Automated Scaffolding (Recommended — All IDEs in One Shot)
 
 Run the zero-dependency Python CLI tool to scaffold all IDE configuration files, policy manifests, pre-commit hooks, and CI/CD pipelines into any repository with a single command:
 
 ```bash
-# From the TriSuElla framework repository or your target project:
-python tools/trisu-cli/trisu_validator.py init --target /path/to/your-project
+# Scaffold into current directory or target project
+python tools/trisu-cli/trisu_validator.py init --target .
 ```
 
-This single command automatically generates:
+This automatically generates:
 1. `.cursorrules` — Active security directives for Cursor AI
 2. `CLAUDE.md` — Active development and gatekeeper rules for Claude Code CLI and Claude Projects
 3. `.windsurfrules` — Active directives for Windsurf Cascade
@@ -50,7 +118,7 @@ This single command automatically generates:
 
 ### 1.2 IDE-Specific Manual Setup
 
-If you prefer placing files manually or are customizing an existing workspace, use the following instructions for your specific IDE:
+If you prefer placing files manually or are customizing an existing workspace, follow these specific instructions:
 
 #### A. Cursor AI (`.cursorrules`)
 1. Copy `templates/.cursorrules` to the root of your project:
@@ -59,7 +127,7 @@ If you prefer placing files manually or are customizing an existing workspace, u
    ```
 2. **How it works in Cursor**:
    - Cursor automatically injects `.cursorrules` into the system prompt of both **Cursor Chat** (`Ctrl+L` / `Cmd+L`) and **Cursor Composer** (`Ctrl+I` / `Cmd+I`).
-   - The AI co-pilot will automatically enforce Phase 1 threat modeling before generating new modules and execute the **20-Item Security Code Review Checklist** at the conclusion of every code edit.
+   - The AI co-pilot automatically enforces Phase 1 threat modeling before generating new modules and executes the **20-Item Security Code Review Checklist** at the conclusion of every code edit.
 
 #### B. Claude Code (CLI) & Claude Desktop / Projects (`CLAUDE.md`)
 1. Copy `templates/CLAUDE.md` to your project root:
@@ -67,8 +135,8 @@ If you prefer placing files manually or are customizing an existing workspace, u
    cp templates/CLAUDE.md /path/to/your-project/CLAUDE.md
    ```
 2. **For Claude Code CLI**:
-   - When you launch `claude` in your terminal inside the repository, Claude Code automatically reads `CLAUDE.md` on startup as its persistent system instructions.
-   - Claude Code will run `python tools/trisu-cli/trisu_validator.py check` before finishing sessions and block any `[CRITICAL]` violations.
+   - When you launch `claude` in your terminal, Claude Code automatically reads `CLAUDE.md` on startup as its persistent system instructions.
+   - Claude Code runs `python tools/trisu-cli/trisu_validator.py check` before finishing sessions and blocks any `[CRITICAL]` violations.
 3. **For Claude Projects (Web / Desktop)**:
    - Create a Project in Claude (claude.ai), click **Project Knowledge**, and upload `TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rules/core-workflow.md`.
    - In **Custom Instructions**, paste the contents of `templates/CLAUDE.md`.
@@ -81,7 +149,7 @@ If you prefer placing files manually or are customizing an existing workspace, u
    ```
 2. **How it works**:
    - GitHub Copilot Chat automatically loads `.github/copilot-instructions.md` as contextual rules for every prompt in VS Code and JetBrains IDEs.
-   - When generating code, Copilot will enforce zero hardcoded secrets, input sanitization, parameterized queries, and least-privilege IAM patterns.
+   - When generating code, Copilot enforces zero hardcoded secrets, input sanitization, parameterized queries, and least-privilege IAM patterns.
 
 #### D. Windsurf IDE by Codeium (`.windsurfrules`)
 1. Copy `templates/.windsurfrules` to your project root:
@@ -92,22 +160,26 @@ If you prefer placing files manually or are customizing an existing workspace, u
    - Windsurf's **Cascade AI** agent automatically reads `.windsurfrules` to govern autonomous multi-file edits, terminal commands, and tool executions.
 
 #### E. Google Antigravity IDE
-1. Ensure `CLAUDE.md` is in the workspace root or create `.agents/rules/` inside your project root.
+1. Ensure `CLAUDE.md` is in the workspace root or place rules in `.agents/rules/` inside your project root.
 2. Antigravity automatically detects workspace rules and binds them into agent tool execution loops, preventing unsafe command execution and unvalidated file modifications.
 
 #### F. Continue.dev / Cline / Roo Code / Aider (VS Code & JetBrains)
 - **Continue.dev**: Open `~/.continue/config.json` and add `templates/CLAUDE.md` to the `systemMessage` or `rules` array.
-- **Cline / Roo Code**: Paste the contents of `templates/CLAUDE.md` into the **Custom Instructions** textarea in the extension settings.
+- **Cline / Roo Code**: Paste the contents of `templates/CLAUDE.md` into the **Custom Instructions** textarea in extension settings.
 - **Aider**: Run aider with:
   ```bash
   aider --read templates/CLAUDE.md
   ```
 
+#### G. JetBrains IDEs Native AI Assistant (IntelliJ IDEA, PyCharm, WebStorm, GoLand)
+- Open **Settings / Preferences -> Tools -> AI Assistant**.
+- In **System Prompt / Prompt Library**, add the contents of `templates/CLAUDE.md` to enforce the TriSuElla security baseline.
+
 ---
 
 ### 1.3 Configuring the Policy Manifest (`trisuella.config.yaml`)
 
-The `trisuella.config.yaml` file is the declarative source of truth for your project's security posture and compliance mandates. Customize it according to your deployment targets:
+The `trisuella.config.yaml` file is the declarative source of truth for your project's security posture and compliance mandates:
 
 ```yaml
 version: "3.0"
@@ -177,7 +249,7 @@ ai_governance:
 
 ---
 
-## ⚡ Step 2: Interactive AI Execution (How to Run it During Development)
+## ⚡ Step 2: Interactive AI Execution (How to Run During Development)
 
 Once your IDE rules are placed, TriSuElla governs every conversational turn between you and your AI assistant.
 
@@ -197,9 +269,9 @@ Once your IDE rules are placed, TriSuElla governs every conversational turn betw
 └────────────────────────┴─────────────────────────────┴───────────────────────────┘
 ```
 
-### 2.2 Example Interaction: What You Experience in the IDE
+### 2.2 Concrete Example: What You Experience in the IDE
 
-#### Phase 1: You request a feature
+#### Phase 1: Feature Request
 ```text
 User: "Create a FastAPI endpoint that takes user prompts, calls OpenAI GPT-4, and stores queries in PostgreSQL."
 ```
@@ -236,7 +308,7 @@ Once approved, the AI generates the code and appends the mandatory checklist:
 
 ## 🔍 Step 3: Running CLI Audits & Inspecting Results
 
-The framework includes `tools/trisu-cli/trisu_validator.py`, a zero-dependency CLI written entirely in Python's standard library. It requires no `pip install` or external packages.
+The framework includes `tools/trisu-cli/trisu_validator.py`, a zero-dependency CLI written entirely in Python's standard library.
 
 ### 3.1 Command Reference
 
@@ -408,11 +480,6 @@ jobs:
           path: ai-bom.json
 ```
 
-**Results in GitHub**:
-- Pull Requests with `[CRITICAL]` or `[HIGH]` findings are blocked from merging.
-- Detailed findings appear under the repository's **Security -> Code scanning alerts** tab.
-- The `ai-bom.json` artifact is archived with each build for supply chain provenance.
-
 ---
 
 ### 4.3 GitLab CI/CD Pipeline (`.gitlab-ci.yml`)
@@ -489,22 +556,6 @@ Incorporate Infrastructure-as-Code (IaC) linting alongside TriSuElla rules in CI
 checkov -d ./terraform --framework terraform --check CKV_AWS_18,CKV_AWS_19,CKV_AWS_145
 ```
 
-The 14 **TRISU-CSPM** controls validated include:
-1. **TRISU-CSPM-01**: CIS Benchmark Level 2 continuous compliance.
-2. **TRISU-CSPM-02**: Non-Human Identity (NHI) federation via OIDC (no long-lived secret keys).
-3. **TRISU-CSPM-03**: Storage WORM lock with Compliance Retention (S3, Azure Blob, GCS Bucket Lock).
-4. **TRISU-CSPM-04**: Zero-Trust network perimeters (AWS PrivateLink, Azure Private Link, GCP PSC).
-5. **TRISU-CSPM-05**: Multi-region tamper-evident audit logging with 365-day retention.
-6. **TRISU-CSPM-06**: Automated configuration drift remediation.
-7. **TRISU-CSPM-07**: Dedicated Customer-Managed Encryption Keys (CMEK) via Cloud HSM.
-8. **TRISU-CSPM-08**: Sovereign geofencing restricting regions to statutory jurisdictions.
-9. **TRISU-CSPM-09**: Kubernetes (KSPM) private API endpoints and non-root admission controls.
-10. **TRISU-CSPM-10**: Database (DSPM) private VPC binding, TLS 1.3, and column-level encryption.
-11. **TRISU-CSPM-11**: AI-CSPM model endpoint private perimeters (SageMaker, Azure OpenAI, Vertex AI).
-12. **TRISU-CSPM-12**: Cloud Infrastructure Entitlement Management (CIEM) least-privilege scoping.
-13. **TRISU-CSPM-13**: Layer 7 Edge WAF and managed anti-DDoS shielding.
-14. **TRISU-CSPM-14**: Shift-Left IaC security scanning blocking unencrypted infrastructure PRs.
-
 ---
 
 ## 🤖 Step 5: Multi-Agent Governance (`TRISUELLA-AIDLCAa`)
@@ -537,6 +588,104 @@ No autonomous agent is permitted to deploy to production, modify production data
 - **Key 2 (Engineering Lead)**: Approved by `eng-lead@company.internal` (GPG: `0x8C1F42...`)
 - **Status**: RELEASE AUTHORIZED
 ```
+
+---
+
+## 🧰 The Prompt Template Library (28 Prompts)
+
+The `TRISUELLA-AIDLCA-Rules/prompts/` directory contains 28 production-ready prompt templates:
+- **Planning (`prompts/planning/`)**: Kickoff, requirements gathering, STRIDE/STRIDE-AI threat modeling, and architecture security review.
+- **Build (`prompts/build/`)**: Secure API endpoint generation, security code review, hardened Dockerfiles, and database schemas.
+- **Test (`prompts/test/`)**: API security testing, PyRIT/Garak prompt injection suites, dependency scanning, and secret audit setup.
+- **AI Agents (`prompts/ai-agents/`)**: Secure LLM feature design, multi-agent pipeline setup, RAG data isolation, and Model Context Protocol (MCP) server review.
+- **Compliance (`prompts/compliance/`)**: DPDPA compliance, GDPR gap assessment, HIPAA controls, and PCI-DSS scoping.
+
+---
+
+## 📁 Repository Directory Structure Reference
+
+```
+OWASP-TriSuElla-AIDLCA-FrameWork/
+├── README.md                                    ← Main project entrypoint & quickstart (v3.0)
+├── Usage-Guide.md                               ← Canonical, comprehensive master usage guide (This File)
+├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (285 checks, 184 rules)
+├── ai-bom.json                                  ← Machine-readable CycloneDX AI v1.6 BoM
+├── trisuella.config.yaml                        ← Declarative policy & CSPM manifest
+├── CLAUDE.md & .cursorrules                     ← Workspace rules for Claude Code & Cursor
+├── LICENSE                                      ← Open-source Apache-2.0 license
+│
+├── templates/                                   ← Drop-in developer configs & CI/CD workflows
+│   ├── .cursorrules                             ← Cursor IDE rules template
+│   ├── CLAUDE.md                                ← Claude Code instructions template
+│   ├── .windsurfrules                           ← Windsurf rules template
+│   ├── copilot-instructions.md                  ← GitHub Copilot instructions template
+│   ├── trisuella.config.yaml                    ← Declarative policy manifest template
+│   ├── .pre-commit-config.yaml                  ← Git pre-commit hook template
+│   └── .github/workflows/trisuella-gate.yml     ← GitHub Actions CI/CD blocking gate
+│
+├── tools/                                       ← Governance tooling & runtime gatekeepers
+│   ├── trisu-cli/
+│   │   └── trisu_validator.py                   ← Zero-dependency CLI (check, audit, init, bom, rules)
+│   └── sisu-ui/                                 ← Sisu Nexus visual compliance dashboard
+│       ├── index.html                           ← Web UI dashboard interface
+│       ├── sisu-ui-design-spec.md               ← UI/UX architecture & metrics specification
+│       └── sample-data/                         ← Sample governance & compliance dataset
+│
+├── TRISUELLA-AIDLCAa/                           ← 8-Stage Autonomous Multi-Agent Governance
+│   └── README.md                                ← Zero-Trust Protocol (ZTP), envelopes & Dual-Key HITL
+│
+├── TRISUELLA-AIDLCA-docs/                       ← Operational state tracking & crosswalk matrices
+│   ├── TRISUELLA-AIDLCA-state.md                ← Runtime workflow state & extension tracking
+│   └── AICM-AIDLCA-Crosswalk.md                 ← CSA AICM v1.0.3 to TriSuElla crosswalk
+│
+├── Data-Source/                                 ← Foundational regulatory baselines & standards
+│   ├── AICMv1.0.3+AI_CAIQv1.0.2 bundle          ← CSA AI Control Matrix spreadsheets & guides
+│   ├── Architecting_Cyber_Resilience_BFSI       ← RBI Cyber Resilience guidelines & manuscript
+│   ├── FREE-AI_Committee_Report                 ← Responsible AI & ethical governance report
+│   └── INDIAN_CYBERSECURITY                     ← CERT-In & statutory compliance references
+│
+└── TRISUELLA-AIDLCA-Rules/                      ← Core specifications, workflows & prompts
+    ├── README.md                                ← Philosophy, severity scale & quick summary
+    ├── CHARTER.md                               ← Strategic mission, foundational pillars & charter
+    ├── FULL_README.md                           ← Comprehensive manual, CSPM crosswalk & changelog
+    │
+    ├── TRISUELLA-AIDLCA-rules/
+    │   └── core-workflow.md                     ← Master TRISUELLA-AIDLCA workflow (all 3 phases)
+    │
+    ├── TRISUELLA-AIDLCA-rule-details/           ← Detailed rules per phase and extension
+    │   ├── common/                              ← Loaded at every workflow start (11 files)
+    │   ├── inception/                           ← Phase 1: Plan, model threats, design architecture
+    │   ├── construction/                        ← Phase 2: Design, generate, test per unit
+    │   ├── operations/                          ← Phase 3: Deploy, observe, respond
+    │   └── extensions/                          ← Modular opt-in extensions
+    │       ├── security/                        ← Baseline, AI-Agentic, Cloud/CSPM, Infra, Privacy, Data, Zero-Trust
+    │       ├── compliance/                      ← DPDPA, India BFSI, AI-DLCA, GDPR, HIPAA, PCI-DSS
+    │       └── testing/                         ← Property-Based Testing (PBT)
+    │
+    ├── prompts/                                 ← Turnkey prompt library across all stages
+    │   ├── README.md                            ← Index of all prompt suites (P, B, T, A, C)
+    │   ├── planning/                            ← Requirements & STRIDE threat model prompts
+    │   ├── build/                               ← Secure code generation & review prompts
+    │   ├── test/                                ← Security test & prompt injection prompts
+    │   ├── ai-agents/                           ← AI/agentic feature design & MCP review prompts
+    │   └── compliance/                          ← DPDPA, GDPR, HIPAA, PCI compliance prompts
+    │
+    └── docs/                                    ← Developer and architectural documentation
+        ├── faq.md                               ← 25+ frequently asked questions
+        ├── benefits.md                          ← Benefits by role & 4 real-world scenarios
+        ├── vibe-coding-guide.md                 ← Fast-track guide for vibe coders
+        ├── which-extensions.md                  ← Decision tree for extension selection
+        └── adr-template.md                      ← Architecture Decision Record template
+```
+
+---
+
+## 💡 Best Practices for Engineering Teams
+
+1. **Never Bypass `[CRITICAL]` Blockers**: If the CLI or agent flags a blocking issue (e.g., hardcoded secret, missing authentication, non-isolated cloud storage), fix the root cause immediately.
+2. **Layer 1 First**: Ensure Cloud IAM, network perimeters, and secret management are hardened before obsessing over prompt injection guardrails.
+3. **Automate in CI/CD**: Run `python tools/trisu-cli/trisu_validator.py audit` as a required GitHub Actions status check on all pull requests.
+4. **Maintain the Audit Trail**: Ensure `audit.md` is committed alongside architectural changes for seamless SOC 2, ISO 42001, and DPDPA compliance evidence.
 
 ---
 

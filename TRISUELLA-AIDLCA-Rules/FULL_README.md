@@ -231,7 +231,6 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
     │   └── compliance/                          ← DPDPA, GDPR, HIPAA, PCI compliance prompts
     │
     └── docs/                                    ← Developer and architectural documentation
-        ├── Usage-Guide.md                       ← Integration guide for all AI tools & IDEs
         ├── faq.md                               ← 25+ frequently asked questions
         ├── benefits.md                          ← Benefits by role & 4 real-world scenarios
         ├── vibe-coding-guide.md                 ← Fast-track guide for vibe coders

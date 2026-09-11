@@ -126,7 +126,7 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 │   ├── TRISUELLA-AIDLCA-rules/            # core-workflow.md (active agent prompt)
 │   ├── TRISUELLA-AIDLCA-rule-details/     # Modular extensions (MCP, EU AI, Zero Trust, CSPM)
 │   ├── prompts/                           # Turnkey prompt library (P, B, T, A, C series)
-│   └── docs/                              # Developer guides (Usage-Guide, faq, which-extensions)
+│   └── docs/                              # Developer guides (faq, which-extensions, vibe-coding)
 ├── TRISUELLA-AIDLCAa/                     # 8-Stage Autonomous Multi-Agent System
 │   └── README.md                          # ZTP message protocol & Dual-Key HITL gates
 ├── TRISUELLA-AIDLCA-docs/                 # State tracker & crosswalk matrices
