@@ -41,4 +41,5 @@ pip-delete-this-directory.txt
 
 # TriSuElla Framework Local Overrides (if any)
 *.local.md
+*.sarif
 /tmp/
