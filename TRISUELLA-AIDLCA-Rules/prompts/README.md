@@ -1,5 +1,6 @@
-# TRISUELLA-AIDLCA Prompt Template Library
-> **Version**: 3.0 | **Status**: Production Library | **Mapped Checks**: 299  
+# 🔱 TRISUELLA-AIDLCA Prompt Template Library
+> **Version**: 3.0 | **Status**: Production Library | **Mapped Checks**: 299 | **Rules**: 198 | **Domain Families**: 25  
+> **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)  
 > **TRISUELLA-AIDLCA SDF** — Security-first, AI-native. From idea to production.
 
 Copy-paste ready prompts for every stage of the TRISUELLA-AIDLCA workflow. Use these with any AI coding assistant — Claude, ChatGPT, Copilot Chat, Cursor, Windsurf — to get structured, security-aware outputs.
@@ -10,15 +11,15 @@ For the best results, these prompts assume the TRISUELLA-AIDLCA SDF core rules a
 
 ---
 
-## Prompt Categories
+## 📈 Prompt Library Coverage & Progress (v3.0)
 
-| Category | File | What it covers |
-|---|---|---|
-| Planning | [planning/requirements-and-threat-model.md](planning/requirements-and-threat-model.md) | Project kickoff (P-01), requirements deep dive (P-02), STRIDE threat model (P-03), user stories with security ACs (P-04), architecture review (P-05) |
-| Build | [build/secure-code-generation.md](build/secure-code-generation.md) | Secure API endpoint (B-01), security code review (B-02), secure Dockerfile (B-03), secure DB schema (B-04), refactor for security (B-05), auth implementation (B-06) |
-| Test | [test/security-testing.md](test/security-testing.md) | API security tests (T-01), prompt injection tests (T-02), dependency scan setup (T-03), secret scan setup (T-04), AI model evaluation (T-05), infra security checklist (T-06) |
-| AI / Agents | [ai-agents/ai-agent-security-prompts.md](ai-agents/ai-agent-security-prompts.md) | Secure LLM feature design (A-01), multi-agent system design (A-02), RAG security design (A-03), LLM output validation (A-04), prompt template review (A-05), MCP server security review (A-06) |
-| Compliance | [compliance/compliance-prompts.md](compliance/compliance-prompts.md) | GDPR checklist (C-01), DPDPA compliance check (C-02), HIPAA gap assessment (C-03), PCI-DSS scoping (C-04), data subject rights workflow (C-05) |
+| Category | Suite | Mapped Invariants | Status |
+|---|---|---|:---:|
+| **Planning & Threat Modeling** | [planning/requirements-and-threat-model.md](planning/requirements-and-threat-model.md) | P-01 to P-05 (STRIDE, STRIDE-AI) | **100%** |
+| **Secure Code Generation & Build**| [build/secure-code-generation.md](build/secure-code-generation.md) | B-01 to B-06 (20-item checklist, ZTC) | **100%** |
+| **Testing & Adversarial Hardening** | [test/security-testing.md](test/security-testing.md) | T-01 to T-06 (PyRIT, Garak, SAST) | **100%** |
+| **AI & Multi-Agent Architecture** | [ai-agents/ai-agent-security-prompts.md](ai-agents/ai-agent-security-prompts.md) | A-01 to A-06 (MCP sandboxing, ZTP) | **100%** |
+| **Global Regulatory Compliance** | [compliance/compliance-prompts.md](compliance/compliance-prompts.md) | C-01 to C-05 (DPDPA, GDPR, HIPAA) | **100%** |
 
 ---
 
@@ -29,6 +30,10 @@ For the best results, these prompts assume the TRISUELLA-AIDLCA SDF core rules a
 **Generating a new API endpoint** → B-01 (Secure API Endpoint)
 
 **Reviewing existing code for security** → B-02 (Security Code Review)
+
+**Applying Zero Trust Code (ZTC) Invariants** → See `extensions/security/system-baseline/zero-trust-code.md` (TRISU-ZTC-01..08)
+
+**Auditing Open Source & Dependencies (OSS)** → See `extensions/security/system-baseline/open-source-security.md` (TRISU-OSS-01..06)
 
 **Setting up a Docker container** → B-03 (Secure Dockerfile)
 
@@ -61,9 +66,17 @@ For the best results, these prompts assume the TRISUELLA-AIDLCA SDF core rules a
 ---
 
 ## ⚡ Automated Tooling Tip
-Instead of manually evaluating prompts, you can generate an automated CycloneDX AI v1.6 Bill of Materials of all prompt templates and dependencies using:
+Instead of manually evaluating prompt templates and dependencies, generate an automated CycloneDX AI v1.6 Bill of Materials using the turnkey CLI:
 ```bash
-python tools/trisu-cli/trisu_validator.py bom --output ai-bom.json
+# Windows
+.\trisu.cmd bom --output ai-bom.json
+
+# Linux / macOS
+./trisu bom --output ai-bom.json
+
+# Global CLI
+trisu bom --output ai-bom.json
 ```
 
-## Total: 28+ prompts across 5 categories | Mapped to 299 Master Invariants
+## Total: 28+ prompts across 5 categories | Mapped to 299 Master Invariants (v3.0)
+

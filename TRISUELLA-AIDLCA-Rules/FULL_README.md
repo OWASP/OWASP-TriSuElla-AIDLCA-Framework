@@ -20,9 +20,9 @@ The name **TriSuElla** represents the convergence of three foundational forces, 
 
 **Version**: 3.0
 **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)
-**Last Updated**: 2026-04-01
-**Status**: Production-ready (Institutionalized)
-**Total Consolidated Checks**: 299 (across 25 sections)
+**Last Updated**: 2026-09-12
+**Status**: Institutionalized Release (Production-Ready)
+**Total Consolidated Checks**: 299 (across 25 sections, 198 unique rules)
 
 ---
 
@@ -108,6 +108,7 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 ├── ai-bom.json                                  ← Machine-readable CycloneDX AI v1.6 BoM
 ├── trisuella.config.yaml                        ← Declarative policy & CSPM manifest
 ├── CLAUDE.md & .cursorrules                     ← Workspace rules for Claude Code & Cursor
+├── trisu.cmd & trisu                            ← Turnkey CLI wrappers for Windows & POSIX
 ├── LICENSE                                      ← Open-source license
 │
 ├── templates/                                   ← Drop-in developer configs & CI/CD workflows
@@ -120,8 +121,10 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 │   └── .github/workflows/trisuella-gate.yml     ← GitHub Actions CI/CD blocking gate
 │
 ├── tools/                                       ← Governance tooling & runtime gatekeepers
-│   ├── trisu-cli/
-│   │   └── trisu_validator.py                   ← Zero-dependency CLI (check, audit, init, bom, rules)
+│   ├── trisu-cli/                               ← Policy gatekeeper CLI engine (v3.0.0)
+│   │   ├── trisu_validator.py                   ← Zero-dependency CLI (check, audit, oss, init, bom, rules)
+│   │   ├── pyproject.toml & setup.py            ← Pip packaging for global 'trisu' command
+│   │   └── README.md                            ← CLI manual & multi-CI integration guide
 │   └── sisu-ui/                                 ← Sisu Nexus visual compliance dashboard
 │       ├── index.html                           ← Web UI dashboard interface
 │       ├── sisu-ui-design-spec.md               ← UI/UX architecture & metrics specification
@@ -247,7 +250,14 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 Run the zero-dependency TriSuElla validator CLI to scaffold drop-in rules, CI gates, and state tracking in 30 seconds:
 
 ```bash
-# Scaffold into current repository or target project
+# Option 1: Turnkey root wrappers (zero install)
+.\trisu.cmd init --target /path/to/my-repo   # Windows
+./trisu init --target /path/to/my-repo       # Linux / macOS
+
+# Option 2: Global pip CLI
+trisu init --target /path/to/my-repo
+
+# Option 3: Direct python execution
 python tools/trisu-cli/trisu_validator.py init --target /path/to/my-repo
 ```
 
@@ -586,23 +596,18 @@ Original TRISUELLA-AIDLCA rules kit, made platform-independent.
 
 ## 🗺️ Next-Generation Upgrades & Roadmap
 
-The following strategic enhancements are identified for upcoming releases:
+### ✅ Completed & Institutionalized in v3.0
+1. **MCP (Model Context Protocol) Security Specification (`TRISU-MCP-01..06`)** — COMPLETED: Tool schema sanitization, recursive loop bounds, and out-of-band human authorization.
+2. **EU AI Act High-Risk Compliance (`TRISU-EUAI-01..07`)** — COMPLETED: Articles 9–15 high-risk classification and CE marking pre-deployment gates.
+3. **Agentic Identity & Token Delegation (`TRISU-AIAM-01..05`)** — COMPLETED: RFC 8693 token exchange, ephemeral credentials, and SPIFFE/mTLS workload isolation.
+4. **Automated AI-BoM Generator (CycloneDX AI v1.6)** — COMPLETED: Automated model, dataset, and agent bill of materials generation via `trisu bom`.
+5. **Zero Trust Code & Supply Chain Scanners (`TRISU-ZTC` & `TRISU-OSS`)** — COMPLETED: Automated AST static verification and cryptographic lockfile hash pinning via `trisu audit` and `trisu oss`.
+6. **Universal Multi-Platform CLI** — COMPLETED: Native `trisu.cmd`, `./trisu`, and `pip install -e tools/trisu-cli` packaging.
 
-1. **MCP (Model Context Protocol) Security Specification (`TRISU-MCP`)**:
-   - Explicit guardrails against prompt injection via tool descriptions, recursive tool-calling loops, and malicious MCP server payloads.
-   - Granular capability negotiation and least-privilege scoping for autonomous tool-use.
-
-2. **EU AI Act High-Risk Compliance Module**:
-   - Comprehensive control checklist mapping to Articles 9–15 (Risk management, Data governance, Technical documentation, Record-keeping, Transparency, Human oversight, and Cybersecurity).
-
-3. **Agentic Workload Identity & Token Delegation (A-IAM / NI-IAM)**:
-   - Cryptographic SPIFFE/mTLS token issuance and ephemeral credentials for subagents, preventing lateral token abuse and session replay.
-
-4. **Automated AI-BoM Generator (CycloneDX AI Extension)**:
-   - Tooling extension in `trisu-cli` to automatically inspect weights, datasets, prompt templates, and vector databases to output verifiable, signed AI Bills of Materials.
-
-5. **IDE Extensions**:
-   - VS Code and JetBrains extension packaging for real-time linting of active TriSuElla rules during code generation.
+### 🔮 Future Evolution (v3.1 / v4.0 Horizon)
+1. **Native Language Server Protocol (LSP) Engine**: Real-time IDE diagnostics and autofixes for VS Code, Cursor, and JetBrains IDEs.
+2. **eBPF-Based Agent Runtime Enclave**: Dynamic runtime kernel sandboxing for autonomous agents executing local shell commands.
+3. **Decentralized Multi-Agent Cryptographic Notary**: Distributed ledger attestations for multi-enterprise agent handoffs.
 
 ---
 

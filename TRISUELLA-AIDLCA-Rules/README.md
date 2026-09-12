@@ -1,9 +1,32 @@
 # 🔱 TriSuElla-AIDLCA Secure Development Framework
-> **Version**: 3.0 | **Status**: Institutionalized | **Checks**: 299  
+> **Version**: 3.0 | **Status**: Institutionalized (Production-Ready) | **Checks**: 299 | **Rules**: 198 | **Domain Families**: 25  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)  
 > **AI-Driven. Policy-Governed. Trustworthy by Design.**
 
 **TriSuElla** is the foundational governance framework for AI-driven development. It ensures that AI agents operate within secure, compliant, and human-aligned boundaries across the entire software lifecycle.
+
+---
+
+## 📈 Progress & Implementation Milestones (v3.0 Institutionalized)
+
+The framework has attained **100% completion** across all 25 governance families and automated enforcement tools:
+
+| Domain & Invariant Category | Rule Count | Scope & Standards | Progress |
+| :--- | :---: | :--- | :---: |
+| **System Security Baseline (`TRISU-BASE`)** | 15 | OWASP Top 10 (2026), API security, encryption | 100% |
+| **AI & Agentic Security (`TRISU-SEC`)** | 22 | OWASP LLM Top 10, Agentic Top 20, Video KYC Deepfake Gate | 100% |
+| **Zero Trust Architecture & Code (`TRISU-TRUST`/`ZTC`)** | 22 | CISA ZT Model, NIST SP 800-207, 8 in-code AST invariants | 100% |
+| **Sensitive Data Security (`TRISU-DATA`)** | 10 | DPDPA (India), GDPR, HIPAA, L0–L4 Classification | 100% |
+| **Infrastructure & NTP Integrity (`TRISU-INFRA`)** | 16 | CIS Benchmarks, Cosign/SLSA container gates, NTP sync | 100% |
+| **Cloud & Multi-Cloud CSPM (`TRISU-CLOUD`/`CSPM`)** | 24 | 14 CSPM controls across AWS, Azure, GCP, Alibaba, OCI | 100% |
+| **Privacy, Secure & Safety by Design (`TRISU-DESIGN`)** | 10 | Art. 25 GDPR, NIST SSDF, Privacy-by-Default | 100% |
+| **Regulatory & BFSI Compliance (`TRISU-COMP`/`ISO-IND`)**| 41 | India BFSI (CERT-In 6h), DPDPA, PCI-DSS v4, HIPAA, SOC 2 | 100% |
+| **Property-Based Testing (`TRISU-TEST`)** | 10 | Hypothesis, fast-check, proptest invariant verification | 100% |
+| **Model Context Protocol Security (`TRISU-MCP`)** | 6 | MCP Schema Sanitization, Recursion Bounds, HITL | 100% |
+| **EU AI Act High-Risk Compliance (`TRISU-EUAI`)** | 7 | EU Regulation 2024/1689 (Articles 9–15, CE Gate) | 100% |
+| **Agentic Identity & Delegation (`TRISU-AIAM`)** | 5 | RFC 8693 Token Exchange, SPIFFE/mTLS, Ephemeral Keys | 100% |
+| **Open Source & Supply Chain Security (`TRISU-OSS`)** | 6 | Lockfile hash pinning, license scan, CycloneDX AI v1.6 | 100% |
+| **TOTAL INVARIANTS & POLICIES** | **198 Rules / 299 Checks** | **100% Enforced in Master Rules & Automated CLI** | **100%** |
 
 ---
 
@@ -52,23 +75,21 @@ The model is based on the insight that AI systems don't exist in a vacuum; they 
 | **Layer 2: AI / App Security** | AI-Native Risks: Prompt Injection, Tool-use boundaries, Agent Sandboxing, Semantic WAFs. | **~20%** | **The New Surface:** This is the layer of "Prompt Injection" and "Excessive Agency." While high-profile, it accounts for a smaller fraction of total financial loss than Layer 1, but it requires specialized, AI-native security tools. |
 | **Layer 3: Technical & Operational Governance** | Lifecycle & Oversight: NI-IAM, AI-BoM, Policy-as-Code, Human-in-the-Loop, Audit. | **~10%** | **The Long Game:** This layer manages the "silent failures"—model drift, compliance fines, and operational overreach. It is the cheapest to implement but the most critical for long-term legal and regulatory survival. |
 
-### 🚀 Operational & Financial Benefits
-*   **Prevents "Shiny Object Syndrome":** It stops organizations from spending their entire security budget on a "Prompt Injection" tool (Layer 2) while their Cloud IAM (Layer 1) remains wide open.
-*   **CISO-Friendly Metrics:** By framing security as "Loss Impact (%)," it transforms AI security from a technical hurdle into a financial risk management discussion.
-*   **Sequential Hardening:** The model mandates that an organization MUST harden Layer 1 (The Floor) before it can claim to have a "Secure AI System," ensuring a strong foundation for the [Three Pillars](#️-the-three-pillars).
-
-> [!NOTE]
-> **🔱 Summary:** In the TriSuElla framework, the **3-Layer Risk Model** acts as the **"Balance"** in the Trident. It ensures that the speed of AI adoption (**Sisu**) is balanced by a realistic understanding of where the real risks lie (**Tillit**), ultimately leading to coordinated and safe collaboration (**Dugnad**).
-
-
 ---
 
 ## 🚀 Quick Setup (30 Seconds)
 
-### Option A: Turnkey Scaffolding with `trisu-cli`
-Run the zero-dependency CLI to instantly configure any project repository:
+### Option A: Turnkey Zero-Setup Scaffolding
+From the repository root:
 ```bash
-python tools/trisu-cli/trisu_validator.py init --target .
+# Windows
+.\trisu.cmd init --target /path/to/my-repo
+
+# Linux / macOS / Git Bash
+./trisu init --target /path/to/my-repo
+
+# Global CLI (via pip install -e tools/trisu-cli)
+trisu init --target /path/to/my-repo
 ```
 This automatically scaffolds `.cursorrules`, `CLAUDE.md`, `.windsurfrules`, `.github/copilot-instructions.md`, `trisuella.config.yaml`, and the PR verification gate (`.github/workflows/trisuella-gate.yml`).
 
@@ -85,12 +106,16 @@ This automatically scaffolds `.cursorrules`, `CLAUDE.md`, `.windsurfrules`, `.gi
 *   📘 **[Framework Usage Guide (v3.0)](../Usage-Guide.md)**
 *   📜 **[Complete Rule Directory & Detailed Guide](FULL_README.md)**
 *   🏛️ **[Framework Charter & Philosophy](CHARTER.md)**
+*   🛡️ **[Zero Trust Code (TRISU-ZTC)](TRISUELLA-AIDLCA-rule-details/extensions/security/system-baseline/zero-trust-code.md)**
+*   📦 **[Open Source Security & Supply Chain (TRISU-OSS)](TRISUELLA-AIDLCA-rule-details/extensions/security/system-baseline/open-source-security.md)**
+*   ☁️ **[Multi-Cloud CSPM Architecture (TRISU-CSPM)](TRISUELLA-AIDLCA-rule-details/extensions/infrastructure/cloud-cspm-rules.md)**
 *   🔌 **[Model Context Protocol Security (TRISU-MCP)](TRISUELLA-AIDLCA-rule-details/extensions/security/ai-agentic/mcp-security.md)**
 *   🇪🇺 **[EU AI Act High-Risk Compliance (TRISU-EUAI)](TRISUELLA-AIDLCA-rule-details/extensions/compliance/compliance-eu-ai-act.md)**
+*   🔑 **[Agentic Identity & Delegation (TRISU-AIAM)](TRISUELLA-AIDLCA-rule-details/extensions/security/ai-agentic/agentic-identity-delegation.md)**
+*   🛠️ **[Validator CLI Manual (`trisu`)](../tools/trisu-cli/README.md)**
 *   🤝 **[Multi-Agent System & Protocol (TRISUELLA-AIDLCAa)](../TRISUELLA-AIDLCAa/README.md)**
-*   ⚡ **[Top 20 AI Agent Security Controls (2026)](../Data-Source/AI_AGENT_Top_Control.md)**
-*   🧠 **[The Risk-First AI Security Mental Model](../Data-Source/AI_Security_Risk_First_Model.md)**
 
 ---
 
 *v3.0 — Security-first, AI-native. Built for the era of Agentic Autonomy.*
+
