@@ -47,13 +47,13 @@ The framework has achieved **100% Institutionalized Implementation** across all 
 
 The TriSuElla-AIDLCA solution provides a full-spectrum, production-grade security and governance engine designed for modern AI engineering and autonomous agent swarms:
 
-### 1. 🛡️ Zero-Dependency Policy Gatekeeper CLI (`trisu`)
+### 1. 🛡️ Zero-Dependency Policy Gatekeeper CLI (`TRISU-CLI`)
 - **Native Portability**: Runs on Windows (`.\trisu.cmd`), Linux/macOS (`./trisu`), or as a global command via `pip install -e tools/trisu-cli`.
 - **Pure Python Standard Library**: Operates with zero third-party dependencies (`argparse`, `ast`, `json`, `re`, `pathlib`), eliminating supply chain risk on the validator itself.
 - **Blazing Speed**: Sub-second execution (<1.5s) making it ideal for fast developer feedback and lightweight CI/CD runner jobs.
 - **Deterministic Fail-Closed Exit Codes**: Returns `0` on clean state and `1` on blocking `[CRITICAL]` / `[HIGH]` violations.
 
-### 2. 🔍 Hybrid AST Static Application Security Testing (SAST)
+### 2. 🔍 Hybrid AST Static Application Security Testing (`TRISU-SAST` / `ZTC`)
 - **Abstract Syntax Tree (AST) Analysis**: Automatically inspects Python source trees to detect banned dynamic execution sinks (`eval()`, `exec()`), insecure deserialization (`pickle.load/loads`, unloader YAML), and dangerous shell execution (`subprocess.run(shell=True)`).
 - **Deterministic Error Handling Enforcement (`TRISU-ZTC-04`)**: Identifies and blocks fail-open naked exception suppressions (`except: pass`), guaranteeing fail-closed security.
 - **Boundary & Injection Prevention (`TRISU-ZTC-01`)**: Detects unparameterized SQL f-strings, raw SQL concatenation, and insecure TLS verification bypasses (`verify=False`).
@@ -68,8 +68,8 @@ The TriSuElla-AIDLCA solution provides a full-spectrum, production-grade securit
 - **Typosquatting & Dependency Confusion Defense (`TRISU-OSS-04`)**: Detects spoofed, malicious, or typosquatted package names.
 - **Cryptographic Provenance Attestation (`TRISU-OSS-06`)**: Validates SLSA Level 2+ provenance and container signing metadata.
 
-### 5. 📋 Automated CycloneDX AI v1.6 Bill of Materials (`trisu bom`)
-- **AI-BoM Generation**: Produces compliant CycloneDX v1.6 JSON manifests with RFC-4122 UUIDs.
+### 5. 📋 Automated CycloneDX AI v1.6 Bill of Materials (`TRISU-BOM` / `AI-BOM`)
+- **AI-BoM Generation**: Produces compliant CycloneDX v1.6 JSON manifests with RFC-4122 UUIDs (`trisu bom --output ai-bom.json`).
 - **Model & Prompt Transparency**: Automatically records foundation models (e.g., Claude, GPT, Gemma), reasoning tasks, input/output schemas, risk tiers, and governance properties for regulatory auditability.
 
 ### 6. 🤖 Autonomous Agent Confinement & MCP Tool Sandboxing (`TRISU-MCP`)
@@ -85,11 +85,11 @@ The TriSuElla-AIDLCA solution provides a full-spectrum, production-grade securit
 - **Dual-Key Approval Gates**: Critical operations (e.g., schema migration, production deploy, IAM elevation) require co-signed authorizations from two distinct human roles.
 - **Non-Human Identity (NHI) Federation**: Replaces static cloud keys with RFC 8693 token exchange and SPIFFE/mTLS workload principals.
 
-### 9. 🌐 Universal CI/CD DevSecOps Integration & OASIS SARIF 2.1.0 Export
+### 9. 🌐 Universal CI/CD DevSecOps Integration & OASIS SARIF 2.1.0 (`TRISU-SARIF`)
 - **OASIS SARIF 2.1.0 Generation**: CLI exports standard SARIF reports (`--sarif`) seamlessly ingested by GitHub Code Scanning, GitLab Security Dashboard, Azure DevOps, and SonarQube.
 - **Turnkey Scaffolding (`trisu init`)**: Scaffolds complete GitHub Actions workflows, pre-commit hooks, and IDE directives in under 30 seconds.
 
-### 10. 🖥️ Sisu Nexus Visual Compliance Dashboard (`tools/sisu-ui`)
+### 10. 🖥️ Sisu Nexus Visual Compliance Dashboard (`SISU-UI`)
 - **Glassmorphic Cyber UI**: Standalone dark-mode web application featuring real-time repository codespace exploration, active dependency graphs, and live pillar health gauges (SISU, TILLIT, DUGNAD).
 
 ---
