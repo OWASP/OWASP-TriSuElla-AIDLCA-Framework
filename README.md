@@ -67,10 +67,24 @@ All rules are consolidated in [TRISUELLA_MASTER_RULES_AND_CHECKS.md](TRISUELLA_M
 
 ## ⚡ Quick Start: 30 Seconds to Production Governance
 
-### 1. Scaffold Any Project with `trisu-cli`
-Run the zero-dependency CLI to instantly initialize TriSuElla in your existing repository:
+### 1. Turnkey Launchers & Global Pip Installation
+
+The framework provides turnkey zero-setup wrappers and standard pip packaging:
+
 ```bash
-python tools/trisu-cli/trisu_validator.py init --target /path/to/my-repo
+# Option A: Direct root wrapper (zero install)
+.\trisu.cmd check        # Windows (cmd / powershell)
+./trisu check            # Linux / macOS / Git Bash
+
+# Option B: Global pip installation (accessible from any directory)
+pip install -e tools/trisu-cli
+trisu --help
+```
+
+### 2. Scaffold Any Project with `trisu init`
+Run the CLI to instantly initialize TriSuElla governance in your existing repository:
+```bash
+trisu init --target /path/to/my-repo
 ```
 This automatically scaffolds:
 - `.cursorrules` (Cursor AI)
@@ -82,16 +96,22 @@ This automatically scaffolds:
 - `.github/workflows/trisuella-gate.yml` (CI/CD PR gate)
 - `audit.md` & `TRISUELLA-AIDLCA-state.md` (State & compliance tracking)
 
-### 2. Run Policy Audits & SARIF Scans
+### 3. Run Policy Audits & Supply Chain Gates
 ```bash
-# Check repository artifact readiness
-python tools/trisu-cli/trisu_validator.py check
+# Check repository artifact and drop-in template readiness
+trisu check
 
-# Run blocking security audit and export to GitHub Code Scanning
-python tools/trisu-cli/trisu_validator.py audit --sarif audit.sarif
+# Run blocking security audit and export OASIS SARIF report
+trisu audit --sarif audit.sarif
+
+# Run Open Source Security (OSS) & supply chain audit
+trisu oss --sarif oss.sarif
+
+# Validate all 198 rule identifiers and inspect domain breakdown
+trisu rules
 
 # Generate a CycloneDX AI v1.6 Bill of Materials (AI-BoM)
-python tools/trisu-cli/trisu_validator.py bom --output ai-bom.json
+trisu bom --output ai-bom.json
 ```
 
 ---
@@ -101,11 +121,12 @@ python tools/trisu-cli/trisu_validator.py bom --output ai-bom.json
 ```
 OWASP-TriSuElla-AIDLCA-FrameWork/
 ├── README.md                              # Main project entrypoint & quickstart (v3.0)
-├── Usage-Guide.md                         # Comprehensive step-by-step usage guide
+├── Usage-Guide.md                         # Comprehensive step-by-step master usage guide
 ├── TRISUELLA_MASTER_RULES_AND_CHECKS.md   # Unified master rulebook (299 checks, 198 rules)
 ├── ai-bom.json                            # Machine-readable CycloneDX AI v1.6 BoM
 ├── trisuella.config.yaml                  # Declarative policy & Multi-Cloud CSPM manifest
 ├── CLAUDE.md & .cursorrules               # Local IDE workspace assistant rules
+├── trisu.cmd & trisu                      # Turnkey CLI wrappers for Windows & Unix
 ├── LICENSE                                # Open-source Apache-2.0 license
 ├── templates/                             # Drop-in templates for all IDEs & CI/CD
 │   ├── .cursorrules                       # Cursor IDE rules
@@ -116,8 +137,14 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 │   ├── .pre-commit-config.yaml            # Git pre-commit hook
 │   └── .github/workflows/trisuella-gate.yml # GitHub Actions PR gate
 ├── tools/
-│   ├── trisu-cli/trisu_validator.py       # Gatekeeper CLI (check, audit, init, bom, rules)
+│   ├── trisu-cli/                         # Gatekeeper CLI (check, audit, oss, init, bom, rules)
+│   │   ├── trisu_validator.py             # Python engine with AST parser & supply chain scanner
+│   │   ├── pyproject.toml & setup.py      # Pip package definition for global 'trisu' command
+│   │   └── README.md                      # CLI usage manual
 │   └── sisu-ui/                           # Sisu Nexus visual compliance dashboard
+│       ├── index.html                     # Web UI dashboard
+│       ├── sisu-ui-design-spec.md         # UI architecture & KPIs spec
+│       └── sample-data/                   # Demo compliance & governance dataset
 │       ├── index.html                     # Web UI dashboard
 │       ├── sisu-ui-design-spec.md         # UI architecture & KPIs spec
 │       └── sample-data/                   # Demo compliance & governance dataset

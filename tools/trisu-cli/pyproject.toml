@@ -9,7 +9,7 @@ description = "OWASP TriSuElla-AIDLCA Policy Gate Validator CLI"
 readme = "README.md"
 requires-python = ">=3.8"
 authors = [
-    { name = "Bhaskar Puppala (PATEL)", email = "bhaskerpatel@gmail.com" }
+    { name = "Bhaskar Puppala (PATEL)", email = "bhaskarpatelp2@gmail.com" }
 ]
 license = { text = "Apache-2.0" }
 keywords = ["owasp", "trisuella", "llmsecops", "zero-trust", "devsecops", "sarif", "cyclonedx"]

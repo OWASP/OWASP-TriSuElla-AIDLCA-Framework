@@ -109,6 +109,8 @@ def cmd_check(root_dir: Path = None) -> int:
         "TRISUELLA-AIDLCAa/README.md",
         "TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rule-details/extensions/security/zero-trust/zero-trust-code.md",
         "TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rule-details/extensions/security/oss/open-source-security.md",
+        "trisuella.config.yaml",
+        "ai-bom.json",
     ]
 
     missing = []
@@ -127,6 +129,8 @@ def cmd_check(root_dir: Path = None) -> int:
         "templates/copilot-instructions.md",
         "templates/.windsurfrules",
         "templates/trisuella.config.yaml",
+        "templates/.pre-commit-config.yaml",
+        "templates/.github/workflows/trisuella-gate.yml",
     ]
 
     for tpl in required_templates:

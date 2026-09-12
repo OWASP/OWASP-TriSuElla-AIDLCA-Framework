@@ -523,6 +523,8 @@ trisu check
   ✓ Found: TRISUELLA-AIDLCAa/README.md
   ✓ Found: TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rule-details/extensions/security/zero-trust/zero-trust-code.md
   ✓ Found: TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rule-details/extensions/security/oss/open-source-security.md
+  ✓ Found: trisuella.config.yaml
+  ✓ Found: ai-bom.json
 
 [*] Checking Developer Drop-in Templates...
   ✓ Template available: templates/.cursorrules
@@ -530,6 +532,8 @@ trisu check
   ✓ Template available: templates/copilot-instructions.md
   ✓ Template available: templates/.windsurfrules
   ✓ Template available: templates/trisuella.config.yaml
+  ✓ Template available: templates/.pre-commit-config.yaml
+  ✓ Template available: templates/.github/workflows/trisuella-gate.yml
 
 SUCCESS: All core artifacts and templates verified.
 ```

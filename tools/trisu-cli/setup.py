@@ -4,7 +4,7 @@ setup(
     name="trisuella-cli",
     version="3.0.0",
     author="Bhaskar Puppala (PATEL)",
-    author_email="bhaskarpatel@gmail.com",
+    author_email="bhaskarpatelp2@gmail.com",
     description="OWASP TriSuElla-AIDLCA Policy Gate Validator CLI",
     py_modules=["trisu_validator"],
     entry_points={
