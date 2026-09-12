@@ -1,7 +1,7 @@
-# 📖 OWASP TriSuElla-AIDLCA Framework — Comprehensive Master Usage Guide (v3.0)
+# 📖 OWASP TriSuElla-AIDLCA Framework — Comprehensive Master Usage Guide (v3.1.0)
 
 > **AI-Driven Development Life Cycle & Autonomous Agent Governance (LLMSecOps)**  
-> **Version**: 3.0 | **Status**: Institutionalized | **Total Checks**: 299 | **Rules**: 198  
+> **Version**: 3.1.0 | **Status**: Institutionalized (Production & DevSecOps Ready) | **Total Checks**: 299 | **Rules**: 198  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)  
 
 ---
@@ -19,7 +19,7 @@ The framework bridges the gap between fast-paced **vibe coding** and stringent *
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│                        TRISUELLA-AIDLCA v3.0                           │
+│                        TRISUELLA-AIDLCA v3.1.0                         │
 ├───────────────────┬────────────────────────────┬───────────────────────┤
 │ Phase 1: INCEPTION│ Phase 2: CONSTRUCTION      │ Phase 3: OPERATIONS   │
 │ (Plan & Model)    │ (Design, Code & Verify)    │ (Deploy & Observe)    │
@@ -32,6 +32,85 @@ The framework bridges the gap between fast-paced **vibe coding** and stringent *
 │ • Unit Planning   │ • PyRIT / Garak AI Tests   │   Remediation         │
 └───────────────────┴────────────────────────────┴───────────────────────┘
 ```
+
+---
+
+## 🚀 Complete CLI Feature Reference & DevSecOps Playbook
+
+The zero-dependency `trisu` command-line interface provides automated policy validation, static code security scanning, supply chain checks, and CycloneDX AI-BoM generation.
+
+### CLI Launchers:
+- **Windows (cmd / powershell)**: `.\trisu.cmd <command> [options]`
+- **Linux / macOS / Git Bash**: `./trisu <command> [options]`
+- **Global Python**: `pip install -e tools/trisu-cli` followed by `trisu <command> [options]`
+
+---
+
+### Command 1: `trisu check` — Framework Artifact Readiness
+Validates that the current workspace has all required policy specifications, charters, and developer templates in place:
+```bash
+trisu check [--dir <directory>]
+```
+- **Exit Codes**: `0` = All artifacts present; `1` = Missing core governance files or templates.
+
+---
+
+### Command 2: `trisu audit` — Static Code Security (SAST) & Secret Detection
+Executes hybrid AST scanning and pattern analysis for Zero Trust Code violations:
+```bash
+# Terminal audit
+trisu audit [--dir <directory>]
+
+# Export standard OASIS SARIF 2.1.0 for GitHub / IDE ingestion
+trisu audit --sarif trisuella-audit.sarif
+```
+- **Checks Performed**:
+  - `TRISU-ZTC-01`: Raw SQL string formatting / concatenation, unvalidated boundaries, TLS bypass (`verify=False`).
+  - `TRISU-ZTC-03`: Hardcoded secrets (AWS `AKIA*`, GitHub `ghp_*`, private keys, API tokens).
+  - `TRISU-ZTC-04`: Fail-open naked exception suppressions (`except: pass`).
+  - `TRISU-ZTC-05`: Insecure dynamic execution (`eval()`, `exec()`, `pickle.loads()`, unloader YAML).
+  - `TRISU-ZTC-07`: Unsafe subprocess invocations (`shell=True`, raw `os.system()`).
+  - `TRISU-ZTC-08`: Unconstrained dynamic agent tool execution.
+
+---
+
+### Command 3: `trisu oss` — Open Source Security (SCA) & Supply Chain
+Audits dependencies, lockfile hashes, and open-source licenses:
+```bash
+trisu oss [--dir <directory>] [--sarif trisuella-oss.sarif]
+```
+- **Checks Performed**:
+  - `TRISU-OSS-01`: Cryptographic lockfile pinning (verifies exact versions and committed lockfiles).
+  - `TRISU-OSS-03`: License governance (blocks copyleft contamination such as AGPL-3.0, SSPL, EUPL).
+  - `TRISU-OSS-04`: Namespace typosquatting and dependency confusion defense.
+  - `TRISU-OSS-05`: CycloneDX AI-BoM structural validation.
+
+---
+
+### Command 4: `trisu bom` — CycloneDX AI v1.6 Bill of Materials Generation
+Generates a machine-readable, schema-compliant Software & AI Bill of Materials:
+```bash
+trisu bom [--output ai-bom.json] [--dir <directory>]
+```
+- **Generated Schema**: CycloneDX v1.6 AI-BoM with RFC-4122 UUID, tool metadata, model cards, datasets, and governance risk-tier properties (`TILLIT`, `Dual-Key HITL`, `ZTC`).
+
+---
+
+### Command 5: `trisu rules` — Invariant Integrity & Domain Inspector
+Inspects all 198 rule identifiers across 25 domain families:
+```bash
+trisu rules
+```
+- Validates rule numbering, domain breakdown, and ensures zero broken rule anchors in the governance matrix.
+
+---
+
+### Command 6: `trisu init` — Instant Project Scaffolding
+Scaffolds turnkey governance directives and CI/CD gates into any existing or new project in 30 seconds:
+```bash
+trisu init --target /path/to/my-repo
+```
+- Automatically creates `.cursorrules`, `CLAUDE.md`, `.windsurfrules`, `.github/copilot-instructions.md`, `trisuella.config.yaml`, `.pre-commit-config.yaml`, and `.github/workflows/trisuella-gate.yml`.
 
 ---
 

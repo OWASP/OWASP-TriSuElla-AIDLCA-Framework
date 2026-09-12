@@ -1,5 +1,5 @@
 # TRISU Framework State
-> **Version**: 3.0.1 | **Status**: Institutionalized Release (Production-Ready & CI-Verified)  
+> **Version**: 3.1.0 | **Status**: Institutionalized Release (Production-Ready, DevSecOps-Ready & CI-Verified)  
 > **Consolidated Invariants**: 299 Checks | **Rules**: 198 | **Domain Families**: 25  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)
 
@@ -8,7 +8,7 @@
 
 ## 📊 Current Status
 - **Project**: OWASP TriSuElla-AIDLCA Governance Institutionalization
-- **Version**: 3.0.1 (Institutionalized Release)
+- **Version**: 3.1.0 (Institutionalized & DevSecOps Release)
 - **Current Phase**: **INSTITUTIONALIZED PRODUCTION & ECOSYSTEM ADOPTION**
 - **Current Stage**: Fully Codified, Validated, and CI/CD Gated
 - **Last Updated**: 2026-09-12

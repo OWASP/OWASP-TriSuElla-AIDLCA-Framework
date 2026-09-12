@@ -1,12 +1,12 @@
 # 🔱 OWASP TriSuElla-AIDLCA Framework
 > **AI-Driven Development Life Cycle & Autonomous Agent Governance (LLMSecOps)**  
-> **Software Version**: 3.0.1 | **Framework Version**: 3.0.1 | **Status**: Institutionalized (Production-Ready & CI-Verified)  
+> **Software Version**: 3.1.0 | **Framework Version**: 3.1.0 | **Status**: Institutionalized (Production-Ready, DevSecOps-Ready & CI-Verified)  
 > **Consolidated Invariants**: 299 Checks | **Rules**: 198 | **Domain Families**: 25
 
 [![TriSuElla Gate](https://github.com/OWASP/TriSuElla-AIDLCA-Framework/actions/workflows/trisuella-gate.yml/badge.svg)](templates/.github/workflows/trisuella-gate.yml)
-[![Version: 3.0.1](https://img.shields.io/badge/Version-3.0.1%20Verified-blue.svg)](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
+[![Version: 3.1.0](https://img.shields.io/badge/Version-3.1.0%20Verified-blue.svg)](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
 [![CI Gate: Passing](https://img.shields.io/badge/CI%20Gate-Passing%20(Run%2034675720411)-success.svg)](https://github.com/OWASP/OWASP-TriSuElla-AIDLCA-Framework/actions)
-[![Progress: 100% Complete](https://img.shields.io/badge/Progress-100%25%20Verified-success.svg)](#-progress--implementation-milestones-v301-institutionalized--ci-verified)
+[![Progress: 100% Complete](https://img.shields.io/badge/Progress-100%25%20Verified-success.svg)](#-progress--implementation-milestones-v310-institutionalized--ci-verified)
 [![Author: Bhaskar Puppala (PATEL)](https://img.shields.io/badge/Author-Bhaskar%20Puppala%20(PATEL)-blue.svg)](https://www.linkedin.com/in/bhaskerkpatel/)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2.svg?logo=linkedin)](https://www.linkedin.com/in/bhaskerkpatel/)
 [![Standards: ISO 42001 / DPDPA / EU AI Act](https://img.shields.io/badge/Standards-ISO%2042001%20%7C%20EU%20AI%20Act%20%7C%20DPDPA-green.svg)](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
@@ -25,7 +25,7 @@ Rooted in the symbolic **Trident (Trishula)** of Nordic and Sanskrit principles:
 
 ---
 
-## 📈 Progress & Implementation Milestones (v3.0.1 Institutionalized & CI-Verified)
+## 📈 Progress & Implementation Milestones (v3.1.0 Institutionalized & CI-Verified)
 
 The framework has achieved **100% Institutionalized Implementation** across all governance pillars, automated tooling, and multi-cloud posture standards:
 
@@ -40,6 +40,68 @@ The framework has achieved **100% Institutionalized Implementation** across all 
 | **CI/CD Pull Request Policy Gate**| GitHub Actions verified live (Run `34675720411`: dual SARIF + BoM) | 100% | **Verified Passing** |
 | **Multi-Agent System (AIDLCAa)** | 8-Agent Pipeline, TRISU-ZTP Envelopes & Dual-Key HITL Gates | 100% | **Production-Ready** |
 | **Visual Governance Dashboard** | Sisu Nexus Web UI (`tools/sisu-ui`) & Compliance Datasets | 100% | **Production-Ready** |
+
+---
+
+## 🌟 Key Solution Features & Capabilities
+
+The TriSuElla-AIDLCA solution provides a full-spectrum, production-grade security and governance engine designed for modern AI engineering and autonomous agent swarms:
+
+### 1. 🛡️ Zero-Dependency Policy Gatekeeper CLI (`trisu`)
+- **Native Portability**: Runs on Windows (`.\trisu.cmd`), Linux/macOS (`./trisu`), or as a global command via `pip install -e tools/trisu-cli`.
+- **Pure Python Standard Library**: Operates with zero third-party dependencies (`argparse`, `ast`, `json`, `re`, `pathlib`), eliminating supply chain risk on the validator itself.
+- **Blazing Speed**: Sub-second execution (<1.5s) making it ideal for fast developer feedback and lightweight CI/CD runner jobs.
+- **Deterministic Fail-Closed Exit Codes**: Returns `0` on clean state and `1` on blocking `[CRITICAL]` / `[HIGH]` violations.
+
+### 2. 🔍 Hybrid AST Static Application Security Testing (SAST)
+- **Abstract Syntax Tree (AST) Analysis**: Automatically inspects Python source trees to detect banned dynamic execution sinks (`eval()`, `exec()`), insecure deserialization (`pickle.load/loads`, unloader YAML), and dangerous shell execution (`subprocess.run(shell=True)`).
+- **Deterministic Error Handling Enforcement (`TRISU-ZTC-04`)**: Identifies and blocks fail-open naked exception suppressions (`except: pass`), guaranteeing fail-closed security.
+- **Boundary & Injection Prevention (`TRISU-ZTC-01`)**: Detects unparameterized SQL f-strings, raw SQL concatenation, and insecure TLS verification bypasses (`verify=False`).
+
+### 3. 🔑 Zero Ambient Credentials & Secret Scanning (`TRISU-ZTC-03`)
+- **Multi-Vector Credential Scanner**: Scans all repository files for exposed AWS Access Keys (`AKIA*`), GitHub PATs (`ghp_*`), private RSA/EC/SSH keys, and hardcoded API tokens.
+- **Just-In-Time (JIT) Credential Enforcement**: Mandates ephemeral identity retrieval via workload federation and immediate memory zeroization.
+
+### 4. 📦 Software Composition Analysis (SCA) & Supply Chain Security (`TRISU-OSS`)
+- **Cryptographic Lockfile Hash Pinning (`TRISU-OSS-01`)**: Enforces exact dependency version pinning with SHA-256 integrity hashes, rejecting floating version ranges (`>=`, `~=`).
+- **Open Source License Governance (`TRISU-OSS-03`)**: Prohibits restrictive copyleft contamination (AGPL-3.0, SSPL, EUPL) in commercial releases.
+- **Typosquatting & Dependency Confusion Defense (`TRISU-OSS-04`)**: Detects spoofed, malicious, or typosquatted package names.
+- **Cryptographic Provenance Attestation (`TRISU-OSS-06`)**: Validates SLSA Level 2+ provenance and container signing metadata.
+
+### 5. 📋 Automated CycloneDX AI v1.6 Bill of Materials (`trisu bom`)
+- **AI-BoM Generation**: Produces compliant CycloneDX v1.6 JSON manifests with RFC-4122 UUIDs.
+- **Model & Prompt Transparency**: Automatically records foundation models (e.g., Claude, GPT, Gemma), reasoning tasks, input/output schemas, risk tiers, and governance properties for regulatory auditability.
+
+### 6. 🤖 Autonomous Agent Confinement & MCP Tool Sandboxing (`TRISU-MCP`)
+- **Model Context Protocol (MCP) Guardrails**: Enforces runtime parameter sanitization, recursive execution loop bounds, and out-of-band credential injection defense (`TRISU-MCP-01..06`).
+- **Agent Blast-Radius Limits**: Restricts autonomous agent tool execution to least-privilege operations with mandatory human sign-off on mutating calls (`TRISU-ZTC-08`).
+
+### 7. ☁️ Enterprise Multi-Cloud CSPM Framework (`TRISU-CSPM`)
+- **14 Unified Cloud Controls**: Standardized security posture across **AWS, Microsoft Azure, Google Cloud (GCP), Alibaba Cloud (Aliyun), and Oracle Cloud Infrastructure (OCI)**.
+- **Deep Domain Coverage**: Kubernetes Posture (KSPM), Data Security Posture (DSPM), AI Model Perimeters (AI-CSPM), WORM Storage Object Locks, and Shift-Left IaC validation.
+
+### 8. 👥 Dual-Key Human-in-the-Loop (HITL) & Agentic IAM (`TRISU-AIAM`)
+- **Zero Trust Protocol (ZTP) Envelopes**: Structured, cryptographically verified inter-agent communication packets across the 8-stage AIDLCAa multi-agent lifecycle.
+- **Dual-Key Approval Gates**: Critical operations (e.g., schema migration, production deploy, IAM elevation) require co-signed authorizations from two distinct human roles.
+- **Non-Human Identity (NHI) Federation**: Replaces static cloud keys with RFC 8693 token exchange and SPIFFE/mTLS workload principals.
+
+### 9. 🌐 Universal CI/CD DevSecOps Integration & OASIS SARIF 2.1.0 Export
+- **OASIS SARIF 2.1.0 Generation**: CLI exports standard SARIF reports (`--sarif`) seamlessly ingested by GitHub Code Scanning, GitLab Security Dashboard, Azure DevOps, and SonarQube.
+- **Turnkey Scaffolding (`trisu init`)**: Scaffolds complete GitHub Actions workflows, pre-commit hooks, and IDE directives in under 30 seconds.
+
+### 10. 🖥️ Sisu Nexus Visual Compliance Dashboard (`tools/sisu-ui`)
+- **Glassmorphic Cyber UI**: Standalone dark-mode web application featuring real-time repository codespace exploration, active dependency graphs, and live pillar health gauges (SISU, TILLIT, DUGNAD).
+
+---
+
+## 🎯 Personas & How to Use TriSuElla
+
+| Persona | Primary Goal | How TriSuElla Solves It |
+| :--- | :--- | :--- |
+| **AI Engineers & Vibe Coders** | Build fast without generating security flaws | Drop in `.cursorrules`, `CLAUDE.md`, or `.windsurfrules`. The AI co-pilot automatically enforces threat modeling, input validation, and the 20-Item Security Review Checklist. |
+| **DevSecOps & AppSec Engineers** | Block vulnerabilities and supply-chain attacks in CI/CD | Run `trisu audit --sarif audit.sarif` and `trisu oss --sarif oss.sarif` in pull requests. Auto-block builds on critical CVEs, unpinned packages, or exposed secrets. |
+| **Cloud & Platform Architects** | Standardize security across multi-cloud deployments | Enforce the 14 `TRISU-CSPM` controls across AWS, Azure, GCP, Alibaba, and OCI to eliminate cloud misconfigurations and ensure private AI perimeters. |
+| **GRC & Compliance Officers** | Satisfy AI regulations (EU AI Act, ISO 42001, DPDPA) | Run `trisu bom` to produce CycloneDX AI-BoMs and audit against the 299 institutionalized checks to ensure continuous compliance evidence. |
 
 ---
 

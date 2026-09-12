@@ -1,13 +1,13 @@
 # 🔱 OWASP TriSuElla-AIDLCA Policy Gate Validator CLI (`trisu`)
-> **Software Version**: 3.0.1 | **Framework Version**: 3.0.1 | **Status**: Production-Ready (Verified CI/CD Gate)  
+> **Software Version**: 3.1.0 | **Framework Version**: 3.1.0 | **Status**: Production-Ready (Verified CI/CD & DevSecOps Gate)  
 > **Consolidated Invariants**: 299 Checks | **Rules**: 198 | **Domain Families**: 25  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)
 
-The official zero-dependency command-line utility for the **OWASP TriSuElla-AIDLCA Framework (v3.0.1)**. Enforces deterministic Zero Trust Code (ZTC) invariants, Open Source Security (OSS) supply chain checks, CycloneDX AI-BoM generation, and automated CI/CD gating across any platform (GitHub, GitLab, Azure DevOps, Bitbucket, Jenkins, or Local).
+The official zero-dependency command-line utility for the **OWASP TriSuElla-AIDLCA Framework (v3.1.0)**. Enforces deterministic Zero Trust Code (ZTC) invariants, Open Source Security (OSS) supply chain checks, CycloneDX AI-BoM generation, and automated CI/CD gating across any platform (GitHub, GitLab, Azure DevOps, Bitbucket, Jenkins, or Local).
 
 ---
 
-## 📈 Progress & Implementation Milestones (v3.0.1)
+## 📈 Progress & Implementation Milestones (v3.1.0)
 
 | Capability / Engine | Scope & Standards | Progress | Status |
 | :--- | :--- | :---: | :---: |

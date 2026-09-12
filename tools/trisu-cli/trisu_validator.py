@@ -5,8 +5,8 @@ Zero-dependency CLI tool for verifying TriSuElla framework artifacts,
 validating Zero Trust Code (ZTC) invariants, Open Source Security (OSS),
 policy manifests, and auditing blockers.
 
-Version: 3.0.1
-Status: Production Gatekeeper
+Version: 3.1.0
+Status: Production Gatekeeper & DevSecOps Engine
 Author: Bhaskar Puppala (PATEL)
 """
 
@@ -29,7 +29,7 @@ if sys.stdout.encoding != "utf-8":
     except Exception:
         pass
 
-VERSION = "3.0.1"
+VERSION = "3.1.0"
 
 
 class Colors:
