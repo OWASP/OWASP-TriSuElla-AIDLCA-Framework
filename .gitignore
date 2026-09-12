@@ -43,3 +43,4 @@ pip-delete-this-directory.txt
 *.local.md
 *.sarif
 /tmp/
+assets/
