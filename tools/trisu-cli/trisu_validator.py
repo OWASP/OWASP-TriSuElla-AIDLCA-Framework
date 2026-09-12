@@ -5,7 +5,7 @@ Zero-dependency CLI tool for verifying TriSuElla framework artifacts,
 validating Zero Trust Code (ZTC) invariants, Open Source Security (OSS),
 policy manifests, and auditing blockers.
 
-Version: 3.0
+Version: 3.0.1
 Status: Production Gatekeeper
 Author: Bhaskar Puppala (PATEL)
 """
@@ -13,21 +13,23 @@ Author: Bhaskar Puppala (PATEL)
 import os
 import sys
 import argparse
-import ast
-import re
-import shutil
 import json
-from pathlib import Path
+import re
+import ast
+import urllib.request
+import urllib.parse
 from datetime import datetime, timezone
+from pathlib import Path
 
-if sys.platform == "win32":
+# Ensure UTF-8 output encoding for cross-platform compatibility
+if sys.stdout.encoding != "utf-8":
     try:
         sys.stdout.reconfigure(encoding="utf-8")
         sys.stderr.reconfigure(encoding="utf-8")
     except Exception:
         pass
 
-VERSION = "3.0"
+VERSION = "3.0.1"
 
 
 class Colors:

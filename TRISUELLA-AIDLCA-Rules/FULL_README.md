@@ -18,10 +18,10 @@ The name **TriSuElla** represents the convergence of three foundational forces, 
 
 **TRISUELLA-AIDLCA (AI-Driven Development Life Cycle)** — A modern methodology for software development that integrates generative AI throughout every stage of the building process: from threat modeling and requirements, through design, code generation, security testing, deployment, and incident response.
 
-**Version**: 3.0
+**Version**: 3.0.1
 **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)
 **Last Updated**: 2026-09-12
-**Status**: Institutionalized Release (Production-Ready)
+**Status**: Institutionalized Release (Production-Ready & CI-Verified)
 **Total Consolidated Checks**: 299 (across 25 sections, 198 unique rules)
 
 ---
@@ -534,6 +534,11 @@ Ready-to-use prompts for every stage of the TRISUELLA-AIDLCA workflow. Copy, fil
 
 ## 🔄 Changelog
 
+### v3.0.1 (2026-09-12) - Production CI/CD Gate Verification & Turnkey Patch
+- **Live CI/CD Policy Gate Verification** — Verified remote GitHub Actions run `34675720411` with 100% success across all 23 pipeline steps (artifact readiness, AST blocking audit, open source supply chain verification, rules index validation, CycloneDX AI-BoM generation, and dual OASIS SARIF 2.1.0 uploads).
+- **Universal Multi-Platform CI/CD Support** — Validated zero-dependency local execution (`trisu.cmd`, `trisu`, `python trisu_validator.py`) and provided turnkey integration patterns for GitLab CI (`artifacts:reports:sast`), Azure DevOps (`PublishSecurityAnalysisLogs@3`), and Bitbucket/Jenkins.
+- **Supply Chain & Reporting Hygiene** — Added `*.sarif` to `.gitignore` to maintain clean source trees while archiving build-time governance artifacts.
+
 ### v3.0 (2026-09-12) - Institutionalized Release
 - **Zero Trust Code (ZTC) Extension (`TRISU-ZTC-01..08`)** — Enforced 8 in-code security invariants: explicit boundary validation, scoped object authorization, zero ambient credentials, deterministic fail-closed, banned dynamic deserialization, in-code audit telemetry, prohibited shell execution (`shell=True`), and agent tool confinement with mandatory HITL approval.
 - **Open Source Security & Supply Chain (OSS) Extension (`TRISU-OSS-01..06`)** — Governed direct and transitive dependencies, deterministic lockfile pinning, build-time integrity hashing, copyleft license contamination checks, typosquatting defense, and CycloneDX SBOM/AI-BoM attestation.
@@ -611,4 +616,4 @@ Original TRISUELLA-AIDLCA rules kit, made platform-independent.
 
 ---
 
-*TRISUELLA-AIDLCA Secure Development Framework v3.0 — Security-first, AI-native. From idea to production.*
+*TRISUELLA-AIDLCA Secure Development Framework v3.0.1 — Security-first, AI-native. From idea to production.*

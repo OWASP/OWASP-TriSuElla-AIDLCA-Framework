@@ -1,5 +1,5 @@
 # 🔱 TRISUELLA-AIDLCA Prompt Template Library
-> **Version**: 3.0 | **Status**: Production Library | **Mapped Checks**: 299 | **Rules**: 198 | **Domain Families**: 25  
+> **Version**: 3.0.1 | **Status**: Production Library | **Mapped Checks**: 299 | **Rules**: 198 | **Domain Families**: 25  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)  
 > **TRISUELLA-AIDLCA SDF** — Security-first, AI-native. From idea to production.
 
@@ -11,7 +11,7 @@ For the best results, these prompts assume the TRISUELLA-AIDLCA SDF core rules a
 
 ---
 
-## 📈 Prompt Library Coverage & Progress (v3.0)
+## 📈 Prompt Library Coverage & Progress (v3.0.1)
 
 | Category | Suite | Mapped Invariants | Status |
 |---|---|---|:---:|
@@ -78,5 +78,5 @@ Instead of manually evaluating prompt templates and dependencies, generate an au
 trisu bom --output ai-bom.json
 ```
 
-## Total: 28+ prompts across 5 categories | Mapped to 299 Master Invariants (v3.0)
+## Total: 28+ prompts across 5 categories | Mapped to 299 Master Invariants (v3.0.1)
 

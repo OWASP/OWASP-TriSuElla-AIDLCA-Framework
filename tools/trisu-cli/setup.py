@@ -2,9 +2,9 @@ from setuptools import setup
 
 setup(
     name="trisuella-cli",
-    version="3.0.0",
+    version="3.0.1",
     author="Bhaskar Puppala (PATEL)",
-    author_email="bhaskarpatelp2@gmail.com",
+    author_email="bhaskarpatel@gmail.com",
     description="OWASP TriSuElla-AIDLCA Policy Gate Validator CLI",
     py_modules=["trisu_validator"],
     entry_points={

@@ -1,11 +1,12 @@
 # 🔱 OWASP TriSuElla-AIDLCA Framework
 > **AI-Driven Development Life Cycle & Autonomous Agent Governance (LLMSecOps)**  
-> **Software Version**: 3.0.0 | **Framework Version**: 3.0 | **Status**: Institutionalized (Production-Ready)  
+> **Software Version**: 3.0.1 | **Framework Version**: 3.0.1 | **Status**: Institutionalized (Production-Ready & CI-Verified)  
 > **Consolidated Invariants**: 299 Checks | **Rules**: 198 | **Domain Families**: 25
 
 [![TriSuElla Gate](https://github.com/OWASP/TriSuElla-AIDLCA-Framework/actions/workflows/trisuella-gate.yml/badge.svg)](templates/.github/workflows/trisuella-gate.yml)
-[![Version: 3.0](https://img.shields.io/badge/Version-3.0%20Institutionalized-blue.svg)](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
-[![Progress: 100% Complete](https://img.shields.io/badge/Progress-100%25%20Institutionalized-success.svg)](#-progress--implementation-milestones-v30)
+[![Version: 3.0.1](https://img.shields.io/badge/Version-3.0.1%20Verified-blue.svg)](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
+[![CI Gate: Passing](https://img.shields.io/badge/CI%20Gate-Passing%20(Run%2034675720411)-success.svg)](https://github.com/OWASP/OWASP-TriSuElla-AIDLCA-Framework/actions)
+[![Progress: 100% Complete](https://img.shields.io/badge/Progress-100%25%20Verified-success.svg)](#-progress--implementation-milestones-v301-institutionalized--ci-verified)
 [![Author: Bhaskar Puppala (PATEL)](https://img.shields.io/badge/Author-Bhaskar%20Puppala%20(PATEL)-blue.svg)](https://www.linkedin.com/in/bhaskerkpatel/)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2.svg?logo=linkedin)](https://www.linkedin.com/in/bhaskerkpatel/)
 [![Standards: ISO 42001 / DPDPA / EU AI Act](https://img.shields.io/badge/Standards-ISO%2042001%20%7C%20EU%20AI%20Act%20%7C%20DPDPA-green.svg)](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
@@ -24,7 +25,7 @@ Rooted in the symbolic **Trident (Trishula)** of Nordic and Sanskrit principles:
 
 ---
 
-## 📈 Progress & Implementation Milestones (v3.0 Institutionalized)
+## 📈 Progress & Implementation Milestones (v3.0.1 Institutionalized & CI-Verified)
 
 The framework has achieved **100% Institutionalized Implementation** across all governance pillars, automated tooling, and multi-cloud posture standards:
 
@@ -36,7 +37,7 @@ The framework has achieved **100% Institutionalized Implementation** across all 
 | **Turnkey CLI & Packaging** | `trisu.cmd`, `trisu` executable, pip packaging (`pyproject.toml`) | 100% | **Production-Ready** |
 | **Multi-Cloud CSPM Framework** | 14 Auditing Standards across AWS, Azure, GCP, Alibaba, OCI | 100% | **Production-Ready** |
 | **CycloneDX AI-BoM Generator** | CycloneDX AI v1.6 Bill of Materials generator (`trisu bom`) | 100% | **Production-Ready** |
-| **CI/CD Pull Request Gate** | GitHub Actions with SARIF 2.1.0 upload & Code Scanning | 100% | **Active Gate** |
+| **CI/CD Pull Request Policy Gate**| GitHub Actions verified live (Run `34675720411`: dual SARIF + BoM) | 100% | **Verified Passing** |
 | **Multi-Agent System (AIDLCAa)** | 8-Agent Pipeline, TRISU-ZTP Envelopes & Dual-Key HITL Gates | 100% | **Production-Ready** |
 | **Visual Governance Dashboard** | Sisu Nexus Web UI (`tools/sisu-ui`) & Compliance Datasets | 100% | **Production-Ready** |
 

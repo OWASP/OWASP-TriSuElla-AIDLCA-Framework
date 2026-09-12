@@ -1,5 +1,5 @@
 # 🔱 TriSuElla-AIDLCA Secure Development Framework
-> **Version**: 3.0 | **Status**: Institutionalized (Production-Ready) | **Checks**: 299 | **Rules**: 198 | **Domain Families**: 25  
+> **Version**: 3.0.1 | **Status**: Institutionalized (Production-Ready & CI-Verified) | **Checks**: 299 | **Rules**: 198 | **Domain Families**: 25  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)  
 > **AI-Driven. Policy-Governed. Trustworthy by Design.**
 
@@ -7,7 +7,7 @@
 
 ---
 
-## 📈 Progress & Implementation Milestones (v3.0 Institutionalized)
+## 📈 Progress & Implementation Milestones (v3.0.1 Institutionalized & CI-Verified)
 
 The framework has attained **100% completion** across all 25 governance families and automated enforcement tools:
 
@@ -117,5 +117,5 @@ This automatically scaffolds `.cursorrules`, `CLAUDE.md`, `.windsurfrules`, `.gi
 
 ---
 
-*v3.0 — Security-first, AI-native. Built for the era of Agentic Autonomy.*
+*v3.0.1 — Security-first, AI-native. Built for the era of Agentic Autonomy.*
 
