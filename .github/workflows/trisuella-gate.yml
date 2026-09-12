@@ -8,8 +8,13 @@ on:
 
 jobs:
   trisuella-gate:
-    name: "Enforce TriSuElla v2.5 Gates"
+    name: "Enforce TriSuElla v3.0 Gates"
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      security-events: write # Required for SARIF upload
+      pull-requests: write
 
     steps:
       - name: Checkout Code
@@ -24,10 +29,31 @@ jobs:
         run: |
           python tools/trisu-cli/trisu_validator.py check
 
-      - name: Audit for Blocking [CRITICAL]/[HIGH] Findings
+      - name: Audit for Blocking [CRITICAL]/[HIGH] Findings & Generate SARIF
         run: |
-          python tools/trisu-cli/trisu_validator.py audit
+          python tools/trisu-cli/trisu_validator.py audit --sarif trisuella-audit.sarif
 
-      - name: Verify Rules Integrity
+      - name: Audit Open Source Security & Supply Chain (TRISU-OSS)
+        run: |
+          python tools/trisu-cli/trisu_validator.py oss --sarif trisuella-oss.sarif
+
+      - name: Verify Rules Integrity (198 TRISU-* Identifiers)
         run: |
           python tools/trisu-cli/trisu_validator.py rules
+
+      - name: Generate CycloneDX AI v1.6 Bill of Materials (AI-BoM)
+        run: |
+          python tools/trisu-cli/trisu_validator.py bom --output ai-bom.json
+
+      - name: Upload Security SARIF Report to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: trisuella-audit.sarif
+          category: trisuella-security-gate
+
+      - name: Archive AI-BoM Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-bom-cyclonedx
+          path: ai-bom.json

@@ -470,15 +470,35 @@ Once approved, the AI generates the code and appends the mandatory checklist:
 
 The framework includes `tools/trisu-cli/trisu_validator.py`, a zero-dependency CLI written entirely in Python's standard library.
 
-### 3.1 Command Reference
+### 3.1 Turnkey Execution & Command Reference
+
+You can run the CLI through any of these three frictionless methods:
+
+1. **Root Convenience Wrappers (Zero Setup)**:
+   - Windows: `.\trisu.cmd <command>`
+   - Linux / macOS / Git Bash: `./trisu <command>`
+2. **Global Pip Install (Accessible in any Directory / PATH)**:
+   ```bash
+   pip install -e tools/trisu-cli
+   trisu <command>
+   ```
+3. **Direct Python Script**:
+   ```bash
+   python tools/trisu-cli/trisu_validator.py <command>
+   ```
+
+#### Command Matrix
 
 | Command | Purpose | When to Run | Output / Exit Code |
 | :--- | :--- | :--- | :--- |
-| `python tools/trisu-cli/trisu_validator.py check` | Verifies repository readiness, templates, and manifests | Before starting work | `0` = Ready, `1` = Missing templates |
-| `python tools/trisu-cli/trisu_validator.py audit` | Scans workspace for hardcoded secrets, insecure patterns, and policy violations | During local dev & pre-commit | `0` = Clean, `1` = Blocking `[CRITICAL]` |
-| `python tools/trisu-cli/trisu_validator.py audit --sarif audit.sarif` | Generates standardized OASIS SARIF v2.1.0 security report | In CI/CD pipelines & IDE SARIF viewers | Writes `audit.sarif` |
-| `python tools/trisu-cli/trisu_validator.py bom --output ai-bom.json` | Catalogs models, datasets, and pipelines into CycloneDX AI v1.6 Bill of Materials | Before release / deployment | Writes `ai-bom.json` |
-| `python tools/trisu-cli/trisu_validator.py rules` | Validates master rules index and verifies all 184 `TRISU-*` identifiers | Post-update or audit verification | `0` = 184 rules valid |
+| `trisu check` | Verifies repository readiness, core artifacts, and drop-in templates | Before starting work / bootstrap | `0` = Ready, `1` = Missing templates |
+| `trisu audit` | Scans workspace for hardcoded secrets, dangerous sinks (`eval`, `shell=True`), and ZTC violations | During local dev & pre-commit | `0` = Clean, `1` = Blocking `[CRITICAL]` |
+| `trisu audit --sarif audit.sarif` | Generates standardized OASIS SARIF v2.1.0 security report | In CI/CD pipelines & IDE SARIF viewers | Writes `audit.sarif` |
+| `trisu oss` | Audits Open Source Security (OSS), dependency pinning, license contamination & supply chain | Dependency updates & pre-merge | `0` = Clean, `1` = Blocking `[CRITICAL]` |
+| `trisu oss --sarif oss.sarif` | Generates standardized OASIS SARIF v2.1.0 OSS supply chain report | In CI/CD pipelines & IDE SARIF viewers | Writes `oss.sarif` |
+| `trisu bom --output ai-bom.json` | Catalogs models, datasets, and pipelines into CycloneDX AI v1.6 Bill of Materials | Before release / deployment | Writes `ai-bom.json` |
+| `trisu rules` | Validates master rules index and displays breakdown across all 25 domains and 198 rules | Post-update or audit verification | `0` = 198 rules valid |
+| `trisu init --target <dir>` | Scaffolds TriSuElla governance templates & config into a new or existing project | Project bootstrap | `0` = Governance active |
 
 ---
 
@@ -486,50 +506,126 @@ The framework includes `tools/trisu-cli/trisu_validator.py`, a zero-dependency C
 
 #### 1. Checking Repository Readiness
 ```bash
-python tools/trisu-cli/trisu_validator.py check
+trisu check
 ```
 **Sample Output:**
 ```text
-======================================================================
+============================================================
   OWASP TriSuElla-AIDLCA Policy Gate Validator v3.0
-  Framework Status: Institutionalized | Checks: 291 | Rules: 190
-======================================================================
-[*] Checking TriSuElla Framework artifacts and configuration...
-  ✓ Configuration manifest present: trisuella.config.yaml
-  ✓ Master rules index verified: TRISUELLA_MASTER_RULES_AND_CHECKS.md
-  ✓ Drop-in template verified: .cursorrules
-  ✓ Drop-in template verified: CLAUDE.md
-  ✓ Drop-in template verified: .windsurfrules
-  ✓ Drop-in template verified: .github/copilot-instructions.md
-  ✓ Drop-in template verified: .pre-commit-config.yaml
-  ✓ CI/CD workflow verified: .github/workflows/trisuella-gate.yml
-  ✓ All core TriSuElla v3.0 artifacts and templates verified successfully.
+  Status: Institutionalized | Pillars: SISU, TILLIT, DUGNAD
+============================================================
+[*] Checking TriSuElla framework core artifacts in: /workspace/OWASP-TriSuElla-AIDLCA-FrameWork...
+  ✓ Found: TRISUELLA_MASTER_RULES_AND_CHECKS.md
+  ✓ Found: TRISUELLA-AIDLCA-Rules/README.md
+  ✓ Found: TRISUELLA-AIDLCA-Rules/CHARTER.md
+  ✓ Found: TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rules/core-workflow.md
+  ✓ Found: TRISUELLA-AIDLCA-docs/TRISUELLA-AIDLCA-state.md
+  ✓ Found: TRISUELLA-AIDLCAa/README.md
+  ✓ Found: TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rule-details/extensions/security/zero-trust/zero-trust-code.md
+  ✓ Found: TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rule-details/extensions/security/oss/open-source-security.md
+
+[*] Checking Developer Drop-in Templates...
+  ✓ Template available: templates/.cursorrules
+  ✓ Template available: templates/CLAUDE.md
+  ✓ Template available: templates/copilot-instructions.md
+  ✓ Template available: templates/.windsurfrules
+  ✓ Template available: templates/trisuella.config.yaml
+
+SUCCESS: All core artifacts and templates verified.
 ```
 
-#### 2. Running a Blocking Security Audit
+#### 2. Running a Blocking Security & Zero Trust Code Audit
 ```bash
-python tools/trisu-cli/trisu_validator.py audit
+trisu audit
 ```
 **Sample Output (Clean Pass):**
 ```text
-[*] Running static security and policy compliance audit on target directory...
-  ✓ Audited 42 source and configuration files.
-  ✓ Static secret scanning passed: 0 exposed private keys, bearer tokens, or cloud credentials.
-  ✓ Insecure pattern scanning passed: No unparameterized queries or wildcard IAM statements.
-  ✓ Blocking Audit Result: 0 Critical, 0 High findings. Policy gate PASSED.
+============================================================
+  OWASP TriSuElla-AIDLCA Policy Gate Validator v3.0
+  Status: Institutionalized | Pillars: SISU, TILLIT, DUGNAD
+============================================================
+[*] Auditing for blocking security findings in: /workspace/my-app
+
+[*] Running hybrid AST & static Zero Trust Code (ZTC) scanning...
+
+PASSED: Zero open [CRITICAL]/[HIGH] blockers detected. Pipeline clear.
 ```
 
 **Sample Output (Blocked on Critical Violation):**
 ```text
-[*] Running static security and policy compliance audit on target directory...
+[*] Auditing for blocking security findings in: /workspace/my-app
+[*] Running hybrid AST & static Zero Trust Code (ZTC) scanning...
   [CRITICAL] Hardcoded AWS Secret Access Key discovered in src/cloud/deploy.py:Line 24
+  [CRITICAL] Prohibited shell execution (shell=True) discovered in scripts/build.py:Line 14
   [HIGH] Unsanitized prompt injection sink found in src/agent/tools.py:Line 89
-  [HIGH] Insecure S3 bucket configuration with public read ACL in terraform/storage.tf:Line 12
   ----------------------------------------------------------------------
-  Audit Summary: 1 Critical, 2 High, 0 Medium, 0 Low findings.
+  Audit Summary: 2 Critical, 1 High, 0 Medium, 0 Low findings.
   FAILED: 3 blocking vulnerabilities must be resolved before proceeding.
 ```
 *(CLI exits with code `1`, immediately halting local commits or CI/CD pipelines).*
+
+#### 3. Auditing Open Source Security (OSS) & Supply Chain Integrity
+```bash
+trisu oss
+```
+**Sample Output:**
+```text
+============================================================
+  OWASP TriSuElla-AIDLCA Policy Gate Validator v3.0
+  Status: Institutionalized | Pillars: SISU, TILLIT, DUGNAD
+============================================================
+[*] Auditing Open Source Security (OSS) & Supply Chain in: /workspace/my-app
+
+  --> Checking Dependency Pinning & Lockfiles (TRISU-OSS-01)...
+  --> Checking License Governance & Contamination (TRISU-OSS-03)...
+  --> Checking for Typosquatting & Dependency Confusion (TRISU-OSS-04)...
+  --> Checking Software Bill of Materials (SBOM / AI-BoM) (TRISU-OSS-05)...
+
+PASSED: Open Source Security (OSS) & Supply Chain verification clear (0 blockers).
+```
+
+#### 4. Validating Rules Integrity & Domain Breakdown
+```bash
+trisu rules
+```
+**Sample Output:**
+```text
+============================================================
+  OWASP TriSuElla-AIDLCA Policy Gate Validator v3.0
+  Status: Institutionalized | Pillars: SISU, TILLIT, DUGNAD
+============================================================
+[*] Validating rules in TRISUELLA_MASTER_RULES_AND_CHECKS.md...
+
+[*] Rule Families Breakdown (25 domains, 198 rules):
+  • TRISU-AIAM       :  5 rules
+  • TRISU-BASE       : 15 rules
+  • TRISU-CHECK      :  1 rules
+  • TRISU-CLOUD      : 10 rules
+  • TRISU-COMP       :  8 rules
+  • TRISU-CSPM       : 14 rules
+  • TRISU-DATA       : 10 rules
+  • TRISU-DLCA       : 15 rules
+  • TRISU-EUAI       :  7 rules
+  • TRISU-GATE       :  1 rules
+  • TRISU-INFRA      : 16 rules
+  • TRISU-LIFE       :  7 rules
+  • TRISU-MCP        :  6 rules
+  • TRISU-OPS        :  5 rules
+  • TRISU-OSS        :  6 rules
+  • TRISU-PBD        :  5 rules
+  • TRISU-PLAN       :  1 rules
+  • TRISU-RE         :  1 rules
+  • TRISU-REQ        :  1 rules
+  • TRISU-SBD        :  5 rules
+  • TRISU-SEC        : 22 rules
+  • TRISU-TEST       : 10 rules
+  • TRISU-TOOL       :  5 rules
+  • TRISU-TRUST      : 14 rules
+  • TRISU-ZTC        :  8 rules
+
+  ✓ Discovered 198 unique TRISU-* rule identifiers.
+  ✓ Master rules index integrity valid (299 consolidated checks, 198 unique rules).
+```
 
 ---
 
@@ -622,6 +718,14 @@ jobs:
         run: |
           python tools/trisu-cli/trisu_validator.py audit --sarif trisuella-audit.sarif
 
+      - name: Audit Open Source Security & Supply Chain (TRISU-OSS)
+        run: |
+          python tools/trisu-cli/trisu_validator.py oss --sarif trisuella-oss.sarif
+
+      - name: Verify Rules Integrity (198 TRISU-* Identifiers)
+        run: |
+          python tools/trisu-cli/trisu_validator.py rules
+
       - name: Generate CycloneDX AI v1.6 Bill of Materials (AI-BoM)
         run: |
           python tools/trisu-cli/trisu_validator.py bom --output ai-bom.json
@@ -657,12 +761,15 @@ trisuella_security_gate:
   script:
     - python tools/trisu-cli/trisu_validator.py check
     - python tools/trisu-cli/trisu_validator.py audit --sarif trisuella-audit.sarif
+    - python tools/trisu-cli/trisu_validator.py oss --sarif trisuella-oss.sarif
+    - python tools/trisu-cli/trisu_validator.py rules
     - python tools/trisu-cli/trisu_validator.py bom --output ai-bom.json
   artifacts:
     reports:
       sast: trisuella-audit.sarif
     paths:
       - trisuella-audit.sarif
+      - trisuella-oss.sarif
       - ai-bom.json
     when: always
   rules:
@@ -694,6 +801,8 @@ steps:
 - script: |
     python tools/trisu-cli/trisu_validator.py check
     python tools/trisu-cli/trisu_validator.py audit --sarif $(Build.ArtifactStagingDirectory)/trisuella-audit.sarif
+    python tools/trisu-cli/trisu_validator.py oss --sarif $(Build.ArtifactStagingDirectory)/trisuella-oss.sarif
+    python tools/trisu-cli/trisu_validator.py rules
     python tools/trisu-cli/trisu_validator.py bom --output $(Build.ArtifactStagingDirectory)/ai-bom.json
   displayName: 'Run TriSuElla v3.0 Policy Gate'
 
@@ -768,10 +877,11 @@ The `TRISUELLA-AIDLCA-Rules/prompts/` directory contains 28 production-ready pro
 OWASP-TriSuElla-AIDLCA-FrameWork/
 ├── README.md                                    ← Main project entrypoint & quickstart (v3.0)
 ├── Usage-Guide.md                               ← Canonical, comprehensive master usage guide (This File)
-├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (291 checks, 190 rules)
+├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (299 checks, 198 rules)
 ├── ai-bom.json                                  ← Machine-readable CycloneDX AI v1.6 BoM
 ├── trisuella.config.yaml                        ← Declarative policy & CSPM manifest
 ├── CLAUDE.md & .cursorrules                     ← Workspace rules for Claude Code & Cursor
+├── trisu.cmd & trisu                            ← Turnkey root execution wrappers (Windows & Unix)
 ├── LICENSE                                      ← Open-source Apache-2.0 license
 │
 ├── templates/                                   ← Drop-in developer configs & CI/CD workflows
@@ -785,7 +895,9 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 │
 ├── tools/                                       ← Governance tooling & runtime gatekeepers
 │   ├── trisu-cli/
-│   │   └── trisu_validator.py                   ← Zero-dependency CLI (check, audit, init, bom, rules)
+│   │   ├── trisu_validator.py                   ← Zero-dependency CLI (check, audit, oss, init, bom, rules)
+│   │   ├── pyproject.toml & setup.py            ← Pip package definition for global 'trisu' command
+│   │   └── README.md                            ← CLI documentation & usage guide
 │   └── sisu-ui/                                 ← Sisu Nexus visual compliance dashboard
 │       ├── index.html                           ← Web UI dashboard interface
 │       ├── sisu-ui-design-spec.md               ← UI/UX architecture & metrics specification
@@ -818,7 +930,7 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
     │   ├── construction/                        ← Phase 2: Design, generate, test per unit
     │   ├── operations/                          ← Phase 3: Deploy, observe, respond
     │   └── extensions/                          ← Modular opt-in extensions
-    │       ├── security/                        ← Baseline, AI-Agentic, Cloud/CSPM, Infra, Privacy, Data, Zero-Trust
+    │       ├── security/                        ← Baseline, AI-Agentic, Cloud/CSPM, Infra, Privacy, Data, Zero-Trust, OSS
     │       ├── compliance/                      ← DPDPA, India BFSI, AI-DLCA, GDPR, HIPAA, PCI-DSS
     │       └── testing/                         ← Property-Based Testing (PBT)
     │
@@ -844,7 +956,7 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 
 1. **Never Bypass `[CRITICAL]` Blockers**: If the CLI or agent flags a blocking issue (e.g., hardcoded secret, missing authentication, non-isolated cloud storage), fix the root cause immediately.
 2. **Layer 1 First**: Ensure Cloud IAM, network perimeters, and secret management are hardened before obsessing over prompt injection guardrails.
-3. **Automate in CI/CD**: Run `python tools/trisu-cli/trisu_validator.py audit` as a required GitHub Actions status check on all pull requests.
+3. **Automate in CI/CD**: Run `python tools/trisu-cli/trisu_validator.py audit` and `oss` as required GitHub Actions status checks on all pull requests.
 4. **Maintain the Audit Trail**: Ensure `audit.md` is committed alongside architectural changes for seamless SOC 2, ISO 42001, and DPDPA compliance evidence.
 
 ---
@@ -864,7 +976,7 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 
 ## 📚 Key Reference Documents
 
-- **Master Rules Specification (291 Checks, 190 Rules)**: [TRISUELLA_MASTER_RULES_AND_CHECKS.md](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
+- **Master Rules Specification (299 Checks, 198 Rules)**: [TRISUELLA_MASTER_RULES_AND_CHECKS.md](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
 - **Detailed Developer Manual & CSPM Crosswalk**: [TRISUELLA-AIDLCA-Rules/FULL_README.md](TRISUELLA-AIDLCA-Rules/FULL_README.md)
 - **Framework Philosophy & Charter**: [TRISUELLA-AIDLCA-Rules/CHARTER.md](TRISUELLA-AIDLCA-Rules/CHARTER.md)
 - **Turnkey Prompt Library (28 Prompts)**: [TRISUELLA-AIDLCA-Rules/prompts/README.md](TRISUELLA-AIDLCA-Rules/prompts/README.md)

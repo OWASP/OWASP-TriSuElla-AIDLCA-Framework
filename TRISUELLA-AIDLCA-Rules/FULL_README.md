@@ -524,8 +524,14 @@ Ready-to-use prompts for every stage of the TRISUELLA-AIDLCA workflow. Copy, fil
 
 ## 🔄 Changelog
 
-### v2.5 (2026-04-01) - Institutionalized Release
-- **Unified Master Rulebook** — Consolidated **299 rules and checks** across 25 categories with **198 unique TRISU-* rule identifiers** into `TRISUELLA_MASTER_RULES_AND_CHECKS.md`.
+### v3.0 (2026-09-12) - Institutionalized Release
+- **Zero Trust Code (ZTC) Extension (`TRISU-ZTC-01..08`)** — Enforced 8 in-code security invariants: explicit boundary validation, scoped object authorization, zero ambient credentials, deterministic fail-closed, banned dynamic deserialization, in-code audit telemetry, prohibited shell execution (`shell=True`), and agent tool confinement with mandatory HITL approval.
+- **Open Source Security & Supply Chain (OSS) Extension (`TRISU-OSS-01..06`)** — Governed direct and transitive dependencies, deterministic lockfile pinning, build-time integrity hashing, copyleft license contamination checks, typosquatting defense, and CycloneDX SBOM/AI-BoM attestation.
+- **Turnkey CLI & Packaging (`tools/trisu-cli`)** — Upgraded `trisu_validator.py` to v3.0 with AST-based static scanning, root discovery, domain breakdowns, `trisu oss` supply chain auditor, root convenience wrappers (`trisu.cmd`, `trisu`), and pip packaging (`pyproject.toml`, `setup.py`) for global `trisu` command execution.
+- **Unified Master Rulebook (299 Checks, 198 Unique Rules)** — Recalibrated full master rules specification across 25 security domains.
+
+### v2.5 (2026-04-01)
+- **Unified Master Rulebook** — Consolidated **291 rules and checks** across 25 categories into `TRISUELLA_MASTER_RULES_AND_CHECKS.md`.
 - **Full-Spectrum Multi-Cloud CSPM & Auditing Standard (`TRISU-CSPM`)** — Institutionalized 14 enterprise-grade CSPM controls across the top 5 cloud providers (**AWS**, **Microsoft Azure**, **Google Cloud Platform**, **Alibaba Cloud (Aliyun)**, and **Oracle Cloud Infrastructure**):
   - `TRISU-CSPM-01` to `TRISU-CSPM-08`: Continuous CSPM & CIS Level 2 scanning, Workload IAM & Non-Human Identity (NHI) federation, Storage WORM compliance locks, Private network perimeter isolation, Tamper-evident multi-region audit trails, Automated drift remediation, Dedicated Cloud HSM / CMK key management, and Sovereign region geofencing.
   - `TRISU-CSPM-09` to `TRISU-CSPM-14`: Kubernetes Security Posture Management (**KSPM** - EKS/AKS/GKE/ACK/OKE), Database & Data Store Posture (**DSPM** - RDS/Cosmos/Cloud SQL/PolarDB/Autonomous DB), Compute & AI/ML Workload Posture (**AI-CSPM / CWPP** - IMDSv2, SageMaker/Azure OpenAI/Vertex/PAI/GenAI), Cloud Infrastructure Entitlements (**CIEM** - dormant credential revocation & PCI < 15), Cloud Edge WAF & Anti-DDoS Ingress, and Shift-Left Infrastructure-as-Code (**IaC**) pre-flight scanning.

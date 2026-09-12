@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "trisuella-cli"
+version = "3.0.0"
+description = "OWASP TriSuElla-AIDLCA Policy Gate Validator CLI"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [
+    { name = "Bhaskar Puppala (PATEL)", email = "bhaskerpatel@gmail.com" }
+]
+license = { text = "Apache-2.0" }
+keywords = ["owasp", "trisuella", "llmsecops", "zero-trust", "devsecops", "sarif", "cyclonedx"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Topic :: Security",
+]
+
+[project.scripts]
+trisu = "trisu_validator:main"
+trisuella = "trisu_validator:main"

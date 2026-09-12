@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# OWASP TriSuElla-AIDLCA CLI Launcher for Linux, macOS & Git Bash
+set -e
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+if command -v python3 >/dev/null 2>&1; then
+    exec python3 "$DIR/tools/trisu-cli/trisu_validator.py" "$@"
+elif command -v python >/dev/null 2>&1; then
+    exec python "$DIR/tools/trisu-cli/trisu_validator.py" "$@"
+else
+    echo "Error: Python 3 is required to run TriSuElla CLI." >&2
+    exit 1
+fi
