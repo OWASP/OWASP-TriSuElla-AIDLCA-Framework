@@ -263,4 +263,4 @@ TriSuElla operates on a strict **Binary Enforcement Principle**:
 - **LinkedIn**: [linkedin.com/in/bhaskerkpatel](https://www.linkedin.com/in/bhaskerkpatel/)
 - **Organization**: [OWASP TriSuElla Working Group](https://github.com/OWASP/OWASP-TriSuElla-AIDLCA-Framework)
 
-*v3.0 Institutionalized Release — Security-first, AI-native. Built for the era of Agentic Autonomy.*
+*v3.2.0 Institutionalized Release — Security-first, AI-native. Built for the era of Agentic Autonomy.*
