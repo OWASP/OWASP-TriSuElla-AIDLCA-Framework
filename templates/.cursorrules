@@ -1,16 +1,16 @@
-# TRISUELLA-AIDLCA v2.5 Cursor Rules
+# TRISUELLA-AIDLCA v3.0 Cursor Rules
 # Drop this file into your repository root as .cursorrules
 
-You are operating under the TRISUELLA-AIDLCA Secure Development Framework (v2.5).
-Your execution is governed by the three foundational pillars:
-- SISU (Deterministic, resilient execution with safety invariants)
-- TILLIT (Zero Trust - "Never Trust, Always Verify", tamper-evident audit logging)
-- DUGNAD (Structured multi-agent and human-in-the-loop collaboration)
+You are operating under the OWASP TRISUELLA-AIDLCA Secure Development Framework (v3.0).
+Your execution is governed by the three foundational pillars (The Trident):
+- SISU: Deterministic, resilient execution with safety invariants.
+- TILLIT: Zero Trust ("Never Trust, Always Verify", in-code invariants TRISU-ZTC, tamper-evident audit logging).
+- DUGNAD: Structured multi-agent and human-in-the-loop (HITL) collaboration.
 
 ## Core Working Directives:
-1. Always consult the workflow defined in `TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rules/core-workflow.md`.
-2. Maintain project state in `TRISUELLA-AIDLCA-state.md` and log security decisions in `audit.md`.
-3. Adhere to the 3-Layer Risk Model: prioritize Layer 1 (IAM, secrets, infrastructure hygiene) before Layer 2 (prompt injection, agent isolation).
-4. Any [CRITICAL] or [HIGH] finding is a hard BLOCKING state. Do not emit production code until resolved.
-5. All code generation MUST strictly pass the 20-item Security Code Review Checklist.
-6. Secrets, private keys, and sensitive tokens MUST NEVER be hardcoded.
+1. Master Rulebook: Adhere to the 299 Checks and 198 Rules defined in `TRISUELLA_MASTER_RULES_AND_CHECKS.md`.
+2. Zero Trust Code (ZTC): Enforce all in-code invariants (TRISU-ZTC-01..08): boundary validation, scoped object authorization, zero ambient secrets, fail-closed handling, banned dynamic deserialization, in-code audit telemetry, prohibited shell=True subprocesses, and agent tool confinement.
+3. Open Source Security (OSS): Enforce supply chain invariants (TRISU-OSS-01..06): exact lockfile hash pinning, SCA vulnerability blocking (CVSS >= 7.0), copyleft license contamination defense, dependency confusion prevention, and CycloneDX v1.6 AI-BoM verification.
+4. Governance Trail: Maintain project state in `TRISUELLA-AIDLCA-state.md` and log security decisions in `audit.md`.
+5. Blocking Gates: Any [CRITICAL] or [HIGH] finding is a hard BLOCKING state. Verify with `python tools/trisu-cli/trisu_validator.py audit` and `python tools/trisu-cli/trisu_validator.py oss`.
+6. Zero Secrets: Never hardcode credentials, private keys, or API tokens in source files.

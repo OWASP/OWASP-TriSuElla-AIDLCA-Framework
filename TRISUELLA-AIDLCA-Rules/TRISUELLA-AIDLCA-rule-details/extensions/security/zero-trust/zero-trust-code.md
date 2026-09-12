@@ -197,4 +197,78 @@ Traditional Zero Trust operates at the **perimeter and network layers** (mTLS, f
 
 ---
 
+### Rule TRISU-ZTC-07 [CRITICAL]: Unsafe Shell & Process Subprocess Execution Invariant
+**Rule**: Invocation of operating system commands via dynamic shell execution (`shell=True`, `os.system()`, `popen()` with raw string concatenation) is strictly PROHIBITED. All system processes MUST be invoked with discrete, parameterized argument lists, absolute binary paths, strict execution timeouts, and sanitized environment blocks.
+
+- **Anti-Pattern (Command Injection Vulnerability)**:
+  ```python
+  # INSECURE: Vulnerable to arbitrary command injection via shell=True
+  import subprocess
+
+  def convert_user_file(filename: str):
+      subprocess.run(f"convert {filename} output.png", shell=True) # DISASTROUS RCE!
+  ```
+- **Compliant Pattern (Zero Trust Code)**:
+  ```python
+  # SECURE: Explicit argument list, no shell invocation, strict timeout, isolated environment
+  import subprocess
+  from pathlib import Path
+
+  ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png"}
+  CONVERT_BINARY = "/usr/bin/convert"
+
+  def convert_user_file(input_path: Path, output_path: Path):
+      if input_path.suffix.lower() not in ALLOWED_EXTENSIONS:
+          raise ValueError("Invalid file extension")
+      # Execute with strict argument vector, no shell interpreter
+      subprocess.run(
+          [CONVERT_BINARY, str(input_path.resolve()), str(output_path.resolve())],
+          shell=False,
+          check=True,
+          timeout=15, # Blast-radius bounded by time
+          env={"PATH": "/usr/bin"} # Clean isolated environment
+      )
+  ```
+- **Auditing Verification**:
+  - `trisu_validator.py audit` statically checks for `shell=True` and `os.system(` calls in application code.
+
+---
+
+### Rule TRISU-ZTC-08 [CRITICAL]: Autonomous Agent Tool Dispatch Boundary & Confinement
+**Rule**: Autonomous AI agents invoking local or remote tools MUST execute within deterministic confinement boundaries. Tool arguments synthesized by LLMs MUST undergo schema validation before execution. Any mutating, financial, external webhook, or destructive tool MUST require an attested Human-in-the-Loop (HITL) approval token before invocation.
+
+- **Anti-Pattern (Unconstrained Agent Tool Execution)**:
+  ```python
+  # INSECURE: Directly dispatches LLM-synthesized tool and arguments with ambient privileges
+  def on_agent_tool_call(tool_name: str, raw_arguments: dict):
+      execute_dynamically(tool_name, **raw_arguments) # NO VALIDATION, NO HITL!
+  ```
+- **Compliant Pattern (Zero Trust Code)**:
+  ```python
+  # SECURE: Strict typed Pydantic schema validation, HITL gating for critical operations, timeout
+  from pydantic import BaseModel, Field
+  from guardrails import require_hitl_approval, emit_tool_audit
+
+  class DatabaseDropTableToolSchema(BaseModel):
+      table_name: str = Field(pattern=r"^[a-zA-Z0-9_]+$")
+      tenant_id: str
+
+  def on_agent_tool_call(tool_name: str, raw_arguments: dict, caller_context: AgentContext):
+      # 1. Deterministic schema validation
+      if tool_name == "drop_table":
+          validated = DatabaseDropTableToolSchema.model_validate(raw_arguments)
+          # 2. Enforce tenant isolation invariant
+          if validated.tenant_id != caller_context.tenant_id:
+              raise SecurityException("Cross-tenant mutation attempt blocked")
+          # 3. Mandatory Human-In-The-Loop (HITL) gate for destructive actions
+          require_hitl_approval(action="DROP_TABLE", context=validated)
+          # 4. In-code audit telemetry
+          emit_tool_audit(tool_name, validated, caller_context)
+          return drop_table_safely(validated.table_name, validated.tenant_id)
+  ```
+- **Auditing Verification**:
+  - AST scanning ensures all agent tool dispatchers enforce schema validation and authorization checks.
+
+---
+
 *OWASP TriSuElla-AIDLCA Zero Trust Code Specification v3.0 — Continuous Verification Inside Application Logic.*

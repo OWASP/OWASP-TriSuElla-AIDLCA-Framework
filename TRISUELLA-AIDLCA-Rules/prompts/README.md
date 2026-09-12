@@ -1,5 +1,5 @@
 # TRISUELLA-AIDLCA Prompt Template Library
-> **Version**: 3.0 | **Status**: Production Library | **Mapped Checks**: 291  
+> **Version**: 3.0 | **Status**: Production Library | **Mapped Checks**: 299  
 > **TRISUELLA-AIDLCA SDF** — Security-first, AI-native. From idea to production.
 
 Copy-paste ready prompts for every stage of the TRISUELLA-AIDLCA workflow. Use these with any AI coding assistant — Claude, ChatGPT, Copilot Chat, Cursor, Windsurf — to get structured, security-aware outputs.
@@ -66,4 +66,4 @@ Instead of manually evaluating prompts, you can generate an automated CycloneDX 
 python tools/trisu-cli/trisu_validator.py bom --output ai-bom.json
 ```
 
-## Total: 28+ prompts across 5 categories | Mapped to 291 Master Invariants
+## Total: 28+ prompts across 5 categories | Mapped to 299 Master Invariants

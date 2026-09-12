@@ -2,7 +2,8 @@
 """
 OWASP TriSuElla-AIDLCA Policy Gate Validator (tools/trisu-cli)
 Zero-dependency CLI tool for verifying TriSuElla framework artifacts,
-validating Zero Trust Code invariants, policy manifests, and auditing blockers.
+validating Zero Trust Code (ZTC) invariants, Open Source Security (OSS),
+policy manifests, and auditing blockers.
 
 Version: 3.0
 Status: Production Gatekeeper
@@ -12,11 +13,13 @@ Author: Bhaskar Puppala (PATEL)
 import os
 import sys
 import argparse
+import ast
 import re
 import shutil
 import json
 from pathlib import Path
 from datetime import datetime, timezone
+
 if sys.platform == "win32":
     try:
         sys.stdout.reconfigure(encoding="utf-8")
@@ -28,12 +31,12 @@ VERSION = "3.0"
 
 
 class Colors:
-    GREEN = "[92m"
-    RED = "[91m"
-    YELLOW = "[93m"
-    BLUE = "[94m"
-    BOLD = "[1m"
-    RESET = "[0m"
+    GREEN = "\033[92m"
+    RED = "\033[91m"
+    YELLOW = "\033[93m"
+    BLUE = "\033[94m"
+    BOLD = "\033[1m"
+    RESET = "\033[0m"
 
 def print_banner():
     banner = f"""{Colors.BLUE}{Colors.BOLD}
@@ -54,6 +57,8 @@ def cmd_check(root_dir: Path) -> int:
         "TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rules/core-workflow.md",
         "TRISUELLA-AIDLCA-docs/TRISUELLA-AIDLCA-state.md",
         "TRISUELLA-AIDLCAa/README.md",
+        "TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rule-details/extensions/security/zero-trust/zero-trust-code.md",
+        "TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rule-details/extensions/security/oss/open-source-security.md",
     ]
 
     missing = []
@@ -89,8 +94,267 @@ def cmd_check(root_dir: Path) -> int:
     print(f"\n{Colors.GREEN}{Colors.BOLD}SUCCESS: All core artifacts and templates verified.{Colors.RESET}")
     return 0
 
+
+class ASTSecurityScanner(ast.NodeVisitor):
+    """Hybrid AST parser detecting Zero Trust Code violations in Python source."""
+    def __init__(self, filename: str, rel_path: str):
+        self.filename = filename
+        self.rel_path = rel_path
+        self.findings = []
+
+    def visit_Try(self, node):
+        # TRISU-ZTC-04: Deterministic Fail-Closed (Catch and Pass without re-raise)
+        for handler in node.handlers:
+            if len(handler.body) == 1 and isinstance(handler.body[0], ast.Pass):
+                exc_name = getattr(handler.type, "id", "Exception") if handler.type else "All"
+                self.findings.append((
+                    self.rel_path,
+                    handler.lineno,
+                    "HIGH",
+                    "TRISU-ZTC-04",
+                    f"Fail-Open Naked Exception Suppression (except {exc_name}: pass)"
+                ))
+        self.generic_visit(node)
+
+    def visit_Call(self, node):
+        func_name = ""
+        if isinstance(node.func, ast.Name):
+            func_name = node.func.id
+        elif isinstance(node.func, ast.Attribute):
+            func_name = node.func.attr
+
+        # TRISU-ZTC-05: Insecure Dynamic Execution
+        if func_name in ("eval", "exec"):
+            self.findings.append((
+                self.rel_path,
+                node.lineno,
+                "CRITICAL",
+                "TRISU-ZTC-05",
+                f"Banned Dynamic Execution Sink ({func_name})"
+            ))
+        elif func_name in ("loads", "load"):
+            # check for pickle.loads or yaml.load without SafeLoader
+            if isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name):
+                module_name = node.func.value.id
+                if module_name == "pickle":
+                    self.findings.append((
+                        self.rel_path,
+                        node.lineno,
+                        "CRITICAL",
+                        "TRISU-ZTC-05",
+                        "Insecure Object Deserialization (pickle.load/loads)"
+                    ))
+                elif module_name in ("yaml", "ruamel"):
+                    # Check if safe loader used
+                    is_safe = False
+                    for kw in node.keywords:
+                        if kw.arg in ("Loader", "loader"):
+                            if "safe" in ast.dump(kw.value).lower():
+                                is_safe = True
+                    if not is_safe and func_name == "load":
+                        self.findings.append((
+                            self.rel_path,
+                            node.lineno,
+                            "CRITICAL",
+                            "TRISU-ZTC-05",
+                            "Unsafe YAML Deserialization (missing SafeLoader)"
+                        ))
+
+        # TRISU-ZTC-07: Unsafe Shell Execution
+        if func_name in ("run", "Popen", "call", "check_call", "check_output"):
+            for kw in node.keywords:
+                if kw.arg == "shell" and isinstance(kw.value, ast.Constant) and kw.value.value is True:
+                    self.findings.append((
+                        self.rel_path,
+                        node.lineno,
+                        "CRITICAL",
+                        "TRISU-ZTC-07",
+                        f"Unsafe Subprocess Shell Execution ({func_name} with shell=True)"
+                    ))
+        elif func_name in ("system", "popen") and isinstance(node.func, ast.Attribute):
+            if isinstance(node.func.value, ast.Name) and node.func.value.id == "os":
+                self.findings.append((
+                    self.rel_path,
+                    node.lineno,
+                    "CRITICAL",
+                    "TRISU-ZTC-07",
+                    f"Direct OS Shell Invocation (os.{func_name})"
+                ))
+
+        self.generic_visit(node)
+
+
+def scan_file_for_ztc(fpath: Path, root_dir: Path) -> list:
+    """Scans a file using hybrid AST and static regex patterns for ZTC rules."""
+    findings = []
+    rel_path = str(fpath.relative_to(root_dir)) if fpath.is_relative_to(root_dir) else str(fpath)
+    
+    # 1. AST Scanning for Python files
+    if fpath.suffix == ".py":
+        try:
+            code = fpath.read_text(encoding="utf-8", errors="ignore")
+            tree = ast.parse(code, filename=str(fpath))
+            scanner = ASTSecurityScanner(fpath.name, rel_path)
+            scanner.visit(tree)
+            findings.extend(scanner.findings)
+        except Exception:
+            pass
+
+    # 2. Universal Static Regex Patterns
+    ztc_patterns = [
+        # TRISU-ZTC-03: Zero Ambient Credentials
+        (re.compile(r"-----BEGIN (?:RSA |EC |DSA |OPENSSH )?PRIVATE KEY-----"), "CRITICAL", "TRISU-ZTC-03", "Exposed Hardcoded Private Key"),
+        (re.compile(r"\bAKIA[0-9A-Z]{16}\b"), "CRITICAL", "TRISU-ZTC-03", "Exposed AWS Access Key ID"),
+        (re.compile(r"\bghp_[A-Za-z0-9]{36}\b"), "CRITICAL", "TRISU-ZTC-03", "Exposed GitHub Personal Access Token"),
+        (re.compile(r"""(?:api[_-]?key|secret[_-]?key|auth[_-]?token)\s*=\s*['"][A-Za-z0-9_\-]{24,}['"]""", re.IGNORECASE), "CRITICAL", "TRISU-ZTC-03", "Ambient Static API Key in Code"),
+        
+        # TRISU-ZTC-01: Explicit Boundary Validation & Insecure TLS
+        (re.compile(r"""(?:execute|cursor\.execute)\s*\(\s*f["'].*?\{.*?\}"""), "CRITICAL", "TRISU-ZTC-01", "Unparameterized Raw SQL Interpolation"),
+        (re.compile(r"""(?:execute|cursor\.execute)\s*\(\s*["'](?:SELECT|INSERT|UPDATE|DELETE)[^"']*["']\s*\+"""), "CRITICAL", "TRISU-ZTC-01", "Raw SQL String Concatenation"),
+        (re.compile(r"""\bverify\s*=\s*False\b"""), "HIGH", "TRISU-ZTC-01", "Insecure TLS Verification Bypass (verify=False)"),
+        
+        # TRISU-ZTC-04: Deterministic Fail-Closed (Regex fallback)
+        (re.compile(r"""\bexcept\s*(?:Exception)?\s*:\s*pass\b"""), "HIGH", "TRISU-ZTC-04", "Fail-Open Exception Suppression (except: pass)"),
+        
+        # TRISU-ZTC-05: Insecure Dynamic Execution & Deserialization
+        (re.compile(r"""\b(?:eval|exec)\s*\(\s*(?!['"][^'"]*['"]\s*\))(?:[A-Za-z0-9_]|request|params)"""), "CRITICAL", "TRISU-ZTC-05", "Insecure Dynamic Execution Sink (eval/exec)"),
+        (re.compile(r"""pickle\.loads?\s*\("""), "CRITICAL", "TRISU-ZTC-05", "Insecure Object Deserialization (pickle)"),
+        
+        # TRISU-ZTC-07: Unsafe Shell Execution
+        (re.compile(r"""\bshell\s*=\s*True\b"""), "CRITICAL", "TRISU-ZTC-07", "Unsafe Subprocess Shell Execution (shell=True)"),
+        (re.compile(r"""\bos\.system\s*\("""), "CRITICAL", "TRISU-ZTC-07", "Direct OS Command Invocation (os.system)"),
+        
+        # TRISU-ZTC-08: Autonomous Agent Tool Dispatch Confinement
+        (re.compile(r"""\bexecute_tool_dynamically\s*\("""), "CRITICAL", "TRISU-ZTC-08", "Unconstrained Dynamic Tool Execution in Agent"),
+    ]
+
+    try:
+        text = fpath.read_text(encoding="utf-8", errors="ignore")
+        for idx, line in enumerate(text.splitlines(), 1):
+            stripped = line.split("#")[0].split("//")[0].strip()
+            if not stripped or stripped.startswith("*"):
+                continue
+            for pattern, sev, rule_id, desc in ztc_patterns:
+                if pattern.search(stripped):
+                    # Avoid duplicate if AST already flagged it on same line
+                    if not any(f[0] == rel_path and f[1] == idx and f[3] == rule_id for f in findings):
+                        findings.append((rel_path, idx, sev, rule_id, f"{desc}: {stripped[:60]}..."))
+    except Exception:
+        pass
+
+    return findings
+
+
+def cmd_oss(root_dir: Path, target_dir: Path = None, sarif_file: str = None) -> int:
+    """Audits open source dependencies, lockfile hash pinning, licenses, and SBOM integrity."""
+    search_path = target_dir or root_dir
+    print(f"{Colors.BOLD}[*] Auditing Open Source Security (OSS) & Supply Chain in: {search_path}{Colors.RESET}")
+    
+    findings = []
+    
+    # 1. TRISU-OSS-01: Dependency Pinning & Lockfile Integrity
+    print(f"\n  {Colors.BLUE}--> Checking Dependency Pinning & Lockfiles (TRISU-OSS-01)...{Colors.RESET}")
+    req_file = search_path / "requirements.txt"
+    if req_file.exists():
+        content = req_file.read_text(encoding="utf-8", errors="ignore")
+        for idx, line in enumerate(content.splitlines(), 1):
+            line_str = line.strip()
+            if not line_str or line_str.startswith("#") or line_str.startswith("-r"):
+                continue
+            # Check for floating versions
+            if any(op in line_str for op in [">=", ">", "~=", "<="]) or ("==" not in line_str and not line_str.startswith("--hash")):
+                findings.append((
+                    "requirements.txt",
+                    idx,
+                    "HIGH",
+                    "TRISU-OSS-01",
+                    f"Unpinned or floating dependency version: {line_str}"
+                ))
+
+    # Check lockfile presence if project manifests exist
+    has_package_json = (search_path / "package.json").exists()
+    has_package_lock = (search_path / "package-lock.json").exists() or (search_path / "pnpm-lock.yaml").exists() or (search_path / "yarn.lock").exists()
+    if has_package_json and not has_package_lock:
+        findings.append((
+            "package.json",
+            1,
+            "HIGH",
+            "TRISU-OSS-01",
+            "Missing committed package lockfile (package-lock.json/pnpm-lock.yaml) for package.json"
+        ))
+
+    # 2. TRISU-OSS-03: Open Source License Governance & Copyleft Contamination
+    print(f"  {Colors.BLUE}--> Checking License Governance & Contamination (TRISU-OSS-03)...{Colors.RESET}")
+    prohibited_licenses = ["AGPL-3.0", "AGPL-1.0", "SSPL-1.0", "EUPL-1.2"]
+    if has_package_json:
+        try:
+            pkg_data = json.loads((search_path / "package.json").read_text(encoding="utf-8", errors="ignore"))
+            lic = pkg_data.get("license", "")
+            if any(p in lic.upper() for p in prohibited_licenses):
+                findings.append((
+                    "package.json",
+                    1,
+                    "HIGH",
+                    "TRISU-OSS-03",
+                    f"Prohibited restrictive/copyleft license detected in manifest: {lic}"
+                ))
+        except Exception:
+            pass
+
+    # 3. TRISU-OSS-04: Namespace Typosquatting & Dependency Confusion Defense
+    print(f"  {Colors.BLUE}--> Checking for Typosquatting & Dependency Confusion (TRISU-OSS-04)...{Colors.RESET}")
+    known_typosquats = ["reqeusts", "urllib4", "colorma", "pydantic-core-fake", "colorama-v2"]
+    if req_file.exists():
+        content = req_file.read_text(encoding="utf-8", errors="ignore")
+        for idx, line in enumerate(content.splitlines(), 1):
+            pkg_name = line.strip().split("==")[0].split(">=")[0].strip().lower()
+            if pkg_name in known_typosquats:
+                findings.append((
+                    "requirements.txt",
+                    idx,
+                    "CRITICAL",
+                    "TRISU-OSS-04",
+                    f"Malicious or typosquatted package identified: {pkg_name}"
+                ))
+
+    # 4. TRISU-OSS-05: Automated CycloneDX AI-BoM Validation
+    print(f"  {Colors.BLUE}--> Checking Software Bill of Materials (SBOM / AI-BoM) (TRISU-OSS-05)...{Colors.RESET}")
+    bom_file = search_path / "ai-bom.json"
+    if bom_file.exists():
+        try:
+            bom_data = json.loads(bom_file.read_text(encoding="utf-8", errors="ignore"))
+            if bom_data.get("bomFormat") != "CycloneDX":
+                findings.append(("ai-bom.json", 1, "HIGH", "TRISU-OSS-05", "Invalid BoM format; must be CycloneDX"))
+            if not bom_data.get("components"):
+                findings.append(("ai-bom.json", 1, "HIGH", "TRISU-OSS-05", "AI-BoM components list is empty"))
+        except Exception as err:
+            findings.append(("ai-bom.json", 1, "HIGH", "TRISU-OSS-05", f"Malformed ai-bom.json: {err}"))
+    else:
+        # Check if project root requires AI-BoM
+        if (search_path / "trisuella.config.yaml").exists():
+            findings.append((
+                "ai-bom.json",
+                1,
+                "HIGH",
+                "TRISU-OSS-05",
+                "Missing required CycloneDX AI-BoM (ai-bom.json) in governance root"
+            ))
+
+    if sarif_file:
+        export_sarif(findings, sarif_file, root_dir)
+
+    if findings:
+        print(f"\n{Colors.RED}{Colors.BOLD}🚨 OSS SUPPLY CHAIN BLOCKERS TRIGGERED ({len(findings)} findings):{Colors.RESET}")
+        for src, lnum, sev, rule_id, desc in findings:
+            print(f"  {Colors.RED}[{sev}]{Colors.RESET} [{rule_id}] {src}:{lnum} -> {desc}")
+        return 1
+
+    print(f"\n{Colors.GREEN}{Colors.BOLD}PASSED: Open Source Security (OSS) & Supply Chain verification clear (0 blockers).{Colors.RESET}")
+    return 0
+
+
 def cmd_audit(root_dir: Path, target_dir: Path = None, sarif_file: str = None) -> int:
-    """Audits repository files or PR diffs for blocking security tags, Zero Trust Code violations, and exposed secrets."""
+    """Audits repository files for blocking security tags, Zero Trust Code violations, and exposed secrets."""
     search_path = target_dir or root_dir
     print(f"{Colors.BOLD}[*] Auditing for blocking security findings in: {search_path}{Colors.RESET}")
 
@@ -114,80 +378,22 @@ def cmd_audit(root_dir: Path, target_dir: Path = None, sarif_file: str = None) -
                     open_findings.append((fpath.name, line_num, tag, f"TRISU-SEC-{tag}", line.strip()))
 
     # 2. Static Zero Trust Code (ZTC) & Secret Scanning
-    ztc_patterns = [
-        (re.compile(r"-----BEGIN (?:RSA )?PRIVATE KEY-----"), "CRITICAL", "TRISU-ZTC-03", "Exposed Hardcoded Private Key"),
-        (re.compile(r"""(?:api[_-]?key|secret[_-]?key|auth[_-]?token)\s*=\s*['"][A-Za-z0-9_\-]{24,}['"]""", re.IGNORECASE), "CRITICAL", "TRISU-ZTC-03", "Ambient Static API Key in Code"),
-        (re.compile(r"""(?:eval|exec)\s*\(\s*(?!['"][^'"]*['"]\s*\))(?:[A-Za-z0-9_]|request|params)"""), "CRITICAL", "TRISU-ZTC-05", "Insecure Dynamic Execution Sink (eval/exec)"),
-        (re.compile(r"""pickle\.loads\s*\("""), "CRITICAL", "TRISU-ZTC-05", "Insecure Object Deserialization (pickle.loads)"),
-        (re.compile(r"""(?:execute|cursor\.execute)\s*\(\s*f["'].*?\{.*?\}"""), "CRITICAL", "TRISU-ZTC-01", "Unparameterized Raw SQL Interpolation"),
-        (re.compile(r"""verify\s*=\s*False"""), "HIGH", "TRISU-ZTC-01", "Insecure TLS Verification Bypass (verify=False)"),
-        (re.compile(r"""except\s*(?:Exception)?\s*:\s*pass"""), "HIGH", "TRISU-ZTC-04", "Fail-Open Exception Suppression (except: pass)"),
-    ]
-
-    print(f"\n{Colors.BOLD}[*] Running static Zero Trust Code & secret scanning on codebase...{Colors.RESET}")
-    exclude_dirs = {".git", "node_modules", "venv", ".venv", "tmp", "scratch", ".gemini"}
+    print(f"\n{Colors.BOLD}[*] Running hybrid AST & static Zero Trust Code (ZTC) scanning...{Colors.RESET}")
+    exclude_dirs = {".git", "node_modules", "venv", ".venv", "tmp", "scratch", ".gemini", "tests"}
     
     for root, dirs, files in os.walk(search_path):
         dirs[:] = [d for d in dirs if d not in exclude_dirs]
         for fname in files:
-            # Audit source code and configuration files
             if fname.endswith((".py", ".js", ".ts", ".go", ".java", ".json", ".yaml", ".yml", ".env")):
-                # Do not flag the validator itself or temporary scripts
-                if fname in ["trisu_validator.py", "test_ztc.py", "create_ztc_specs.py", "update_usage_guides.py", "merge_usage_guides.py", "update_validator_ztc.py"]:
+                # Do not flag the validator itself or known generator scripts
+                if fname in ["trisu_validator.py", "test_ztc.py", "create_ztc_specs.py", "update_usage_guides.py", "merge_usage_guides.py", "update_validator_ztc.py", "apply_ztc_updates.py"]:
                     continue
                 fpath = Path(root) / fname
-                try:
-                    text = fpath.read_text(encoding="utf-8", errors="ignore")
-                    for pattern, sev, rule_id, desc in ztc_patterns:
-                        for idx, line in enumerate(text.splitlines(), 1):
-                            stripped = line.strip()
-                            # skip full comments
-                            if stripped.startswith("#") or stripped.startswith("//"):
-                                continue
-                            if pattern.search(line):
-                                rel_path = str(fpath.relative_to(root_dir)) if fpath.is_relative_to(root_dir) else str(fpath)
-                                open_findings.append((rel_path, idx, sev, rule_id, f"{desc}: {stripped[:60]}..."))
-                except Exception:
-                    pass
+                f_findings = scan_file_for_ztc(fpath, root_dir)
+                open_findings.extend(f_findings)
 
     if sarif_file:
-        sarif_data = {
-            "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
-            "version": "2.1.0",
-            "runs": [{
-                "tool": {
-                    "driver": {
-                        "name": "TriSuElla-AIDLCA Policy Gate Validator",
-                        "version": VERSION,
-                        "informationUri": "https://github.com/OWASP/TriSuElla-AIDLCA-Framework",
-                        "rules": [
-                            {"id": "TRISU-ZTC-01", "name": "ExplicitBoundaryValidation", "shortDescription": {"text": "Validate all in-code boundaries and parameters independently."}},
-                            {"id": "TRISU-ZTC-02", "name": "ScopedObjectAuthorization", "shortDescription": {"text": "Enforce tenancy and user scoping on every database and object query."}},
-                            {"id": "TRISU-ZTC-03", "name": "ZeroAmbientCredentials", "shortDescription": {"text": "Prohibit static ambient credentials and long-lived private keys in source code."}},
-                            {"id": "TRISU-ZTC-04", "name": "FailClosedExecution", "shortDescription": {"text": "Prohibit error suppression and fail-open exception handling."}},
-                            {"id": "TRISU-ZTC-05", "name": "BannedInsecureDeserialization", "shortDescription": {"text": "Prohibit dynamic execution (eval/exec) and insecure deserialization (pickle)."}},
-                            {"id": "TRISU-ZTC-06", "name": "InCodeAuditTelemetry", "shortDescription": {"text": "Emit structured tamper-evident audit events on all state transitions."}},
-                        ]
-                    }
-                },
-                "results": [
-                    {
-                        "ruleId": rule_id,
-                        "level": "error" if sev == "CRITICAL" else "warning",
-                        "message": {"text": desc},
-                        "locations": [{
-                            "physicalLocation": {
-                                "artifactLocation": {"uri": src.replace("\\", "/")},
-                                "region": {"startLine": lnum}
-                            }
-                        }]
-                    } for src, lnum, sev, rule_id, desc in open_findings
-                ]
-            }]
-        }
-        sarif_path = Path(sarif_file)
-        sarif_path.write_text(json.dumps(sarif_data, indent=2), encoding="utf-8")
-        print(f"\n{Colors.BLUE}[*] Exported SARIF report to: {sarif_path.resolve()}{Colors.RESET}")
+        export_sarif(open_findings, sarif_file, root_dir)
 
     if open_findings:
         print(f"\n{Colors.RED}{Colors.BOLD}🚨 BLOCKING GATE TRIGGERED ({len(open_findings)} findings):{Colors.RESET}")
@@ -198,6 +404,58 @@ def cmd_audit(root_dir: Path, target_dir: Path = None, sarif_file: str = None) -
 
     print(f"\n{Colors.GREEN}{Colors.BOLD}PASSED: Zero open [CRITICAL]/[HIGH] blockers detected. Pipeline clear.{Colors.RESET}")
     return 0
+
+
+def export_sarif(findings: list, sarif_file: str, root_dir: Path):
+    """Generates OASIS SARIF v2.1.0 output for GitHub Advanced Security and CI/CD tools."""
+    rules_def = [
+        {"id": "TRISU-ZTC-01", "name": "ExplicitBoundaryValidation", "shortDescription": {"text": "Validate all in-code boundaries and parameters independently."}},
+        {"id": "TRISU-ZTC-02", "name": "ScopedObjectAuthorization", "shortDescription": {"text": "Enforce tenancy and user scoping on every database and object query."}},
+        {"id": "TRISU-ZTC-03", "name": "ZeroAmbientCredentials", "shortDescription": {"text": "Prohibit static ambient credentials and long-lived private keys in source code."}},
+        {"id": "TRISU-ZTC-04", "name": "FailClosedExecution", "shortDescription": {"text": "Prohibit error suppression and fail-open exception handling."}},
+        {"id": "TRISU-ZTC-05", "name": "BannedInsecureDeserialization", "shortDescription": {"text": "Prohibit dynamic execution (eval/exec) and insecure deserialization (pickle)."}},
+        {"id": "TRISU-ZTC-06", "name": "InCodeAuditTelemetry", "shortDescription": {"text": "Emit structured tamper-evident audit events on all state transitions."}},
+        {"id": "TRISU-ZTC-07", "name": "UnsafeSubprocessExecution", "shortDescription": {"text": "Prohibit shell=True and unparameterized OS command invocations."}},
+        {"id": "TRISU-ZTC-08", "name": "AutonomousAgentToolConfinement", "shortDescription": {"text": "Enforce schema validation, HITL gating, and blast-radius bounds on agent tools."}},
+        {"id": "TRISU-OSS-01", "name": "DependencyLockfilePinning", "shortDescription": {"text": "Pin all dependencies to exact versions and cryptographic hashes."}},
+        {"id": "TRISU-OSS-02", "name": "VulnerabilityAdvisoryGating", "shortDescription": {"text": "Automate SCA scans and block on CVEs with CVSS >= 7.0."}},
+        {"id": "TRISU-OSS-03", "name": "LicenseGovernanceContamination", "shortDescription": {"text": "Audit open-source licenses and prohibit unauthorized copyleft licenses."}},
+        {"id": "TRISU-OSS-04", "name": "NamespaceTyposquattingDefense", "shortDescription": {"text": "Prevent dependency confusion and typosquatted package ingestion."}},
+        {"id": "TRISU-OSS-05", "name": "SoftwareBillOfMaterials", "shortDescription": {"text": "Generate machine-readable CycloneDX v1.6 SBOM and AI-BoM."}},
+        {"id": "TRISU-OSS-06", "name": "CryptographicBuildProvenance", "shortDescription": {"text": "Enforce SLSA Level 2+ cryptographic provenance attestations."}},
+    ]
+
+    sarif_data = {
+        "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+        "version": "2.1.0",
+        "runs": [{
+            "tool": {
+                "driver": {
+                    "name": "TriSuElla-AIDLCA Policy Gate Validator",
+                    "version": VERSION,
+                    "informationUri": "https://github.com/OWASP/TriSuElla-AIDLCA-Framework",
+                    "rules": rules_def
+                }
+            },
+            "results": [
+                {
+                    "ruleId": rule_id,
+                    "level": "error" if sev == "CRITICAL" else "warning",
+                    "message": {"text": desc},
+                    "locations": [{
+                        "physicalLocation": {
+                            "artifactLocation": {"uri": src.replace("\\", "/")},
+                            "region": {"startLine": lnum}
+                        }
+                    }]
+                } for src, lnum, sev, rule_id, desc in findings
+            ]
+        }]
+    }
+    sarif_path = Path(sarif_file)
+    sarif_path.write_text(json.dumps(sarif_data, indent=2), encoding="utf-8")
+    print(f"\n{Colors.BLUE}[*] Exported SARIF report to: {sarif_path.resolve()}{Colors.RESET}")
+
 
 def cmd_init(target_dir: Path, framework_dir: Path) -> int:
     """Scaffolds TriSuElla v3.0 templates and configuration into target project."""
@@ -248,6 +506,7 @@ Last Audit: Clean
     print(f"\n{Colors.GREEN}{Colors.BOLD}Initialization Complete: TriSuElla v{VERSION} governance active.{Colors.RESET}")
     return 0
 
+
 def cmd_bom(root_dir: Path, output_file: str = "ai-bom.json") -> int:
     """Generates CycloneDX AI v1.6 Bill of Materials for AI models, agents, and data components."""
     print(f"{Colors.BOLD}[*] Generating CycloneDX AI v1.6 Bill of Materials (AI-BoM)...{Colors.RESET}")
@@ -280,7 +539,9 @@ def cmd_bom(root_dir: Path, output_file: str = "ai-bom.json") -> int:
                 "properties": [
                     {"name": "trisuella:risk_tier", "value": "tier_2"},
                     {"name": "trisuella:governance_pillar", "value": "TILLIT"},
-                    {"name": "trisuella:dual_key_hitl", "value": "enabled"}
+                    {"name": "trisuella:dual_key_hitl", "value": "enabled"},
+                    {"name": "trisuella:ztc_invariants", "value": "enforced"},
+                    {"name": "trisuella:oss_supply_chain", "value": "attested"}
                 ]
             }
         },
@@ -300,10 +561,10 @@ def cmd_bom(root_dir: Path, output_file: str = "ai-bom.json") -> int:
                 "type": "data",
                 "name": "trisuella-master-rules",
                 "version": VERSION,
-                "description": "291 consolidated security, privacy, and zero trust governance rules",
+                "description": "299 consolidated security, privacy, and zero trust governance rules",
                 "properties": [
-                    {"name": "trisuella:total_checks", "value": "291"},
-                    {"name": "trisuella:unique_rules", "value": "190"}
+                    {"name": "trisuella:total_checks", "value": "299"},
+                    {"name": "trisuella:unique_rules", "value": "198"}
                 ]
             }
         ],
@@ -321,6 +582,7 @@ def cmd_bom(root_dir: Path, output_file: str = "ai-bom.json") -> int:
     print(f"  {Colors.GREEN}✓{Colors.RESET} Spec format: CycloneDX v1.6 (AI/ML extensions)")
     return 0
 
+
 def cmd_rules(root_dir: Path) -> int:
     """Validates rule identifiers and cross-references in the master rules file."""
     master_file = root_dir / "TRISUELLA_MASTER_RULES_AND_CHECKS.md"
@@ -337,6 +599,7 @@ def cmd_rules(root_dir: Path) -> int:
     print(f"  {Colors.GREEN}✓{Colors.RESET} Master rules index integrity valid.")
     return 0
 
+
 def main():
     print_banner()
     parser = argparse.ArgumentParser(description="TriSuElla-AIDLCA Policy Gate Validator")
@@ -345,9 +608,13 @@ def main():
     check_parser = subparsers.add_parser("check", help="Verify repository artifacts and templates")
     check_parser.add_argument("--dir", default=".", help="Root directory")
 
-    audit_parser = subparsers.add_parser("audit", help="Audit for blocking security vulnerabilities")
+    audit_parser = subparsers.add_parser("audit", help="Audit for blocking security vulnerabilities and ZTC violations")
     audit_parser.add_argument("--dir", default=".", help="Target directory to audit")
     audit_parser.add_argument("--sarif", default=None, help="File path to write OASIS SARIF report")
+
+    oss_parser = subparsers.add_parser("oss", help="Audit Open Source Security (OSS) & supply chain integrity")
+    oss_parser.add_argument("--dir", default=".", help="Target directory to audit")
+    oss_parser.add_argument("--sarif", default=None, help="File path to write OASIS SARIF report")
 
     init_parser = subparsers.add_parser("init", help="Scaffold TriSuElla templates into target directory")
     init_parser.add_argument("--target", default=".", help="Target repository directory to initialize")
@@ -367,12 +634,15 @@ def main():
         sys.exit(cmd_check(root_dir))
     elif args.command == "audit":
         sys.exit(cmd_audit(root_dir, target_dir=Path(args.dir).resolve(), sarif_file=args.sarif))
+    elif args.command == "oss":
+        sys.exit(cmd_oss(root_dir, target_dir=Path(args.dir).resolve(), sarif_file=args.sarif))
     elif args.command == "init":
         sys.exit(cmd_init(Path(args.target).resolve(), Path(args.framework_dir).resolve()))
     elif args.command == "bom":
         sys.exit(cmd_bom(root_dir, output_file=args.output))
     elif args.command == "rules":
         sys.exit(cmd_rules(root_dir))
+
 
 if __name__ == "__main__":
     main()

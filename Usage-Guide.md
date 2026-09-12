@@ -1,7 +1,7 @@
 # 📖 OWASP TriSuElla-AIDLCA Framework — Comprehensive Master Usage Guide (v3.0)
 
 > **AI-Driven Development Life Cycle & Autonomous Agent Governance (LLMSecOps)**  
-> **Version**: 3.0 | **Status**: Institutionalized | **Total Checks**: 291 | **Rules**: 190  
+> **Version**: 3.0 | **Status**: Institutionalized | **Total Checks**: 299 | **Rules**: 198  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)  
 
 ---
@@ -73,7 +73,7 @@ For autonomous software factories using specialized AI agents:
 
 While traditional Zero Trust operates at the perimeter and network tiers (mTLS, firewalls, SSO), **Zero Trust Code (ZTC)** enforces *"Never Trust, Always Verify"* and *"Assume Breach"* **directly inside the application logic, memory structures, and agent dispatchers**.
 
-### The 6 Core Invariants of Zero Trust Code
+### The 8 Core Invariants of Zero Trust Code
 
 | Rule ID | Severity | Invariant Name | Application Rule | Blocking Audit Mechanism |
 | :--- | :--- | :--- | :--- | :--- |
@@ -83,6 +83,8 @@ While traditional Zero Trust operates at the perimeter and network tiers (mTLS, 
 | **TRISU-ZTC-04** | `[CRITICAL]` | **Deterministic Fail-Closed** | All security decisions and exception handlers default to DENY. Naked `except: pass` or error swallowing is strictly prohibited. | Linter detects naked exception suppression and fail-open fallbacks |
 | **TRISU-ZTC-05** | `[CRITICAL]` | **Banned Dynamic Deserialization** | Dynamic code execution (`eval`, `exec`) and unsafe deserialization (`pickle.loads`, unsafe YAML) are strictly banned across all tiers. | Static scanner flags dangerous execution sinks in application and agent code |
 | **TRISU-ZTC-06** | `[HIGH]` | **In-Code Audit Telemetry** | Every privileged mutation, data deletion, or agent tool dispatch emits an immutable, structured audit event with caller identity and payload hash. | Verification of audit hook correlation on mutating endpoints |
+| **TRISU-ZTC-07** | `[CRITICAL]` | **Prohibited Shell Execution** | Invocation of OS commands via dynamic shell execution (`shell=True`, `os.system`) is strictly prohibited. Use discrete argument vectors. | AST scanning detects shell=True in subprocess calls and raw os.system |
+| **TRISU-ZTC-08** | `[CRITICAL]` | **Agent Tool Confinement** | Autonomous AI agents invoking tools must enforce schema validation, timeout limits, and mandatory HITL approval tokens for mutating operations. | Code review and static analysis confirm schema validation and HITL gates |
 
 ### Zero Trust Code Implementation Patterns
 
@@ -147,12 +149,82 @@ def check_permission(user_id, resource) -> bool:
         return False # Mandatory DENY on failure
 ```
 
+#### Pattern 4: Safe Process Execution vs Shell Injection (TRISU-ZTC-07)
+```python
+# ❌ INSECURE: Command injection risk via dynamic shell string
+import subprocess
+def generate_thumbnail(image_path):
+    subprocess.run(f"convert {image_path} -resize 128x128 thumb.png", shell=True) # RCE!
+
+# ✅ SECURE: Zero Trust Code (discrete arg list, no shell, strict timeout, isolated environment)
+import subprocess
+from pathlib import Path
+def generate_thumbnail(image_path: Path):
+    subprocess.run(
+        ["/usr/bin/convert", str(image_path.resolve()), "-resize", "128x128", "thumb.png"],
+        shell=False,
+        check=True,
+        timeout=10,
+        env={"PATH": "/usr/bin"}
+    )
+```
+
+#### Pattern 5: Autonomous AI Agent Tool Dispatch Confinement (TRISU-ZTC-08)
+```python
+# ❌ INSECURE: Direct dispatch of LLM-generated arguments without validation or HITL gate
+def dispatch_tool(tool_name: str, arguments: dict):
+    tool_registry[tool_name](**arguments) # Arbitrary parameter execution!
+
+# ✅ SECURE: Zero Trust Code (Pydantic validation, tenant isolation, HITL gate)
+from pydantic import BaseModel, Field
+class EraseTenantDataSchema(BaseModel):
+    tenant_id: str
+    confirmation_token: str
+
+def dispatch_tool(tool_name: str, arguments: dict, caller: AgentContext):
+    if tool_name == "erase_tenant_data":
+        validated = EraseTenantDataSchema.model_validate(arguments)
+        if validated.tenant_id != caller.tenant_id:
+            raise SecurityException("Cross-tenant destruction attempt blocked")
+        require_dual_key_hitl_approval("ERASE_TENANT_DATA", validated)
+        return execute_erase_safely(validated.tenant_id)
+```
+
 ### Static Auditing via `trisu_validator.py`
 Run the local CLI to audit your codebase against Zero Trust Code invariants:
 ```bash
 python tools/trisu-cli/trisu_validator.py audit
 ```
-Any instance of insecure dynamic execution (`TRISU-ZTC-05`), fail-open error suppression (`TRISU-ZTC-04`), unparameterized SQL interpolation (`TRISU-ZTC-01`), or ambient credentials (`TRISU-ZTC-03`) will trigger an immediate **System Halt (exit code 1)**.
+Any instance of insecure dynamic execution (`TRISU-ZTC-05`), fail-open error suppression (`TRISU-ZTC-04`), unparameterized SQL interpolation (`TRISU-ZTC-01`), ambient credentials (`TRISU-ZTC-03`), or unsafe shell execution (`TRISU-ZTC-07`) will trigger an immediate **System Halt (exit code 1)**.
+
+---
+
+## 📦 Open Source Security (OSS) & Software Supply Chain Auditing (TRISU-OSS)
+
+Modern AI systems and applications incorporate dozens of open-source dependencies and foundation model packages. The **TRISU-OSS** extension establishes strict, automated gates against supply chain poisoning, dependency confusion, typosquatting, and copyleft license contamination.
+
+### The 6 Core Supply Chain Invariants
+
+| Rule ID | Severity | Invariant Name | Requirement |
+| :--- | :--- | :--- | :--- |
+| **TRISU-OSS-01** | `[CRITICAL]` | **Cryptographic Lockfile Pinning** | All dependencies MUST use exact versions with cryptographic SHA-256 hashes (`--hash=sha256:...`, `poetry.lock`, `package-lock.json`, `go.sum`). Floating versions are prohibited. |
+| **TRISU-OSS-02** | `[CRITICAL]` | **Vulnerability Advisory Gating (SCA)** | Automated gating blocks CI/CD pipelines on any package with open CVE CVSS >= 7.0 or listed in CISA KEV. |
+| **TRISU-OSS-03** | `[HIGH]` | **Open Source License Governance** | Prohibits restrictive copyleft licenses (AGPL-3.0, SSPL, GPL-3.0) in commercial distributions to prevent legal contamination. |
+| **TRISU-OSS-04** | `[HIGH]` | **Typosquatting & Dependency Confusion** | Enforces internal namespace scoping (`@org/` on npm, private PyPI priority) to eliminate confused deputy attacks. |
+| **TRISU-OSS-05** | `[HIGH]` | **Automated SBOM & AI-BoM** | Every production release MUST generate a CycloneDX v1.6 or SPDX v2.3 BoM containing component hashes and ML model cards. |
+| **TRISU-OSS-06** | `[HIGH]` | **SLSA Level 2+ Cryptographic Provenance** | Enforces Sigstore/Cosign container signing and OIDC Trusted Publishers for verified build reproducibility. |
+
+### Running the OSS Supply Chain Auditor
+Execute the dedicated OSS security scanner locally or in CI/CD:
+```bash
+python tools/trisu-cli/trisu_validator.py oss
+```
+This automatically verifies:
+1. Manifest version pinning in `requirements.txt`, `package.json`, and `pyproject.toml`.
+2. Committed lockfile presence (`package-lock.json`, `poetry.lock`, `go.sum`).
+3. Absence of prohibited copyleft licenses.
+4. Typosquatting package checks.
+5. Structural validity of the CycloneDX `ai-bom.json`.
 
 ---
 

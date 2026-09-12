@@ -10,7 +10,7 @@ This document consolidates all TRISUELLA-AIDLCA rules, security checklists, and 
 | **Section 1** | Core Lifecycle (LLMSecOps) | 12 |
 | **Section 2** | Security Baseline (BASE) | 15 |
 | **Section 3** | AI & Agentic Security (SEC) | 22 |
-| **Section 4** | Zero Trust Architecture & Code (TRUST/ZTC) | 20 |
+| **Section 4** | Zero Trust Architecture & Code (TRUST/ZTC) | 22 |
 | **Section 5** | Sensitive Data Security (DATA) | 10 |
 | **Section 6** | AI-DLCA Compliance (DLCA) | 15 |
 | **Section 7** | Infrastructure Security (INFRA) | 16 |
@@ -30,7 +30,8 @@ This document consolidates all TRISUELLA-AIDLCA rules, security checklists, and 
 | **Section 21** | Model Context Protocol Security (MCP) | 6 |
 | **Section 22** | EU AI Act High-Risk Compliance (EUAI) | 7 |
 | **Section 23** | Agentic Identity & Token Delegation (AIAM) | 5 |
-| **GRAND TOTAL** | **Consolidated Rules & Checks** | **291** |
+| **Section 24** | Open Source & Supply Chain Security (OSS) | 6 |
+| **GRAND TOTAL** | **Consolidated Rules & Checks** | **299** |
 
 ---
 
@@ -245,6 +246,10 @@ The **TRISUELLA** framework establishes a unique architectural and governance mo
     - *Verification*: Automated SAST scan flags all instances of `eval`, `exec`, `pickle.loads`, or unsafe deserializers.
 - **TRISU-ZTC-06 [HIGH]**: **Continuous In-Code Audit Telemetry**. Every state-altering function, privilege escalation, data deletion, financial transaction, and autonomous AI agent tool execution MUST emit an immutable, structured audit event before executing.
     - *Verification*: Audit logging verified on all mutating endpoints and agent dispatchers.
+- **TRISU-ZTC-07 [CRITICAL]**: **Unsafe Shell & Process Execution Invariant**. Invocation of operating system commands via dynamic shell execution (`shell=True`, `os.system()`, `popen()` with raw string concatenation) is strictly prohibited. All system processes MUST use parameterized argument lists and strict timeouts.
+    - *Verification*: AST and regex auditing detects and blocks any `shell=True` or `os.system` invocation in application code.
+- **TRISU-ZTC-08 [CRITICAL]**: **Autonomous Agent Tool Dispatch Boundary & Confinement**. Autonomous AI agents invoking local or remote tools MUST enforce deterministic schema validation, timeout boundaries, and mandatory Human-in-the-Loop (HITL) approval tokens for mutating or financial operations.
+    - *Verification*: Code review and static analysis confirm schema validation and HITL gates before agent tool dispatch.
 
 ---
 
@@ -842,6 +847,24 @@ The framework includes specialized tooling to visualize and enforce governance i
     - *Verification*: `audit.md` contains signed delegation sequence with trace ID and SHA-256 signature for every execution step.
 - **TRISU-AIAM-05 [CRITICAL]**: **Confused Deputy & Lateral Escalation Defense**. Subagents are cryptographically quarantined from requesting permission escalations or cross-boundary tool executions outside their assigned delegation envelope.
     - *Verification*: Penetration test simulating subagent privilege escalation returns immediate security halt and alerts SIEM.
+
+---
+
+## 📦 Section 24: Open Source & Supply Chain Security (TRISU-OSS)
+*OpenSSF, NIST SP 800-218 (SSDF), and SLSA Level 2+ Standards Alignment*
+
+- **TRISU-OSS-01 [CRITICAL]**: **Cryptographic Dependency Pinning & Lockfile Integrity**. All direct and transitive open-source dependencies and base container images MUST be pinned to exact versions with cryptographic content hashes; floating version ranges without committed lockfiles are prohibited.
+    - *Verification*: `trisu_validator.py oss` inspects manifests and lockfiles to confirm zero floating dependencies.
+- **TRISU-OSS-02 [CRITICAL]**: **Vulnerability Orchestration & Advisory Gating (SCA)**. Software Composition Analysis MUST run on every pull request; any package with an open CVSS >= 7.0 vulnerability or listed in CISA KEV halts the build pipeline immediately.
+    - *Verification*: CI pipeline runs automated SCA (`pip-audit`, `npm audit`, `trivy`) with zero unmitigated High/Critical CVEs.
+- **TRISU-OSS-03 [HIGH]**: **Open Source License Governance & Contamination Defense**. All third-party components MUST be audited against an approved SPDX license whitelist; unauthorized copyleft licenses (AGPL-3.0, SSPL, GPL-3.0) are prohibited in commercial distributions.
+    - *Verification*: License scanner verifies zero copyleft contamination and validates required attribution notices.
+- **TRISU-OSS-04 [HIGH]**: **Namespace Typosquatting & Dependency Confusion Defense**. Prohibit un-scoped packages in private registries; enforce internal namespace scoping (`@org/`) and private repository priority to prevent public package hijacking.
+    - *Verification*: Package manifest audit confirms absence of dual-index dependency confusion configurations.
+- **TRISU-OSS-05 [HIGH]**: **Automated Machine-Readable Bill of Materials (SBOM & AI-BoM)**. Every production release MUST generate a CycloneDX v1.6 or SPDX v2.3 JSON Bill of Materials containing component hashes, license metadata, and model provenance.
+    - *Verification*: `trisu_validator.py bom` validates and generates compliant `ai-bom.json`.
+- **TRISU-OSS-06 [HIGH]**: **Artifact Cryptographic Provenance & Build Attestation (SLSA Level 2+)**. Release packages, container images, and wheel distributions MUST produce cryptographic provenance attestations signed via Sigstore/Cosign or OIDC Trusted Publishers.
+    - *Verification*: Container admission controller verifies signed Cosign attestations before production deployment.
 
 ---
 

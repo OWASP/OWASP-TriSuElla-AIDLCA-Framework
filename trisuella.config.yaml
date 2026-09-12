@@ -122,3 +122,16 @@ zero_trust_code:
   enforce_fail_closed_execution: true           # TRISU-ZTC-04
   disallow_insecure_deserialization: true       # TRISU-ZTC-05 (banning eval/exec/pickle)
   require_in_code_audit_telemetry: true         # TRISU-ZTC-06
+  prohibit_unsafe_shell_execution: true         # TRISU-ZTC-07 (banning shell=True and raw os.system)
+  enforce_agent_tool_confinement: true          # TRISU-ZTC-08 (HITL gating and schema bounds)
+
+# Open Source Security (OSS) & Software Supply Chain Governance (TRISU-OSS)
+open_source_security:
+  enabled: true
+  profile: "OSS-2"                              # OSS-1 | OSS-2 | OSS-3
+  enforce_lockfile_pinning: true                # TRISU-OSS-01 (exact version + sha256 hash pinning)
+  fail_on_cvss_threshold: 7.0                   # TRISU-OSS-02 (block CVSS >= 7.0 and CISA KEV)
+  prohibit_copyleft_licenses: true              # TRISU-OSS-03 (prohibit AGPL/GPL contamination)
+  prevent_dependency_confusion: true            # TRISU-OSS-04 (enforce namespace scoping @org/)
+  generate_cyclonedx_sbom: true                 # TRISU-OSS-05 (CycloneDX v1.6 AI-BoM)
+  enforce_slsa_provenance: false                # TRISU-OSS-06 (SLSA Level 2+ Cosign attestation)
