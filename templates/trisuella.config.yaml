@@ -135,3 +135,19 @@ open_source_security:
   prevent_dependency_confusion: true            # TRISU-OSS-04 (enforce namespace scoping @org/)
   generate_cyclonedx_sbom: true                 # TRISU-OSS-05 (CycloneDX v1.6 AI-BoM)
   enforce_slsa_provenance: false                # TRISU-OSS-06 (SLSA Level 2+ Cosign attestation)
+
+# Shadow AI Discovery & Auditing Governance (TRISU-SHADOW)
+shadow_ai_governance:
+  enabled: true
+  enforce_ai_bom_reconciliation: true           # TRISU-SHADOW-01: Block build if source imports undeclared AI models
+  allowed_model_suppliers:                      # TRISU-SHADOW-02: Sanctioned model supplier whitelist
+    - "Anthropic"
+    - "Google"
+    - "AzureOpenAI"
+    - "Internal"
+  require_enterprise_gateway: true              # TRISU-SHADOW-03: Prohibit direct public LLM vendor URLs
+  enterprise_gateway_url: "https://ai-gateway.internal.corp/v1"
+  enforce_approval_attestation: true            # TRISU-SHADOW-04: Mandatory trisuella:approval_ref in AI-BoM
+  enforce_agent_confinement: true               # TRISU-SHADOW-05: Confine agent tool loops with HITL
+  catalog_vector_stores: true                   # TRISU-SHADOW-06: Ensure vector stores are in AI-BoM data components
+

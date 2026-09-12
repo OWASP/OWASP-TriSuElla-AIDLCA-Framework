@@ -1,7 +1,7 @@
-# 📖 OWASP TriSuElla-AIDLCA Framework — Comprehensive Master Usage Guide (v3.1.0)
+# 📖 OWASP TriSuElla-AIDLCA Framework — Comprehensive Master Usage Guide (v3.2.0)
 
 > **AI-Driven Development Life Cycle & Autonomous Agent Governance (LLMSecOps)**  
-> **Version**: 3.1.0 | **Status**: Institutionalized (Production & DevSecOps Ready) | **Total Checks**: 299 | **Rules**: 198  
+> **Version**: 3.2.0 | **Status**: Institutionalized (Production & DevSecOps Ready) | **Total Checks**: 305 | **Rules**: 204 | **Domain Families**: 26  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)  
 
 ---
@@ -19,7 +19,7 @@ The framework bridges the gap between fast-paced **vibe coding** and stringent *
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│                        TRISUELLA-AIDLCA v3.1.0                         │
+│                        TRISUELLA-AIDLCA v3.2.0                         │
 ├───────────────────┬────────────────────────────┬───────────────────────┤
 │ Phase 1: INCEPTION│ Phase 2: CONSTRUCTION      │ Phase 3: OPERATIONS   │
 │ (Plan & Model)    │ (Design, Code & Verify)    │ (Deploy & Observe)    │
@@ -37,7 +37,7 @@ The framework bridges the gap between fast-paced **vibe coding** and stringent *
 
 ## 🚀 Complete CLI Feature Reference & DevSecOps Playbook
 
-The zero-dependency `trisu` command-line interface provides automated policy validation, static code security scanning, supply chain checks, and CycloneDX AI-BoM generation.
+The zero-dependency `trisu` command-line interface provides automated policy validation, static code security scanning, supply chain checks, Shadow AI reconciliation, and CycloneDX AI-BoM generation.
 
 ### CLI Launchers:
 - **Windows (cmd / powershell)**: `.\trisu.cmd <command> [options]`
@@ -55,8 +55,8 @@ trisu check [--dir <directory>]
 
 ---
 
-### Command 2: `trisu audit` — Static Code Security (SAST) & Secret Detection
-Executes hybrid AST scanning and pattern analysis for Zero Trust Code violations:
+### Command 2: `trisu audit` — Static Code Security (SAST), Secrets & Shadow AI
+Executes hybrid AST scanning and pattern analysis for Zero Trust Code violations and Shadow AI:
 ```bash
 # Terminal audit
 trisu audit [--dir <directory>]
@@ -71,11 +71,31 @@ trisu audit --sarif trisuella-audit.sarif
   - `TRISU-ZTC-05`: Insecure dynamic execution (`eval()`, `exec()`, `pickle.loads()`, unloader YAML).
   - `TRISU-ZTC-07`: Unsafe subprocess invocations (`shell=True`, raw `os.system()`).
   - `TRISU-ZTC-08`: Unconstrained dynamic agent tool execution.
+  - `TRISU-SHADOW-01..06`: Full Code-to-BOM reconciliation, gateway bypass checks, and undeclared model detection.
 
 ---
 
-### Command 3: `trisu oss` — Open Source Security (SCA) & Supply Chain
-Audits dependencies, lockfile hashes, and open-source licenses:
+### Command 3: `trisu shadow` — Shadow AI Discovery & Code-to-BOM Reconciliation
+Dedicated gatekeeper to discover undeclared AI frameworks, unvetted foundation models, and public egress bypasses:
+```bash
+# Terminal audit
+trisu shadow [--dir <directory>]
+
+# Export standard OASIS SARIF 2.1.0 for GitHub / IDE ingestion
+trisu shadow --sarif trisuella-shadow.sarif
+```
+- **Checks Performed**:
+  - `TRISU-SHADOW-01`: Code-to-BOM reconciliation (detects uncatalogued AI SDKs and client libraries).
+  - `TRISU-SHADOW-02`: Sanctioned model catalog and supplier whitelisting.
+  - `TRISU-SHADOW-03`: Direct public LLM endpoint bypass defense (mandates Enterprise GenAI Gateway).
+  - `TRISU-SHADOW-04`: AI-BoM attestation, freshness, and governance property integrity.
+  - `TRISU-SHADOW-05`: Autonomous agent execution sandboxing and HITL checks.
+  - `TRISU-SHADOW-06`: Uncatalogued vector database and dataset ingestion audit.
+
+---
+
+### Command 4: `trisu oss` — Open Source Security (SCA) & Supply Chain
+Audits dependencies, lockfile hashes, open-source licenses, and AI-BoM attestations:
 ```bash
 trisu oss [--dir <directory>] [--sarif trisuella-oss.sarif]
 ```
@@ -83,29 +103,29 @@ trisu oss [--dir <directory>] [--sarif trisuella-oss.sarif]
   - `TRISU-OSS-01`: Cryptographic lockfile pinning (verifies exact versions and committed lockfiles).
   - `TRISU-OSS-03`: License governance (blocks copyleft contamination such as AGPL-3.0, SSPL, EUPL).
   - `TRISU-OSS-04`: Namespace typosquatting and dependency confusion defense.
-  - `TRISU-OSS-05`: CycloneDX AI-BoM structural validation.
+  - `TRISU-OSS-05`: CycloneDX v1.6 AI-BoM structural and model card attestation validation.
 
 ---
 
-### Command 4: `trisu bom` — CycloneDX AI v1.6 Bill of Materials Generation
+### Command 5: `trisu bom` — CycloneDX AI v1.6 Bill of Materials Generation
 Generates a machine-readable, schema-compliant Software & AI Bill of Materials:
 ```bash
 trisu bom [--output ai-bom.json] [--dir <directory>]
 ```
-- **Generated Schema**: CycloneDX v1.6 AI-BoM with RFC-4122 UUID, tool metadata, model cards, datasets, and governance risk-tier properties (`TILLIT`, `Dual-Key HITL`, `ZTC`).
+- **Generated Schema**: CycloneDX v1.6 AI-BoM with RFC-4122 UUID, tool metadata, model cards, datasets, and governance risk-tier properties (`TILLIT`, `Dual-Key HITL`, `ZTC`, `Sanctioned Status`, `Approval Ref`).
 
 ---
 
-### Command 5: `trisu rules` — Invariant Integrity & Domain Inspector
-Inspects all 198 rule identifiers across 25 domain families:
+### Command 6: `trisu rules` — Invariant Integrity & Domain Inspector
+Inspects all 204 rule identifiers across 26 domain families:
 ```bash
 trisu rules
 ```
-- Validates rule numbering, domain breakdown, and ensures zero broken rule anchors in the governance matrix.
+- Validates rule numbering, domain breakdown, and ensures zero broken rule anchors in the governance matrix (305 consolidated checks, 204 unique rules).
 
 ---
 
-### Command 6: `trisu init` — Instant Project Scaffolding
+### Command 7: `trisu init` — Instant Project Scaffolding
 Scaffolds turnkey governance directives and CI/CD gates into any existing or new project in 30 seconds:
 ```bash
 trisu init --target /path/to/my-repo
@@ -575,8 +595,10 @@ You can run the CLI through any of these three frictionless methods:
 | `trisu audit --sarif audit.sarif` | Generates standardized OASIS SARIF v2.1.0 security report | In CI/CD pipelines & IDE SARIF viewers | Writes `audit.sarif` |
 | `trisu oss` | Audits Open Source Security (OSS), dependency pinning, license contamination & supply chain | Dependency updates & pre-merge | `0` = Clean, `1` = Blocking `[CRITICAL]` |
 | `trisu oss --sarif oss.sarif` | Generates standardized OASIS SARIF v2.1.0 OSS supply chain report | In CI/CD pipelines & IDE SARIF viewers | Writes `oss.sarif` |
+| `trisu shadow` | Audits for Shadow AI, undeclared model imports, hardcoded endpoints, and AI-BoM drift | Model integration & pre-release | `0` = Reconciled, `1` = Blocking `[CRITICAL]` |
+| `trisu shadow --sarif shadow.sarif` | Generates standardized OASIS SARIF v2.1.0 Shadow AI compliance report | CI/CD pipelines & auditing | Writes `shadow.sarif` |
 | `trisu bom --output ai-bom.json` | Catalogs models, datasets, and pipelines into CycloneDX AI v1.6 Bill of Materials | Before release / deployment | Writes `ai-bom.json` |
-| `trisu rules` | Validates master rules index and displays breakdown across all 25 domains and 198 rules | Post-update or audit verification | `0` = 198 rules valid |
+| `trisu rules` | Validates master rules index and displays breakdown across all 26 domains and 204 rules | Post-update or audit verification | `0` = 204 rules valid |
 | `trisu init --target <dir>` | Scaffolds TriSuElla governance templates & config into a new or existing project | Project bootstrap | `0` = Governance active |
 
 ---
@@ -674,12 +696,12 @@ trisu rules
 **Sample Output:**
 ```text
 ============================================================
-  OWASP TriSuElla-AIDLCA Policy Gate Validator v3.0
+  OWASP TriSuElla-AIDLCA Policy Gate Validator v3.2
   Status: Institutionalized | Pillars: SISU, TILLIT, DUGNAD
 ============================================================
 [*] Validating rules in TRISUELLA_MASTER_RULES_AND_CHECKS.md...
 
-[*] Rule Families Breakdown (25 domains, 198 rules):
+[*] Rule Families Breakdown (26 domains, 204 rules):
   • TRISU-AIAM       :  5 rules
   • TRISU-BASE       : 15 rules
   • TRISU-CHECK      :  1 rules
@@ -701,13 +723,14 @@ trisu rules
   • TRISU-REQ        :  1 rules
   • TRISU-SBD        :  5 rules
   • TRISU-SEC        : 22 rules
+  • TRISU-SHADOW     :  6 rules
   • TRISU-TEST       : 10 rules
   • TRISU-TOOL       :  5 rules
   • TRISU-TRUST      : 14 rules
   • TRISU-ZTC        :  8 rules
 
-  ✓ Discovered 198 unique TRISU-* rule identifiers.
-  ✓ Master rules index integrity valid (299 consolidated checks, 198 unique rules).
+  ✓ Discovered 204 unique TRISU-* rule identifiers.
+  ✓ Master rules index integrity valid (305 consolidated checks, 204 unique rules).
 ```
 
 ---
@@ -806,7 +829,7 @@ jobs:
         run: |
           python tools/trisu-cli/trisu_validator.py oss --sarif trisuella-oss.sarif
 
-      - name: Verify Rules Integrity (198 TRISU-* Identifiers)
+      - name: Verify Rules Integrity (204 TRISU-* Identifiers)
         run: |
           python tools/trisu-cli/trisu_validator.py rules
 
@@ -974,7 +997,7 @@ The `TRISUELLA-AIDLCA-Rules/prompts/` directory contains 28 production-ready pro
 OWASP-TriSuElla-AIDLCA-FrameWork/
 ├── README.md                                    ← Main project entrypoint & quickstart (v3.0)
 ├── Usage-Guide.md                               ← Canonical, comprehensive master usage guide (This File)
-├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (299 checks, 198 rules)
+├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (305 checks, 204 rules)
 ├── ai-bom.json                                  ← Machine-readable CycloneDX AI v1.6 BoM
 ├── trisuella.config.yaml                        ← Declarative policy & CSPM manifest
 ├── CLAUDE.md & .cursorrules                     ← Workspace rules for Claude Code & Cursor
@@ -1073,7 +1096,7 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 
 ## 📚 Key Reference Documents
 
-- **Master Rules Specification (299 Checks, 198 Rules)**: [TRISUELLA_MASTER_RULES_AND_CHECKS.md](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
+- **Master Rules Specification (305 Checks, 204 Rules)**: [TRISUELLA_MASTER_RULES_AND_CHECKS.md](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
 - **Detailed Developer Manual & CSPM Crosswalk**: [TRISUELLA-AIDLCA-Rules/FULL_README.md](TRISUELLA-AIDLCA-Rules/FULL_README.md)
 - **Framework Philosophy & Charter**: [TRISUELLA-AIDLCA-Rules/CHARTER.md](TRISUELLA-AIDLCA-Rules/CHARTER.md)
 - **Turnkey Prompt Library (28 Prompts)**: [TRISUELLA-AIDLCA-Rules/prompts/README.md](TRISUELLA-AIDLCA-Rules/prompts/README.md)

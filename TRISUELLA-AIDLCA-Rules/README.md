@@ -1,5 +1,5 @@
 # 🔱 TriSuElla-AIDLCA Secure Development Framework
-> **Version**: 3.1.0 | **Status**: Institutionalized (Production-Ready, DevSecOps-Ready & CI-Verified) | **Checks**: 299 | **Rules**: 198 | **Domain Families**: 25  
+> **Version**: 3.2.0 | **Status**: Institutionalized (Production-Ready, DevSecOps-Ready & CI-Verified) | **Checks**: 305 | **Rules**: 204 | **Domain Families**: 26  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)  
 > **AI-Driven. Policy-Governed. Trustworthy by Design.**
 
@@ -7,14 +7,15 @@
 
 ---
 
-## 📈 Progress & Implementation Milestones (v3.1.0 Institutionalized & CI-Verified)
+## 📈 Progress & Implementation Milestones (v3.2.0 Institutionalized & CI-Verified)
 
-The framework has attained **100% completion** across all 25 governance families and automated enforcement tools:
+The framework has attained **100% completion** across all 26 governance families and automated enforcement tools:
 
 | Domain & Invariant Category | Rule Count | Scope & Standards | Progress |
 | :--- | :---: | :--- | :---: |
 | **System Security Baseline (`TRISU-BASE`)** | 15 | OWASP Top 10 (2026), API security, encryption | 100% |
 | **AI & Agentic Security (`TRISU-SEC`)** | 22 | OWASP LLM Top 10, Agentic Top 20, Video KYC Deepfake Gate | 100% |
+| **Shadow AI & Model Discovery (`TRISU-SHADOW`)**| 6 | AST & regex scan, AI-BOM reconciliation, Gateway bypass gate | 100% |
 | **Zero Trust Architecture & Code (`TRISU-TRUST`/`ZTC`)** | 22 | CISA ZT Model, NIST SP 800-207, 8 in-code AST invariants | 100% |
 | **Sensitive Data Security (`TRISU-DATA`)** | 10 | DPDPA (India), GDPR, HIPAA, L0–L4 Classification | 100% |
 | **Infrastructure & NTP Integrity (`TRISU-INFRA`)** | 16 | CIS Benchmarks, Cosign/SLSA container gates, NTP sync | 100% |
@@ -26,7 +27,7 @@ The framework has attained **100% completion** across all 25 governance families
 | **EU AI Act High-Risk Compliance (`TRISU-EUAI`)** | 7 | EU Regulation 2024/1689 (Articles 9–15, CE Gate) | 100% |
 | **Agentic Identity & Delegation (`TRISU-AIAM`)** | 5 | RFC 8693 Token Exchange, SPIFFE/mTLS, Ephemeral Keys | 100% |
 | **Open Source & Supply Chain Security (`TRISU-OSS`)** | 6 | Lockfile hash pinning, license scan, CycloneDX AI v1.6 | 100% |
-| **TOTAL INVARIANTS & POLICIES** | **198 Rules / 299 Checks** | **100% Enforced in Master Rules & Automated CLI** | **100%** |
+| **TOTAL INVARIANTS & POLICIES** | **204 Rules / 305 Checks** | **100% Enforced in Master Rules & Automated CLI** | **100%** |
 
 ---
 
@@ -97,12 +98,12 @@ This automatically scaffolds `.cursorrules`, `CLAUDE.md`, `.windsurfrules`, `.gi
 1.  **Activate**: Tell your AI assistant (Cursor, Claude, Copilot, Windsurf):
     > *"Follow the TRISUELLA-AIDLCA v3.0 workflow defined in TRISUELLA-AIDLCA-rules/core-workflow.md"*
 2.  **Initialize**: Describe what you want to build. The framework handles the rest.
-3.  **Enforce**: All code generated is automatically audited against the 20-item **Security Review Checklist** and 299 consolidated invariants.
+3.  **Enforce**: All code generated is automatically audited against the 20-item **Security Review Checklist** and 305 consolidated invariants.
 
 ---
 
 ## 📚 Documentation & Key References
-*   📖 **[Master Rules & Checks Reference (299 Checks)](../TRISUELLA_MASTER_RULES_AND_CHECKS.md)**
+*   📖 **[Master Rules & Checks Reference (305 Checks)](../TRISUELLA_MASTER_RULES_AND_CHECKS.md)**
 *   📘 **[Framework Usage Guide (v3.0)](../Usage-Guide.md)**
 *   📜 **[Complete Rule Directory & Detailed Guide](FULL_README.md)**
 *   🏛️ **[Framework Charter & Philosophy](CHARTER.md)**
@@ -117,5 +118,5 @@ This automatically scaffolds `.cursorrules`, `CLAUDE.md`, `.windsurfrules`, `.gi
 
 ---
 
-*v3.0.1 — Security-first, AI-native. Built for the era of Agentic Autonomy.*
+*v3.2.0 — Security-first, AI-native. Built for the era of Agentic Autonomy.*
 

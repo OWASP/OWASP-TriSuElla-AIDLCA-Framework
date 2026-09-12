@@ -1,6 +1,6 @@
 # TRISU Framework State
-> **Version**: 3.1.0 | **Status**: Institutionalized Release (Production-Ready, DevSecOps-Ready & CI-Verified)  
-> **Consolidated Invariants**: 299 Checks | **Rules**: 198 | **Domain Families**: 25  
+> **Version**: 3.2.0 | **Status**: Institutionalized Release (Production-Ready, DevSecOps-Ready & CI-Verified)  
+> **Consolidated Invariants**: 305 Checks | **Rules**: 204 | **Domain Families**: 26  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)
 
 > [!NOTE]
@@ -8,7 +8,7 @@
 
 ## 📊 Current Status
 - **Project**: OWASP TriSuElla-AIDLCA Governance Institutionalization
-- **Version**: 3.1.0 (Institutionalized & DevSecOps Release)
+- **Version**: 3.2.0 (Institutionalized & DevSecOps Release)
 - **Current Phase**: **INSTITUTIONALIZED PRODUCTION & ECOSYSTEM ADOPTION**
 - **Current Stage**: Fully Codified, Validated, and CI/CD Gated
 - **Last Updated**: 2026-09-12
@@ -16,14 +16,15 @@
 
 ---
 
-## 🛠️ Active Domain & Rule Family Configuration (198 Rules / 299 Checks)
+## 🛠️ Active Domain & Rule Family Configuration (204 Rules / 305 Checks)
 
-The following 25 rule domains are fully integrated and enforced via master specifications and the automated `trisu` policy gatekeeper:
+The following 26 rule domains are fully integrated and enforced via master specifications and the automated `trisu` policy gatekeeper:
 
 | Domain Family | Prefix | Rule Count | Standards & Enforcement Scope |
 | :--- | :--- | :---: | :--- |
 | **System Security Baseline** | `TRISU-BASE` | 15 | OWASP Top 10 (2026), API security, encryption at rest/transit |
 | **AI & Agentic Security** | `TRISU-SEC` | 22 | OWASP LLM Top 10, Agentic Top 20, Deepfake detection gate |
+| **Shadow AI & Model Discovery** | `TRISU-SHADOW` | 6 | AST & regex scan, CycloneDX AI-BOM model reconciliation, GenAI Gateway bypass detection, supplier whitelisting |
 | **Zero Trust Architecture** | `TRISU-TRUST` | 14 | CISA ZT Maturity Model, NIST SP 800-207 |
 | **Zero Trust Code (ZTC)** | `TRISU-ZTC` | 8 | AST invariants: boundary checks, ambient secrets, fail-closed |
 | **Sensitive Data Security** | `TRISU-DATA` | 10 | DPDPA (India), GDPR, HIPAA, L0–L4 Classification |
@@ -39,7 +40,7 @@ The following 25 rule domains are fully integrated and enforced via master speci
 | **Open Source & Supply Chain Security**| `TRISU-OSS` | 6 | Lockfile hash pinning, license scan, CycloneDX AI v1.6 |
 | **Property-Based Testing** | `TRISU-TEST` | 10 | Invariant Proof, Hypothesis, fast-check, proptest |
 | **Lifecycle Gates & Core Workflow** | Core Invariants | 28 | 20-item Code Review Checklist, Inception threat modeling |
-| **TOTAL CONSOLIDATED COVERAGE** | **25 Domains** | **198 Rules** | **299 Consolidated Invariants (100% Gated)** |
+| **TOTAL CONSOLIDATED COVERAGE** | **26 Domains** | **204 Rules** | **305 Consolidated Invariants (100% Gated)** |
 
 ---
 
@@ -64,10 +65,16 @@ The following 25 rule domains are fully integrated and enforced via master speci
 - Validated dual SARIF 2.1.0 uploading and CycloneDX AI v1.6 AI-BoM build archiving.
 - Packaged turnkey zero-dependency local wrappers (`trisu.cmd`, `trisu`) and pip package `trisuella-cli` v3.0.1.
 
+### Phase 5: Shadow AI Governance & AI-BOM Reconciliation (Completed - v3.2.0)
+- Introduced 6 Shadow AI rules (`TRISU-SHADOW-01` through `TRISU-SHADOW-06`) covering model reconciliation, supplier whitelisting, gateway bypass detection, and unapproved deployment prevention.
+- Integrated AST-driven static analysis in `trisu shadow` command and automated into `audit` and `oss` gates.
+- Enhanced CycloneDX v1.6 AI-BOM metadata schema with sanctioned status tracking and approval ticketing.
+
 ---
 
-## 🚀 Forward Evolution (v3.1 / v4.0 Horizon)
+## 🚀 Forward Evolution (v3.3 / v4.0 Horizon)
 - **Native LSP Server**: Real-time IDE diagnostics and autofixes for VS Code and JetBrains.
 - **Agent Kernel Runtime Sandbox**: eBPF-based enforcement for autonomous local command execution.
 - **Decentralized Multi-Agent Notary**: Cross-enterprise cryptographic agent handoffs.
+
 

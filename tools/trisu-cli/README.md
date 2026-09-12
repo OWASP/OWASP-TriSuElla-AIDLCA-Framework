@@ -1,21 +1,22 @@
 # 🔱 OWASP TriSuElla-AIDLCA Policy Gate Validator CLI (`trisu`)
-> **Software Version**: 3.1.0 | **Framework Version**: 3.1.0 | **Status**: Production-Ready (Verified CI/CD & DevSecOps Gate)  
-> **Consolidated Invariants**: 299 Checks | **Rules**: 198 | **Domain Families**: 25  
+> **Software Version**: 3.2.0 | **Framework Version**: 3.2.0 | **Status**: Production-Ready (Verified CI/CD & DevSecOps Gate)  
+> **Consolidated Invariants**: 305 Checks | **Rules**: 204 | **Domain Families**: 26  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)
 
-The official zero-dependency command-line utility for the **OWASP TriSuElla-AIDLCA Framework (v3.1.0)**. Enforces deterministic Zero Trust Code (ZTC) invariants, Open Source Security (OSS) supply chain checks, CycloneDX AI-BoM generation, and automated CI/CD gating across any platform (GitHub, GitLab, Azure DevOps, Bitbucket, Jenkins, or Local).
+The official zero-dependency command-line utility for the **OWASP TriSuElla-AIDLCA Framework (v3.2.0)**. Enforces deterministic Zero Trust Code (ZTC) invariants, Open Source Security (OSS) supply chain checks, Shadow AI model discovery, CycloneDX AI-BoM generation, and automated CI/CD gating across any platform (GitHub, GitLab, Azure DevOps, Bitbucket, Jenkins, or Local).
 
 ---
 
-## 📈 Progress & Implementation Milestones (v3.1.0)
+## 📈 Progress & Implementation Milestones (v3.2.0)
 
 | Capability / Engine | Scope & Standards | Progress | Status |
 | :--- | :--- | :---: | :---: |
 | **AST Security Audit Engine (`trisu audit`)** | Secret scanning, dangerous sinks (`eval`, `exec`, `shell=True`), ZTC checks | 100% | **Production-Ready** |
+| **Shadow AI & Model Discovery (`trisu shadow`)**| AST SDK scanning, undeclared model detection, AI Gateway bypass gate | 100% | **Production-Ready** |
 | **Supply Chain & OSS Engine (`trisu oss`)** | Lockfile hash pinning, copyleft license checks, typosquatting defense | 100% | **Production-Ready** |
 | **CycloneDX AI-BoM Generator (`trisu bom`)** | Automated CycloneDX AI v1.6 Bill of Materials generation | 100% | **Production-Ready** |
 | **Repository Readiness Validator (`trisu check`)**| Validates 10 core framework artifacts & 7 developer templates | 100% | **Production-Ready** |
-| **Master Rule Indexer (`trisu rules`)** | Validates 198 rule identifiers across 25 domain families | 100% | **Production-Ready** |
+| **Master Rule Indexer (`trisu rules`)** | Validates 204 rule identifiers across 26 domain families | 100% | **Production-Ready** |
 | **Project Scaffolder (`trisu init`)** | Instant scaffolding of `.cursorrules`, `CLAUDE.md`, config, and CI gates | 100% | **Production-Ready** |
 | **Multi-Platform Turnkey Launchers** | `trisu.cmd` (Windows), `trisu` (POSIX executable), pip package | 100% | **Production-Ready** |
 | **Universal OASIS SARIF 2.1.0 Export** | Standard SARIF output for GitHub, GitLab, Azure DevOps, and SonarQube | 100% | **Production-Ready** |
@@ -31,12 +32,14 @@ From the repository root:
 # Windows (cmd / powershell)
 .\trisu.cmd check
 .\trisu.cmd audit
+.\trisu.cmd shadow
 .\trisu.cmd oss
 .\trisu.cmd rules
 
 # Linux / macOS / Git Bash
 ./trisu check
 ./trisu audit
+./trisu shadow
 ./trisu oss
 ./trisu rules
 ```
@@ -50,6 +53,7 @@ Now `trisu` is available globally in your system PATH:
 trisu --help
 trisu check
 trisu audit --sarif audit.sarif
+trisu shadow --sarif shadow.sarif
 trisu oss --sarif oss.sarif
 trisu bom --output ai-bom.json
 trisu rules
@@ -63,10 +67,11 @@ trisu init --target ./my-app
 | Command | Description | Exit Code Behavior |
 |---|---|---|
 | `trisu check` | Verifies repository readiness, core artifacts, and drop-in templates | Exits `0` if all artifacts exist; `1` if missing |
-| `trisu audit` | Scans workspace for hardcoded secrets, dangerous sinks (`eval`, `exec`, `shell=True`), and ZTC violations | Exits `1` if `[CRITICAL]` or `[HIGH]` findings exist; `0` if clean |
+| `trisu audit` | Scans workspace for hardcoded secrets, dangerous sinks (`eval`, `exec`, `shell=True`), ZTC and Shadow AI violations | Exits `1` if `[CRITICAL]` or `[HIGH]` findings exist; `0` if clean |
+| `trisu shadow` | Scans codebase for undeclared AI model invocations, supplier whitelist violations, and Gateway bypasses | Exits `1` if unapproved or undeclared AI models are detected |
 | `trisu oss` | Audits open source dependencies, pinned lockfiles, license contamination, and supply chain integrity | Exits `1` on unpinned dependencies or GPL in proprietary projects |
-| `trisu bom` | Generates CycloneDX AI v1.6 Bill of Materials (`ai-bom.json`) for models, datasets, and agents | Exits `0` on successful generation |
-| `trisu rules` | Validates master rules index and displays breakdown across all 25 domains and 198 rules | Exits `0` on valid index |
+| `trisu bom` | Generates CycloneDX AI v1.6 Bill of Materials (`ai-bom.json`) with sanctioned status & model tracking | Exits `0` on successful generation |
+| `trisu rules` | Validates master rules index and displays breakdown across all 26 domains and 204 rules | Exits `0` on valid index |
 | `trisu init` | Scaffolds TriSuElla governance templates (`.cursorrules`, `CLAUDE.md`, config, CI workflow) into a project | Exits `0` on successful scaffolding |
 
 ---

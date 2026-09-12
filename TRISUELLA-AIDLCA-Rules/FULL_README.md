@@ -104,7 +104,7 @@ This framework is **platform-agnostic** — copy it once, use it with any AI ass
 OWASP-TriSuElla-AIDLCA-FrameWork/
 ├── README.md                                    ← Main project entrypoint & quickstart (v3.0)
 ├── Usage-Guide.md                                ← Turnkey setup & step-by-step usage guide
-├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (299 checks, 198 rules)
+├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (305 checks, 204 rules)
 ├── ai-bom.json                                  ← Machine-readable CycloneDX AI v1.6 BoM
 ├── trisuella.config.yaml                        ← Declarative policy & CSPM manifest
 ├── CLAUDE.md & .cursorrules                     ← Workspace rules for Claude Code & Cursor
@@ -533,6 +533,11 @@ Ready-to-use prompts for every stage of the TRISUELLA-AIDLCA workflow. Copy, fil
 ---
 
 ## 🔄 Changelog
+
+### v3.2.0 (2026-09-12) - Shadow AI Governance & AI-BOM Reconciliation
+- **Shadow AI & Model Discovery Extension (`TRISU-SHADOW-01..06`)** — Governed undeclared model invocations, supplier whitelisting, Enterprise GenAI Gateway bypass detection, unapproved deployment prevention, prompt egress sanitization, and continuous shadow discovery across 26 security domains (204 unique rules, 305 checks).
+- **Automated AST Shadow AI Scanner Engine (`trisu shadow`)** — Integrated Python AST and static regex scanner into the zero-dependency CLI (`tools/trisu-cli`) and wired shadow auditing into `audit` and `oss` gates with SARIF 2.1.0 reporting.
+- **Enhanced CycloneDX AI v1.6 AI-BOM Schema** — Added model reconciliation properties (`sanctioned_status`, `approval_ref`) and updated master inventory to 305 checks across 26 domains and 204 unique rules.
 
 ### v3.0.1 (2026-09-12) - Production CI/CD Gate Verification & Turnkey Patch
 - **Live CI/CD Policy Gate Verification** — Verified remote GitHub Actions run `34675720411` with 100% success across all 23 pipeline steps (artifact readiness, AST blocking audit, open source supply chain verification, rules index validation, CycloneDX AI-BoM generation, and dual OASIS SARIF 2.1.0 uploads).

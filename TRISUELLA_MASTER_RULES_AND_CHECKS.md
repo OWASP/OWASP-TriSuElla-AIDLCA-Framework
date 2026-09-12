@@ -31,7 +31,8 @@ This document consolidates all TRISUELLA-AIDLCA rules, security checklists, and 
 | **Section 22** | EU AI Act High-Risk Compliance (EUAI) | 7 |
 | **Section 23** | Agentic Identity & Token Delegation (AIAM) | 5 |
 | **Section 24** | Open Source & Supply Chain Security (OSS) | 6 |
-| **GRAND TOTAL** | **Consolidated Rules & Checks** | **299** |
+| **Section 25** | Shadow AI Discovery, Auditing & Inventory (SHADOW) | 6 |
+| **GRAND TOTAL** | **Consolidated Rules & Checks** | **305** |
 
 ---
 
@@ -865,6 +866,24 @@ The framework includes specialized tooling to visualize and enforce governance i
     - *Verification*: `trisu_validator.py bom` validates and generates compliant `ai-bom.json`.
 - **TRISU-OSS-06 [HIGH]**: **Artifact Cryptographic Provenance & Build Attestation (SLSA Level 2+)**. Release packages, container images, and wheel distributions MUST produce cryptographic provenance attestations signed via Sigstore/Cosign or OIDC Trusted Publishers.
     - *Verification*: Container admission controller verifies signed Cosign attestations before production deployment.
+
+---
+
+## 🕵️‍♂️ Section 25: Shadow AI Discovery, Auditing & Inventory (TRISU-SHADOW)
+*NIST AI RMF Govern 1.1/1.2, ISO/IEC 42001 Clause 4.1 & 8.1, and OWASP LLM Supply Chain Controls*
+
+- **TRISU-SHADOW-01 [CRITICAL]**: **Undeclared AI Component Drift & Code-to-BOM Reconciliation**. All AI foundation models, inference client SDKs (`openai`, `anthropic`, `google.genai`, `groq`, `cohere`, `transformers`, etc.), and agent frameworks (`langchain`, `crewai`, `autogen`) in source code or dependency manifests MUST be declared in `ai-bom.json`. Any uncatalogued AI asset triggers an immediate blocking halt.
+    - *Verification*: `trisu_validator.py shadow` (or `trisu audit`) cross-references AST/static package scans with `ai-bom.json` components; undeclared usage halts deployment.
+- **TRISU-SHADOW-02 [HIGH]**: **Sanctioned Model Catalog & Supplier Whitelisting**. AI models deployed or consumed in code MUST belong to the organization's approved model catalog specified in `trisuella.config.yaml`. Unvetted open weights, unapproved HuggingFace model repos, or unvetted commercial SaaS endpoints are prohibited.
+    - *Verification*: Model name, supplier, and version in `ai-bom.json` matched against `allowed_model_suppliers` and `allowed_models` in configuration.
+- **TRISU-SHADOW-03 [HIGH]**: **Direct Public Egress & GenAI Gateway Bypass Defense**. Production source code and runtime containers MUST NOT execute unmediated outbound HTTP/WebSocket requests to public LLM vendor endpoints (`api.openai.com`, `api.anthropic.com`, etc.). All AI inference calls MUST route through an enterprise-governed GenAI reverse-proxy gateway with centralized DLP, rate-limiting, and auditing.
+    - *Verification*: Static scanner audits code for direct vendor endpoint URLs; egress policy gate checks gateway routing.
+- **TRISU-SHADOW-04 [HIGH]**: **AI-BOM Attestation & Approval Metadata Integrity**. Every AI component in `ai-bom.json` MUST contain explicit cryptographic provenance and governance properties: `trisuella:sanctioned_status: "approved"`, `trisuella:approval_ref`, and `trisuella:data_classification_limit`. Stale BoMs older than 24 hours (GATE-08) or missing sign-offs are rejected.
+    - *Verification*: CycloneDX v1.6 schema validator verifies presence and validity of governance properties on all machine-learning-model components.
+- **TRISU-SHADOW-05 [CRITICAL]**: **Unconfined Autonomous Agent & Dynamic Tool Sandboxing**. Autonomous multi-agent loops and agentic tool dispatch mechanisms (executing local shells, database queries, or network actions) MUST declare bounded tool definitions and mandatory Human-in-the-Loop (`Dual-Key HITL`) approval tokens. Rogue agent loops bypassing safety sandboxes are prohibited.
+    - *Verification*: Agent manifests verified for sandboxed tool execution and verified HITL circuit breakers before execution permission is granted.
+- **TRISU-SHADOW-06 [HIGH]**: **Uncatalogued Vector Database & Dataset Ingestion Audit**. Vector embeddings databases (`chromadb`, `pinecone`, `qdrant`, `weaviate`, `faiss`) and external data loaders MUST be inventoried in `ai-bom.json` as governed `data` components to prevent shadow ingestion of sensitive enterprise intellectual property into vector context.
+    - *Verification*: Scanner checks imports and configs for vector store engines and verifies matching dataset component entries in `ai-bom.json`.
 
 ---
 

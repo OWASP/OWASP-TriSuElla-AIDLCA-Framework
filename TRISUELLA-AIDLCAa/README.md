@@ -1,13 +1,13 @@
 # 🤖 TRISUELLA-AIDLCAa: Multi-Agent Autonomous Development & Governance System
-> **Version**: 3.0.1 | **Status**: Institutionalized Architecture (CI-Verified) | **Consolidated Invariants**: 299 Checks | **Rules**: 198 | **Domain Families**: 25  
+> **Version**: 3.2.0 | **Status**: Institutionalized Architecture (CI-Verified) | **Consolidated Invariants**: 305 Checks | **Rules**: 204 | **Domain Families**: 26  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)  
 > **Pillars**: SISU, TILLIT, DUGNAD
 
-> **TRISUELLA-AIDLCAa** (AI-Driven Development Life Cycle Agents) is the automated multi-agent implementation of the TriSuElla framework. It translates the 299 governance rules and sequential lifecycle gates into a coordinated pipeline of specialized autonomous agents operating under a Zero-Trust orchestration fabric.
+> **TRISUELLA-AIDLCAa** (AI-Driven Development Life Cycle Agents) is the automated multi-agent implementation of the TriSuElla framework. It translates the 305 governance rules and sequential lifecycle gates into a coordinated pipeline of specialized autonomous agents operating under a Zero-Trust orchestration fabric.
 
 ---
 
-## 📈 Multi-Agent System Progress & Milestones (v3.0.1)
+## 📈 Multi-Agent System Progress & Milestones (v3.2.0)
 
 | Autonomous Agent Architecture Component | Implementation Scope | Progress | Status |
 | :--- | :--- | :---: | :---: |
@@ -17,7 +17,7 @@
 | **Agentic Identity & Delegation (`TRISU-AIAM`)** | RFC 8693 Token Exchange, ephemeral subagent credentials, mTLS binding | 100% | **Production-Ready** |
 | **Model Context Protocol Security (`TRISU-MCP`)** | Schema sanitization, recursion depth limits, out-of-band human auth | 100% | **Production-Ready** |
 | **Zero Trust Code (ZTC) Guardrails** | In-code AST checks preventing prompt leakage & ambient tool abuse | 100% | **Production-Ready** |
-| **Automated Policy Gatekeeper CLI** | Native integration with `trisu audit`, `trisu oss`, and `trisu bom` | 100% | **Production-Ready** |
+| **Automated Policy Gatekeeper CLI** | Native integration with `trisu audit`, `trisu shadow`, `trisu oss`, and `trisu bom` | 100% | **Production-Ready** |
 | **CI/CD Multi-Agent Policy Gate** | Automated verification of agent envelopes & policy enforcement | 100% | **Verified Passing** |
 
 ---
@@ -141,4 +141,4 @@ agents:
 - 🔐 **Agentic Identity & Delegation**: See [TRISU-AIAM](../TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rule-details/extensions/security/zero-trust/agentic-iam.md) for RFC 8693 token exchange and SPIFFE/mTLS workload identity specifications.
 - 🔌 **Tool & MCP Sandboxing**: See [TRISU-MCP](../TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rule-details/extensions/security/ai-agentic/mcp-security.md) for runtime tool sandboxing and parameter sanitization.
 - 🛠️ **Automated Policy Gatekeeper**: See [Validator CLI (`trisu`)](../tools/trisu-cli/README.md) and [Usage Guide](../Usage-Guide.md) for turnkey runtime enforcement.
-- 📋 **Master Governance Reference**: Consult [TRISUELLA_MASTER_RULES_AND_CHECKS.md](../TRISUELLA_MASTER_RULES_AND_CHECKS.md) (299 Checks) and [CHARTER.md](../TRISUELLA-AIDLCA-Rules/CHARTER.md).
+- 📋 **Master Governance Reference**: Consult [TRISUELLA_MASTER_RULES_AND_CHECKS.md](../TRISUELLA_MASTER_RULES_AND_CHECKS.md) (305 Checks) and [CHARTER.md](../TRISUELLA-AIDLCA-Rules/CHARTER.md).
