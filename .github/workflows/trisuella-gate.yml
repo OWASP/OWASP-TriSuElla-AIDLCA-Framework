@@ -13,7 +13,8 @@ jobs:
 
     permissions:
       contents: read
-      security-events: write # Required for SARIF upload
+      security-events: write # Required for SARIF upload to GitHub Code Scanning
+      actions: read          # Required by CodeQL action to inspect workflow run metadata
       pull-requests: write
 
     steps:
@@ -48,12 +49,25 @@ jobs:
       - name: Upload Security SARIF Report to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v3
         if: always()
+        continue-on-error: true # Gracefully proceeds if repository does not have GitHub Advanced Security enabled
         with:
           sarif_file: trisuella-audit.sarif
           category: trisuella-security-gate
 
-      - name: Archive AI-BoM Artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload OSS Supply Chain SARIF to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        continue-on-error: true # Gracefully proceeds if repository does not have GitHub Advanced Security enabled
         with:
-          name: ai-bom-cyclonedx
-          path: ai-bom.json
+          sarif_file: trisuella-oss.sarif
+          category: trisuella-oss-gate
+
+      - name: Archive Governance & Security Artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: trisuella-v3-artifacts
+          path: |
+            ai-bom.json
+            trisuella-audit.sarif
+            trisuella-oss.sarif
