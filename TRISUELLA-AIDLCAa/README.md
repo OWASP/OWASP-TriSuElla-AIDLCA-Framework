@@ -112,7 +112,7 @@ Under the **DUGNAD** pillar, no agent possesses unilateral authority to deploy A
 
 ### Configuration Example (`trisuella-agents.yaml`)
 ```yaml
-version: "3.0"
+version: "3.3.0"
 orchestrator:
   mode: strict-zero-trust
   audit_file: "./audit.md"

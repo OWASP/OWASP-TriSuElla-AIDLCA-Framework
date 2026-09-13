@@ -1,7 +1,7 @@
-# TriSuElla-AIDLCA Project Configuration (v3.0)
+# TriSuElla-AIDLCA Project Configuration (v3.3.0)
 # Place in repository root to customize policy enforcement
 
-version: "3.0"
+version: "3.3.0"
 project_name: "enterprise-ai-application"
 risk_tier: "Tier-1" # Tier-1 (High Assurance / Regulated), Tier-2 (Standard Enterprise), Tier-3 (Internal Prototype)
 

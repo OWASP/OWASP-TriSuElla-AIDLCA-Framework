@@ -82,7 +82,7 @@ def print_usage_guide():
   {Colors.GREEN}shadow{Colors.RESET}       Audit for Shadow AI, undeclared models, and AI-BoM discrepancies
   {Colors.GREEN}oss{Colors.RESET}          Audit Open Source Security (OSS) & software supply chain integrity
   {Colors.GREEN}bom{Colors.RESET}          Generate CycloneDX AI v1.6 Bill of Materials (AI-BoM)
-  {Colors.GREEN}rules{Colors.RESET}        Validate all 204 TRISU-* rule identifiers and domain breakdown
+  {Colors.GREEN}rules{Colors.RESET}        Validate all 212 TRISU-* rule identifiers and domain breakdown
   {Colors.GREEN}init{Colors.RESET}         Scaffold TriSuElla templates into target directory
 
 {Colors.BOLD}Common Examples:{Colors.RESET}
@@ -927,7 +927,7 @@ def export_sarif(findings: list, sarif_file: str, root_dir: Path):
 
 
 def cmd_init(target_dir: Path, framework_dir: Path = None) -> int:
-    """Scaffolds TriSuElla v3.0 templates and configuration into target project."""
+    """Scaffolds TriSuElla v3.3.0 templates and configuration into target project."""
     framework_dir = find_framework_root(framework_dir)
     print(f"{Colors.BOLD}[*] Initializing TriSuElla-AIDLCA v{VERSION} in: {target_dir}{Colors.RESET}")
     print(f"[*] Framework templates source: {framework_dir / 'templates'}")

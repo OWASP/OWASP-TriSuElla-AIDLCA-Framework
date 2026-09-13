@@ -196,7 +196,7 @@ trisu oss --sarif oss.sarif
 # Scan codebase for Shadow AI, undeclared models & gateway bypasses
 trisu shadow --sarif shadow.sarif
 
-# Validate all 204 rule identifiers and inspect domain breakdown
+# Validate all 212 rule identifiers and inspect domain breakdown
 trisu rules
 
 # Generate a CycloneDX AI v1.6 Bill of Materials (AI-BoM)
@@ -209,7 +209,7 @@ trisu bom --output ai-bom.json
 
 ```
 OWASP-TriSuElla-AIDLCA-FrameWork/
-├── README.md                              # Main project entrypoint & quickstart (v3.0)
+├── README.md                              # Main project entrypoint & quickstart (v3.3.0)
 ├── Usage-Guide.md                         # Comprehensive step-by-step master usage guide
 ├── TRISUELLA_MASTER_RULES_AND_CHECKS.md   # Unified master rulebook (313 checks, 212 rules)
 ├── ai-bom.json                            # Machine-readable CycloneDX AI v1.6 BoM

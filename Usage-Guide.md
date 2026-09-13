@@ -598,7 +598,7 @@ You can run the CLI through any of these three frictionless methods:
 | `trisu shadow` | Audits for Shadow AI, undeclared model imports, hardcoded endpoints, and AI-BoM drift | Model integration & pre-release | `0` = Reconciled, `1` = Blocking `[CRITICAL]` |
 | `trisu shadow --sarif shadow.sarif` | Generates standardized OASIS SARIF v2.1.0 Shadow AI compliance report | CI/CD pipelines & auditing | Writes `shadow.sarif` |
 | `trisu bom --output ai-bom.json` | Catalogs models, datasets, and pipelines into CycloneDX AI v1.6 Bill of Materials | Before release / deployment | Writes `ai-bom.json` |
-| `trisu rules` | Validates master rules index and displays breakdown across all 26 domains and 204 rules | Post-update or audit verification | `0` = 204 rules valid |
+| `trisu rules` | Validates master rules index and displays breakdown across all 27 domains and 212 rules | Post-update or audit verification | `0` = 212 rules valid |
 | `trisu init --target <dir>` | Scaffolds TriSuElla governance templates & config into a new or existing project | Project bootstrap | `0` = Governance active |
 
 ---
@@ -830,7 +830,7 @@ jobs:
         run: |
           python tools/trisu-cli/trisu_validator.py oss --sarif trisuella-oss.sarif
 
-      - name: Verify Rules Integrity (204 TRISU-* Identifiers)
+      - name: Verify Rules Integrity (212 TRISU-* Identifiers)
         run: |
           python tools/trisu-cli/trisu_validator.py rules
 
@@ -996,7 +996,7 @@ The `TRISUELLA-AIDLCA-Rules/prompts/` directory contains 28 production-ready pro
 
 ```
 OWASP-TriSuElla-AIDLCA-FrameWork/
-├── README.md                                    ← Main project entrypoint & quickstart (v3.0)
+├── README.md                                    ← Main project entrypoint & quickstart (v3.3.0)
 ├── Usage-Guide.md                               ← Canonical, comprehensive master usage guide (This File)
 ├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (313 checks, 212 rules)
 ├── ai-bom.json                                  ← Machine-readable CycloneDX AI v1.6 BoM
@@ -1106,4 +1106,4 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 
 ---
 
-*OWASP TriSuElla-AIDLCA Secure Development Framework v3.0 — Security-First, AI-Native. Built for Agentic Autonomy.*
+*OWASP TriSuElla-AIDLCA Secure Development Framework v3.3.0 — Security-First, AI-Native. Built for Agentic Autonomy.*

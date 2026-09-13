@@ -72,7 +72,7 @@ trisu init --target ./my-app
 | `trisu shadow` | Scans codebase for undeclared AI model invocations, supplier whitelist violations, and Gateway bypasses | Exits `1` if unapproved or undeclared AI models are detected |
 | `trisu oss` | Audits open source dependencies, pinned lockfiles, license contamination, and supply chain integrity | Exits `1` on unpinned dependencies or GPL in proprietary projects |
 | `trisu bom` | Generates CycloneDX AI v1.6 Bill of Materials (`ai-bom.json`) with sanctioned status & model tracking | Exits `0` on successful generation |
-| `trisu rules` | Validates master rules index and displays breakdown across all 26 domains and 204 rules | Exits `0` on valid index |
+| `trisu rules` | Validates master rules index and displays breakdown across all 27 domains and 212 rules | Exits `0` on valid index |
 | `trisu init` | Scaffolds TriSuElla governance templates (`.cursorrules`, `CLAUDE.md`, config, CI workflow) into a project | Exits `0` on successful scaffolding |
 
 ---
