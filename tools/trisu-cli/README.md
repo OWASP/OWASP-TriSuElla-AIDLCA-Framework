@@ -1,22 +1,23 @@
 # 🔱 OWASP TriSuElla-AIDLCA Policy Gate Validator CLI (`trisu`)
-> **Software Version**: 3.2.0 | **Framework Version**: 3.2.0 | **Status**: Production-Ready (Verified CI/CD & DevSecOps Gate)  
-> **Consolidated Invariants**: 305 Checks | **Rules**: 204 | **Domain Families**: 26  
+> **Software Version**: 3.3.0 | **Framework Version**: 3.3.0 | **Status**: Production-Ready (Verified CI/CD & DevSecOps Gate)  
+> **Consolidated Invariants**: 313 Checks | **Rules**: 212 | **Domain Families**: 27  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)
 
-The official zero-dependency command-line utility for the **OWASP TriSuElla-AIDLCA Framework (v3.2.0)**. Enforces deterministic Zero Trust Code (ZTC) invariants, Open Source Security (OSS) supply chain checks, Shadow AI model discovery, CycloneDX AI-BoM generation, and automated CI/CD gating across any platform (GitHub, GitLab, Azure DevOps, Bitbucket, Jenkins, or Local).
+The official zero-dependency command-line utility for the **OWASP TriSuElla-AIDLCA Framework (v3.3.0)**. Enforces deterministic Zero Trust Code (ZTC) invariants, Open Source Security (OSS) supply chain checks, Shadow AI model discovery, Data Literacy and provenance defense, CycloneDX AI-BoM generation, and automated CI/CD gating across any platform (GitHub, GitLab, Azure DevOps, Bitbucket, Jenkins, or Local).
 
 ---
 
-## 📈 Progress & Implementation Milestones (v3.2.0)
+## 📈 Progress & Implementation Milestones (v3.3.0)
 
 | Capability / Engine | Scope & Standards | Progress | Status |
 | :--- | :--- | :---: | :---: |
-| **AST Security Audit Engine (`trisu audit`)** | Secret scanning, dangerous sinks (`eval`, `exec`, `shell=True`), ZTC checks | 100% | **Production-Ready** |
+| **AST Security Audit Engine (`trisu audit`)** | Secret scanning, dangerous sinks (`eval`, `exec`, `shell=True`), ZTC checks, and raw DB dump defense | 100% | **Production-Ready** |
+| **Data Literacy & Integrity Engine** | Vector retrieval ACL pre-filter AST scan, production PII defense, provenance tracking (`TRISU-DLIT`) | 100% | **Production-Ready** |
 | **Shadow AI & Model Discovery (`trisu shadow`)**| AST SDK scanning, undeclared model detection, AI Gateway bypass gate | 100% | **Production-Ready** |
 | **Supply Chain & OSS Engine (`trisu oss`)** | Lockfile hash pinning, copyleft license checks, typosquatting defense | 100% | **Production-Ready** |
 | **CycloneDX AI-BoM Generator (`trisu bom`)** | Automated CycloneDX AI v1.6 Bill of Materials generation | 100% | **Production-Ready** |
 | **Repository Readiness Validator (`trisu check`)**| Validates 10 core framework artifacts & 7 developer templates | 100% | **Production-Ready** |
-| **Master Rule Indexer (`trisu rules`)** | Validates 204 rule identifiers across 26 domain families | 100% | **Production-Ready** |
+| **Master Rule Indexer (`trisu rules`)** | Validates 212 rule identifiers across 27 domain families | 100% | **Production-Ready** |
 | **Project Scaffolder (`trisu init`)** | Instant scaffolding of `.cursorrules`, `CLAUDE.md`, config, and CI gates | 100% | **Production-Ready** |
 | **Multi-Platform Turnkey Launchers** | `trisu.cmd` (Windows), `trisu` (POSIX executable), pip package | 100% | **Production-Ready** |
 | **Universal OASIS SARIF 2.1.0 Export** | Standard SARIF output for GitHub, GitLab, Azure DevOps, and SonarQube | 100% | **Production-Ready** |

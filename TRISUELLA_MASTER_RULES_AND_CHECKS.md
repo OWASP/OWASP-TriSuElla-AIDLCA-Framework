@@ -32,7 +32,8 @@ This document consolidates all TRISUELLA-AIDLCA rules, security checklists, and 
 | **Section 23** | Agentic Identity & Token Delegation (AIAM) | 5 |
 | **Section 24** | Open Source & Supply Chain Security (OSS) | 6 |
 | **Section 25** | Shadow AI Discovery, Auditing & Inventory (SHADOW) | 6 |
-| **GRAND TOTAL** | **Consolidated Rules & Checks** | **305** |
+| **Section 26** | Data Literacy, Lineage, Integrity & Quality (DLIT) | 8 |
+| **GRAND TOTAL** | **Consolidated Rules & Checks** | **313** |
 
 ---
 
@@ -884,6 +885,28 @@ The framework includes specialized tooling to visualize and enforce governance i
     - *Verification*: Agent manifests verified for sandboxed tool execution and verified HITL circuit breakers before execution permission is granted.
 - **TRISU-SHADOW-06 [HIGH]**: **Uncatalogued Vector Database & Dataset Ingestion Audit**. Vector embeddings databases (`chromadb`, `pinecone`, `qdrant`, `weaviate`, `faiss`) and external data loaders MUST be inventoried in `ai-bom.json` as governed `data` components to prevent shadow ingestion of sensitive enterprise intellectual property into vector context.
     - *Verification*: Scanner checks imports and configs for vector store engines and verifies matching dataset component entries in `ai-bom.json`.
+
+---
+
+## 📚 Section 26: Data Literacy, Lineage, Integrity & Quality Assurance (TRISU-DLIT)
+*Anchored in the Data Literacy Quick Reference Card: Foundations, Quality, Assurance, Lineage, Integrity, and Capability Organization*
+
+- **TRISU-DLIT-01 [HIGH]**: **Machine-Readable Data Contracts & Semantic Vocabulary**. All data ingestion endpoints, agent memory state stores, and vector ETL pipelines MUST validate inputs against explicit schemas (Pydantic models, JSON Schema, or Protobuf) with strict typing, non-nullable invariants, and domain vocabulary definitions. Unstructured, unvalidated dynamic dictionaries are prohibited at system boundaries.
+    - *Verification*: AST inspection validates that data ingestion and vector preparation functions parse inputs through explicit schema validators (e.g. `BaseModel.model_validate()`, `@validate_call`).
+- **TRISU-DLIT-02 [CRITICAL]**: **Production Data Air-Gap & Zero Raw Customer PII in Non-Prod**. Raw customer production data (L2–L4 classification) is strictly forbidden in local workstations, developer notebooks (`.ipynb`), scratch scripts, or CI build runners. All development and automated testing MUST exclusively consume synthetically generated or deterministically masked/tokenized data fixtures.
+    - *Verification*: `trisu audit` workspace scan rejects raw database dumps (`*.dump`, `*.sql`, `*.parquet`, `*.bak`, `*.mdf`) and unmasked PII patterns outside authorized production mounts.
+- **TRISU-DLIT-03 [CRITICAL]**: **RAG Context Access Control Lists (ACL) & Egress Boundaries**. Retrieval-Augmented Generation (RAG) vector database queries (`similarity_search`, `query`) MUST enforce tenant-scoped and user-level authorization filters *prior* to vector similarity ranking. Injecting document chunks exceeding the calling user's verified clearance level into prompt contexts is strictly prohibited.
+    - *Verification*: AST validator inspects vector database client calls (`pinecone`, `qdrant`, `chromadb`, `pgvector`, `milvus`, `weaviate`) to verify mandatory metadata authorization filter arguments are present.
+- **TRISU-DLIT-04 [HIGH]**: **Dataset Provenance, Lineage & Consent Attestation in AI-BOM**. All training datasets, fine-tuning corpora, and RAG knowledge bases MUST be cataloged in `ai-bom.json` with cryptographic content hashes (SHA-256), source URI, data license, consent basis (under EU AI Act Art. 10 & DPDPA), and designated Data Steward.
+    - *Verification*: `trisu bom` and `trisu shadow` verify that external training datasets and vector collections match declared CycloneDX dataset components.
+- **TRISU-DLIT-05 [HIGH]**: **Synthetic Data Provenance Tagging & Model Collapse Prevention**. All AI-generated synthetic training or evaluation datasets MUST be cryptographically watermarked with metadata tags (`is_synthetic: true`, generating model identifier, generation timestamp, and random seed) and isolated from production training sets unless verified via Dual-Key human review.
+    - *Verification*: Pre-commit and CI/CD validation checks dataset schema headers to prevent unvalidated synthetic data from entering production feature stores.
+- **TRISU-DLIT-06 [HIGH]**: **Statistical Data Drift & Distribution Health Gate**. Continuous inference and retraining pipelines MUST enforce statistical drift detection thresholds (KS-test, Population Stability Index, embedding centroid drift) with automated alerts and circuit breakers before degraded data reaches production model inference.
+    - *Verification*: `trisu check` validates presence of statistical data validation hooks (Great Expectations, Evidently, Whylogs, Pydantic) in data ingestion and training scripts.
+- **TRISU-DLIT-07 [MEDIUM]**: **Agent Context Window & Session Memory TTL Expiration**. Autonomous agent conversation histories, ephemeral memory stores, and vector prompt caches MUST enforce deterministic Time-To-Live (TTL) expiration policies. Unbounded retention of ephemeral conversational context is prohibited.
+    - *Verification*: AST inspection confirms TTL configurations on Redis, vector cache, or in-memory session stores.
+- **TRISU-DLIT-08 [MEDIUM]**: **Enterprise Data Literacy & Role Ownership Attestation**. Every business dataset, feature store, and AI model domain MUST designate a named Data Steward and business owner in `trisuella.config.yaml`, establishing clear accountability, catalog discoverability, and data literacy governance.
+    - *Verification*: `trisu check` verifies `data_literacy_governance` and `data_stewardship` configuration blocks in `trisuella.config.yaml`.
 
 ---
 

@@ -1,7 +1,7 @@
-# 📖 OWASP TriSuElla-AIDLCA Framework — Comprehensive Master Usage Guide (v3.2.0)
+# 📖 OWASP TriSuElla-AIDLCA Framework — Comprehensive Master Usage Guide (v3.3.0)
 
 > **AI-Driven Development Life Cycle & Autonomous Agent Governance (LLMSecOps)**  
-> **Version**: 3.2.0 | **Status**: Institutionalized (Production & DevSecOps Ready) | **Total Checks**: 305 | **Rules**: 204 | **Domain Families**: 26  
+> **Version**: 3.3.0 | **Status**: Institutionalized (Production & DevSecOps Ready) | **Total Checks**: 313 | **Rules**: 212 | **Domain Families**: 27  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)  
 
 ---
@@ -19,7 +19,7 @@ The framework bridges the gap between fast-paced **vibe coding** and stringent *
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│                        TRISUELLA-AIDLCA v3.2.0                         │
+│                        TRISUELLA-AIDLCA v3.3.0                         │
 ├───────────────────┬────────────────────────────┬───────────────────────┤
 │ Phase 1: INCEPTION│ Phase 2: CONSTRUCTION      │ Phase 3: OPERATIONS   │
 │ (Plan & Model)    │ (Design, Code & Verify)    │ (Deploy & Observe)    │
@@ -117,11 +117,11 @@ trisu bom [--output ai-bom.json] [--dir <directory>]
 ---
 
 ### Command 6: `trisu rules` — Invariant Integrity & Domain Inspector
-Inspects all 204 rule identifiers across 26 domain families:
+Inspects all 212 rule identifiers across 27 domain families:
 ```bash
 trisu rules
 ```
-- Validates rule numbering, domain breakdown, and ensures zero broken rule anchors in the governance matrix (305 consolidated checks, 204 unique rules).
+- Validates rule numbering, domain breakdown, and ensures zero broken rule anchors in the governance matrix (313 consolidated checks, 212 unique rules).
 
 ---
 
@@ -696,12 +696,12 @@ trisu rules
 **Sample Output:**
 ```text
 ============================================================
-  OWASP TriSuElla-AIDLCA Policy Gate Validator v3.2
+  OWASP TriSuElla-AIDLCA Policy Gate Validator v3.3.0
   Status: Institutionalized | Pillars: SISU, TILLIT, DUGNAD
 ============================================================
 [*] Validating rules in TRISUELLA_MASTER_RULES_AND_CHECKS.md...
 
-[*] Rule Families Breakdown (26 domains, 204 rules):
+[*] Rule Families Breakdown (27 domains, 212 rules):
   • TRISU-AIAM       :  5 rules
   • TRISU-BASE       : 15 rules
   • TRISU-CHECK      :  1 rules
@@ -710,6 +710,7 @@ trisu rules
   • TRISU-CSPM       : 14 rules
   • TRISU-DATA       : 10 rules
   • TRISU-DLCA       : 15 rules
+  • TRISU-DLIT       :  8 rules
   • TRISU-EUAI       :  7 rules
   • TRISU-GATE       :  1 rules
   • TRISU-INFRA      : 16 rules
@@ -729,8 +730,8 @@ trisu rules
   • TRISU-TRUST      : 14 rules
   • TRISU-ZTC        :  8 rules
 
-  ✓ Discovered 204 unique TRISU-* rule identifiers.
-  ✓ Master rules index integrity valid (305 consolidated checks, 204 unique rules).
+  ✓ Discovered 212 unique TRISU-* rule identifiers.
+  ✓ Master rules index integrity valid (313 consolidated checks, 212 unique rules).
 ```
 
 ---
@@ -997,7 +998,7 @@ The `TRISUELLA-AIDLCA-Rules/prompts/` directory contains 28 production-ready pro
 OWASP-TriSuElla-AIDLCA-FrameWork/
 ├── README.md                                    ← Main project entrypoint & quickstart (v3.0)
 ├── Usage-Guide.md                               ← Canonical, comprehensive master usage guide (This File)
-├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (305 checks, 204 rules)
+├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (313 checks, 212 rules)
 ├── ai-bom.json                                  ← Machine-readable CycloneDX AI v1.6 BoM
 ├── trisuella.config.yaml                        ← Declarative policy & CSPM manifest
 ├── CLAUDE.md & .cursorrules                     ← Workspace rules for Claude Code & Cursor
@@ -1096,7 +1097,7 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 
 ## 📚 Key Reference Documents
 
-- **Master Rules Specification (305 Checks, 204 Rules)**: [TRISUELLA_MASTER_RULES_AND_CHECKS.md](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
+- **Master Rules Specification (313 Checks, 212 Rules)**: [TRISUELLA_MASTER_RULES_AND_CHECKS.md](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
 - **Detailed Developer Manual & CSPM Crosswalk**: [TRISUELLA-AIDLCA-Rules/FULL_README.md](TRISUELLA-AIDLCA-Rules/FULL_README.md)
 - **Framework Philosophy & Charter**: [TRISUELLA-AIDLCA-Rules/CHARTER.md](TRISUELLA-AIDLCA-Rules/CHARTER.md)
 - **Turnkey Prompt Library (28 Prompts)**: [TRISUELLA-AIDLCA-Rules/prompts/README.md](TRISUELLA-AIDLCA-Rules/prompts/README.md)

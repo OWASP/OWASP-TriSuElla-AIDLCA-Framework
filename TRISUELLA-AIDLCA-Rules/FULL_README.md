@@ -104,7 +104,7 @@ This framework is **platform-agnostic** — copy it once, use it with any AI ass
 OWASP-TriSuElla-AIDLCA-FrameWork/
 ├── README.md                                    ← Main project entrypoint & quickstart (v3.0)
 ├── Usage-Guide.md                                ← Turnkey setup & step-by-step usage guide
-├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (305 checks, 204 rules)
+├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (313 checks, 212 rules)
 ├── ai-bom.json                                  ← Machine-readable CycloneDX AI v1.6 BoM
 ├── trisuella.config.yaml                        ← Declarative policy & CSPM manifest
 ├── CLAUDE.md & .cursorrules                     ← Workspace rules for Claude Code & Cursor
@@ -533,6 +533,12 @@ Ready-to-use prompts for every stage of the TRISUELLA-AIDLCA workflow. Copy, fil
 ---
 
 ## 🔄 Changelog
+
+### v3.3.0 (2026-09-13) - Data Literacy, Lineage & Quality Assurance
+- **Data Literacy & Integrity Domain (`TRISU-DLIT-01..08`)** — Codified 8 non-negotiable rules covering training & RAG dataset provenance, production data air-gap defense, vector context pre-retrieval authorization, data profiling/drift monitoring, machine unlearning/RTBF, differential privacy, consent attestation, and continuous vector store poisoning defense across 27 security domains (212 unique rules, 313 consolidated checks).
+- **AST Vector Pre-Retrieval Filter Inspection** — Integrated vector query AST verification (`similarity_search`, `query`) ensuring pre-retrieval ACL filters are present before vector embeddings enter context windows.
+- **Production Data Ingestion Defense** — Added static detection for unmasked Aadhaar, SSN, PAN, and raw database dump files (`.dump`, `.parquet`, `.bak`, `.mdf`, `.sqlite3`, `.db`) in non-production code repositories.
+- **CycloneDX AI v1.6 AI-BOM Enrichment** — Enhanced data component schema with cryptographic lineage hashes (`sha256`) and explicit consent attestation properties.
 
 ### v3.2.0 (2026-09-12) - Shadow AI Governance & AI-BOM Reconciliation
 - **Shadow AI & Model Discovery Extension (`TRISU-SHADOW-01..06`)** — Governed undeclared model invocations, supplier whitelisting, Enterprise GenAI Gateway bypass detection, unapproved deployment prevention, prompt egress sanitization, and continuous shadow discovery across 26 security domains (204 unique rules, 305 checks).

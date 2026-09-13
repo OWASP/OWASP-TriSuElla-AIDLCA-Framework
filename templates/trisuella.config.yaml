@@ -151,3 +151,16 @@ shadow_ai_governance:
   enforce_agent_confinement: true               # TRISU-SHADOW-05: Confine agent tool loops with HITL
   catalog_vector_stores: true                   # TRISU-SHADOW-06: Ensure vector stores are in AI-BoM data components
 
+# Data Literacy, Lineage, Integrity & Quality Assurance (TRISU-DLIT)
+data_literacy_governance:
+  enabled: true
+  enforce_provenance_attestation: true          # TRISU-DLIT-01: Cryptographic lineage & licensing attestation
+  enforce_production_data_air_gap: true         # TRISU-DLIT-02: Block raw DB dumps & unmasked PII/SPI in non-prod
+  enforce_vector_pre_retrieval_acl: true        # TRISU-DLIT-03: Mandatory pre-retrieval filters in RAG vector search
+  enforce_data_quality_integrity: true          # TRISU-DLIT-04: Schema validation, drift monitoring & profiling
+  enforce_right_to_be_forgotten: true           # TRISU-DLIT-05: Verifiable unlearning & selective purging mechanism
+  enforce_differential_privacy: true           # TRISU-DLIT-06: Differential privacy & sanitization before embedding
+  enforce_consent_attestation: true             # TRISU-DLIT-07: Explicit lawful consent basis and lineage linkage
+  enforce_vector_store_poisoning_audit: true    # TRISU-DLIT-08: Continuous vector index integrity & poisoning audit
+
+

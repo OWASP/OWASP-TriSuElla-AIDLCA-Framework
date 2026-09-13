@@ -1,6 +1,6 @@
 # TRISU Framework State
-> **Version**: 3.2.0 | **Status**: Institutionalized Release (Production-Ready, DevSecOps-Ready & CI-Verified)  
-> **Consolidated Invariants**: 305 Checks | **Rules**: 204 | **Domain Families**: 26  
+> **Version**: 3.3.0 | **Status**: Institutionalized Release (Production-Ready, DevSecOps-Ready & CI-Verified)  
+> **Consolidated Invariants**: 313 Checks | **Rules**: 212 | **Domain Families**: 27  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)
 
 > [!NOTE]
@@ -8,22 +8,23 @@
 
 ## 📊 Current Status
 - **Project**: OWASP TriSuElla-AIDLCA Governance Institutionalization
-- **Version**: 3.2.0 (Institutionalized & DevSecOps Release)
+- **Version**: 3.3.0 (Institutionalized & DevSecOps Release)
 - **Current Phase**: **INSTITUTIONALIZED PRODUCTION & ECOSYSTEM ADOPTION**
 - **Current Stage**: Fully Codified, Validated, and CI/CD Gated
-- **Last Updated**: 2026-09-12
+- **Last Updated**: 2026-09-13
 - **Overall Progress**: [████████████████████] 100%
 
 ---
 
-## 🛠️ Active Domain & Rule Family Configuration (204 Rules / 305 Checks)
+## 🛠️ Active Domain & Rule Family Configuration (212 Rules / 313 Checks)
 
-The following 26 rule domains are fully integrated and enforced via master specifications and the automated `trisu` policy gatekeeper:
+The following 27 rule domains are fully integrated and enforced via master specifications and the automated `trisu` policy gatekeeper:
 
 | Domain Family | Prefix | Rule Count | Standards & Enforcement Scope |
 | :--- | :--- | :---: | :--- |
 | **System Security Baseline** | `TRISU-BASE` | 15 | OWASP Top 10 (2026), API security, encryption at rest/transit |
 | **AI & Agentic Security** | `TRISU-SEC` | 22 | OWASP LLM Top 10, Agentic Top 20, Deepfake detection gate |
+| **Data Literacy & Integrity** | `TRISU-DLIT` | 8 | Provenance attestation, production data air-gap, vector retrieval ACL, data profiling, machine unlearning, consent tracking |
 | **Shadow AI & Model Discovery** | `TRISU-SHADOW` | 6 | AST & regex scan, CycloneDX AI-BOM model reconciliation, GenAI Gateway bypass detection, supplier whitelisting |
 | **Zero Trust Architecture** | `TRISU-TRUST` | 14 | CISA ZT Maturity Model, NIST SP 800-207 |
 | **Zero Trust Code (ZTC)** | `TRISU-ZTC` | 8 | AST invariants: boundary checks, ambient secrets, fail-closed |
@@ -40,7 +41,7 @@ The following 26 rule domains are fully integrated and enforced via master speci
 | **Open Source & Supply Chain Security**| `TRISU-OSS` | 6 | Lockfile hash pinning, license scan, CycloneDX AI v1.6 |
 | **Property-Based Testing** | `TRISU-TEST` | 10 | Invariant Proof, Hypothesis, fast-check, proptest |
 | **Lifecycle Gates & Core Workflow** | Core Invariants | 28 | 20-item Code Review Checklist, Inception threat modeling |
-| **TOTAL CONSOLIDATED COVERAGE** | **26 Domains** | **204 Rules** | **305 Consolidated Invariants (100% Gated)** |
+| **TOTAL CONSOLIDATED COVERAGE** | **27 Domains** | **212 Rules** | **313 Consolidated Invariants (100% Gated)** |
 
 ---
 
@@ -69,6 +70,12 @@ The following 26 rule domains are fully integrated and enforced via master speci
 - Introduced 6 Shadow AI rules (`TRISU-SHADOW-01` through `TRISU-SHADOW-06`) covering model reconciliation, supplier whitelisting, gateway bypass detection, and unapproved deployment prevention.
 - Integrated AST-driven static analysis in `trisu shadow` command and automated into `audit` and `oss` gates.
 - Enhanced CycloneDX v1.6 AI-BOM metadata schema with sanctioned status tracking and approval ticketing.
+
+### Phase 6: Data Literacy, Lineage & Quality Assurance (Completed - v3.3.0)
+- Introduced 8 Data Literacy and Quality rules (`TRISU-DLIT-01` through `TRISU-DLIT-08`) covering dataset provenance, production data air-gap defense, RAG vector pre-retrieval authorization, data profiling/drift monitoring, machine unlearning/RTBF, differential privacy, consent attestation, and continuous vector store poisoning defense.
+- Implemented AST-driven vector retrieval pre-filter verification and production PII/DB dump static defense in `trisu_validator.py`.
+- Enriched CycloneDX v1.6 AI-BOM schema with dataset provenance hashes and explicit consent attestation properties.
+- Formulated declarative `data_literacy_governance` policy schema in `trisuella.config.yaml`.
 
 ---
 

@@ -1,12 +1,12 @@
 # 🔱 TriSuElla-AIDLCA Framework
 > **AI-Driven Development Life Cycle & Autonomous Agent Governance (LLMSecOps)**  
-> **Software Version**: 3.2.0 | **Framework Version**: 3.2.0 | **Status**: Institutionalized (Production-Ready, DevSecOps-Ready & CI-Verified)  
-> **Consolidated Invariants**: 305 Checks | **Rules**: 204 | **Domain Families**: 26
+> **Software Version**: 3.3.0 | **Framework Version**: 3.3.0 | **Status**: Institutionalized (Production-Ready, DevSecOps-Ready & CI-Verified)  
+> **Consolidated Invariants**: 313 Checks | **Rules**: 212 | **Domain Families**: 27
 
 [![TriSuElla Gate](https://github.com/OWASP/TriSuElla-AIDLCA-Framework/actions/workflows/trisuella-gate.yml/badge.svg)](templates/.github/workflows/trisuella-gate.yml)
-[![Version: 3.2.0](https://img.shields.io/badge/Version-3.2.0%20Verified-blue.svg)](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
+[![Version: 3.3.0](https://img.shields.io/badge/Version-3.3.0%20Verified-blue.svg)](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
 [![CI Gate: Passing](https://img.shields.io/badge/CI%20Gate-Passing%20(Run%2034675720411)-success.svg)](https://github.com/OWASP/OWASP-TriSuElla-AIDLCA-Framework/actions)
-[![Progress: 100% Complete](https://img.shields.io/badge/Progress-100%25%20Verified-success.svg)](#-progress--implementation-milestones-v320-institutionalized--ci-verified)
+[![Progress: 100% Complete](https://img.shields.io/badge/Progress-100%25%20Verified-success.svg)](#-progress--implementation-milestones-v330-institutionalized--ci-verified)
 [![Author: Bhaskar Puppala (PATEL)](https://img.shields.io/badge/Author-Bhaskar%20Puppala%20(PATEL)-blue.svg)](https://www.linkedin.com/in/bhaskerkpatel/)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2.svg?logo=linkedin)](https://www.linkedin.com/in/bhaskerkpatel/)
 [![Standards: ISO 42001 / DPDPA / EU AI Act](https://img.shields.io/badge/Standards-ISO%2042001%20%7C%20EU%20AI%20Act%20%7C%20DPDPA-green.svg)](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
@@ -25,13 +25,14 @@ Rooted in the symbolic **Trident (Trishula)** of Nordic and Sanskrit principles:
 
 ---
 
-## 📈 Progress & Implementation Milestones (v3.2.0 Institutionalized & CI-Verified)
+## 📈 Progress & Implementation Milestones (v3.3.0 Institutionalized & CI-Verified)
 
 The framework has achieved **100% Institutionalized Implementation** across all governance pillars, automated tooling, and multi-cloud posture standards:
 
 | Governance Pillar / Component | Scope & Standards | Progress | Status |
 | :--- | :--- | :---: | :---: |
-| **Master Rulebook & Invariants** | 305 Checks across 26 Domain Families & 204 Rules | 100% | **Institutionalized** |
+| **Master Rulebook & Invariants** | 313 Checks across 27 Domain Families & 212 Rules | 100% | **Institutionalized** |
+| **Data Literacy & Integrity** | `TRISU-DLIT-01..08` (Dataset provenance, vector ACL, air-gap defense) | 100% | **Production-Ready** |
 | **Shadow AI & Model Discovery** | `TRISU-SHADOW-01..06` (AST scan, AI-BOM model sync, gateway bypass gate) | 100% | **Production-Ready** |
 | **Zero Trust Code (ZTC)** | `TRISU-ZTC-01..08` (AST boundary checks, ambient secret removal) | 100% | **Production-Ready** |
 | **Open Source Security (OSS)** | `TRISU-OSS-01..06` (Cryptographic lockfile pinning & license scan) | 100% | **Production-Ready** |
@@ -210,7 +211,7 @@ trisu bom --output ai-bom.json
 OWASP-TriSuElla-AIDLCA-FrameWork/
 ├── README.md                              # Main project entrypoint & quickstart (v3.0)
 ├── Usage-Guide.md                         # Comprehensive step-by-step master usage guide
-├── TRISUELLA_MASTER_RULES_AND_CHECKS.md   # Unified master rulebook (305 checks, 204 rules)
+├── TRISUELLA_MASTER_RULES_AND_CHECKS.md   # Unified master rulebook (313 checks, 212 rules)
 ├── ai-bom.json                            # Machine-readable CycloneDX AI v1.6 BoM
 ├── trisuella.config.yaml                  # Declarative policy & Multi-Cloud CSPM manifest
 ├── CLAUDE.md & .cursorrules               # Local IDE workspace assistant rules
@@ -263,4 +264,4 @@ TriSuElla operates on a strict **Binary Enforcement Principle**:
 - **LinkedIn**: [linkedin.com/in/bhaskerkpatel](https://www.linkedin.com/in/bhaskerkpatel/)
 - **Organization**: [OWASP TriSuElla Working Group](https://github.com/OWASP/OWASP-TriSuElla-AIDLCA-Framework)
 
-*v3.2.0 Institutionalized Release — Security-first, AI-native. Built for the era of Agentic Autonomy.*
+*v3.3.0 Institutionalized Release — Security-first, AI-native. Built for the era of Agentic Autonomy.*
