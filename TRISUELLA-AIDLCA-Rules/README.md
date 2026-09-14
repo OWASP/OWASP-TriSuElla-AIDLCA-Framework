@@ -1,5 +1,5 @@
 # 🔱 TriSuElla-AIDLCA Secure Development Framework
-> **Version**: 3.3.0 | **Status**: Institutionalized (Production-Ready, DevSecOps-Ready & CI-Verified) | **Checks**: 313 | **Rules**: 212 | **Domain Families**: 27  
+> **Version**: 3.4.0 | **Status**: Institutionalized (Production-Ready, DevSecOps-Ready & CI-Verified) | **Checks**: 338 | **Rules**: 237 | **Domain Families**: 33  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)  
 > **AI-Driven. Policy-Governed. Trustworthy by Design.**
 
@@ -7,16 +7,19 @@
 
 ---
 
-## 📈 Progress & Implementation Milestones (v3.3.0 Institutionalized & CI-Verified)
+## 📈 Progress & Implementation Milestones (v3.4.0 Institutionalized & CI-Verified)
 
-The framework has attained **100% completion** across all 27 governance families and automated enforcement tools:
+The framework has attained **100% completion** across all 33 governance families and automated enforcement tools:
 
 | Domain & Invariant Category | Rule Count | Scope & Standards | Progress |
 | :--- | :---: | :--- | :---: |
 | **System Security Baseline (`TRISU-BASE`)** | 15 | OWASP Top 10 (2026), API security, encryption | 100% |
-| **AI & Agentic Security (`TRISU-SEC`)** | 22 | OWASP LLM Top 10, Agentic Top 20, Video KYC Deepfake Gate | 100% |
+| **AI & Agentic Security (`TRISU-SEC`)** | 22 | OWASP Top 10 for LLM Applications (2025 Standard), Agentic Top 20, Video KYC | 100% |
 | **Data Literacy & Integrity (`TRISU-DLIT`)** | 8 | Provenance attestation, vector retrieval ACL, air-gap PII defense | 100% |
 | **Shadow AI & Model Discovery (`TRISU-SHADOW`)**| 6 | AST & regex scan, AI-BOM reconciliation, Gateway bypass gate | 100% |
+| **Core GRC & ISMS (`TRISU-SOC2`/`ISMS`)** | 8 | SOC 2 Type II (CC6.1..CC8.1), ISO/IEC 27001:2022 ISMS Controls | 100% |
+| **AI Risk Management (`TRISU-AIRMF`)** | 6 | NIST AI RMF 1.0 (Govern, Map, Measure, Manage), GenAI Profile | 100% |
+| **Full-Spectrum AppSec (`TRISU-API`/`MOB`/`WEB`)**| 11 | OWASP API Security Top 10, Mobile Top 10, ASVS v4.0, CWE, CISA KEV | 100% |
 | **Zero Trust Architecture & Code (`TRISU-TRUST`/`ZTC`)** | 22 | CISA ZT Model, NIST SP 800-207, 8 in-code AST invariants | 100% |
 | **Sensitive Data Security (`TRISU-DATA`)** | 10 | DPDPA (India), GDPR, HIPAA, L0–L4 Classification | 100% |
 | **Infrastructure & NTP Integrity (`TRISU-INFRA`)** | 16 | CIS Benchmarks, Cosign/SLSA container gates, NTP sync | 100% |
@@ -28,7 +31,7 @@ The framework has attained **100% completion** across all 27 governance families
 | **EU AI Act High-Risk Compliance (`TRISU-EUAI`)** | 7 | EU Regulation 2024/1689 (Articles 9–15, CE Gate) | 100% |
 | **Agentic Identity & Delegation (`TRISU-AIAM`)** | 5 | RFC 8693 Token Exchange, SPIFFE/mTLS, Ephemeral Keys | 100% |
 | **Open Source & Supply Chain Security (`TRISU-OSS`)** | 6 | Lockfile hash pinning, license scan, CycloneDX AI v1.6 | 100% |
-| **TOTAL INVARIANTS & POLICIES** | **212 Rules / 313 Checks** | **100% Enforced in Master Rules & Automated CLI** | **100%** |
+| **TOTAL INVARIANTS & POLICIES** | **237 Rules / 338 Checks** | **100% Enforced in Master Rules & Automated CLI** | **100%** |
 
 ---
 
@@ -99,25 +102,30 @@ This automatically scaffolds `.cursorrules`, `CLAUDE.md`, `.windsurfrules`, `.gi
 1.  **Activate**: Tell your AI assistant (Cursor, Claude, Copilot, Windsurf):
     > *"Follow the TRISUELLA-AIDLCA v3.0 workflow defined in TRISUELLA-AIDLCA-rules/core-workflow.md"*
 2.  **Initialize**: Describe what you want to build. The framework handles the rest.
-3.  **Enforce**: All code generated is automatically audited against the 20-item **Security Review Checklist** and 313 consolidated invariants.
+3.  **Enforce**: All code generated is automatically audited against the 20-item **Security Review Checklist** and 338 consolidated invariants.
 
 ---
 
 ## 📚 Documentation & Key References
-*   📖 **[Master Rules & Checks Reference (313 Checks)](../TRISUELLA_MASTER_RULES_AND_CHECKS.md)**
-*   📘 **[Framework Usage Guide (v3.0)](../Usage-Guide.md)**
+*   📖 **[Master Rules & Checks Reference (338 Checks, 237 Rules)](../TRISUELLA_MASTER_RULES_AND_CHECKS.md)**
+*   🏛️ **[Unified Architecture Blueprint (9 Solution Layers)](../TRISUELLA-AIDLCA-docs/Unified-Trust-Risk-Compliance-Architecture.md)**
+*   🌐 **[Multi-Standard Crosswalk Matrix](../TRISUELLA-AIDLCA-docs/TriSuElla-Unified-Crosswalk-Matrix.md)**
+*   📘 **[Framework Usage Guide (v3.4.0)](../Usage-Guide.md)**
 *   📜 **[Complete Rule Directory & Detailed Guide](FULL_README.md)**
 *   🏛️ **[Framework Charter & Philosophy](CHARTER.md)**
-*   🛡️ **[Zero Trust Code (TRISU-ZTC)](TRISUELLA-AIDLCA-rule-details/extensions/security/system-baseline/zero-trust-code.md)**
-*   📦 **[Open Source Security & Supply Chain (TRISU-OSS)](TRISUELLA-AIDLCA-rule-details/extensions/security/system-baseline/open-source-security.md)**
-*   ☁️ **[Multi-Cloud CSPM Architecture (TRISU-CSPM)](TRISUELLA-AIDLCA-rule-details/extensions/infrastructure/cloud-cspm-rules.md)**
+*   🛡️ **[Zero Trust Code (TRISU-ZTC)](TRISUELLA-AIDLCA-rule-details/extensions/security/zero-trust/zero-trust-code.md)**
+*   📦 **[Open Source Security & Supply Chain (TRISU-OSS)](TRISUELLA-AIDLCA-rule-details/extensions/security/oss/open-source-security.md)**
+*   ☁️ **[Multi-Cloud CSPM Architecture (TRISU-CSPM)](TRISUELLA-AIDLCA-rule-details/extensions/security/cloud-security/cloud-security.md)**
 *   🔌 **[Model Context Protocol Security (TRISU-MCP)](TRISUELLA-AIDLCA-rule-details/extensions/security/ai-agentic/mcp-security.md)**
 *   🇪🇺 **[EU AI Act High-Risk Compliance (TRISU-EUAI)](TRISUELLA-AIDLCA-rule-details/extensions/compliance/compliance-eu-ai-act.md)**
-*   🔑 **[Agentic Identity & Delegation (TRISU-AIAM)](TRISUELLA-AIDLCA-rule-details/extensions/security/ai-agentic/agentic-identity-delegation.md)**
+*   🔑 **[Agentic Identity & Delegation (TRISU-AIAM)](TRISUELLA-AIDLCA-rule-details/extensions/security/zero-trust/agentic-iam.md)**
+*   🏢 **[SOC 2 & ISO 27001 ISMS Compliance](TRISUELLA-AIDLCA-rule-details/extensions/compliance/compliance-soc2-iso27001.md)**
+*   🤖 **[NIST AI RMF 1.0 & GenAI Profile](TRISUELLA-AIDLCA-rule-details/extensions/compliance/compliance-nist-ai-rmf.md)**
+*   🎯 **[Full-Spectrum AppSec Suite (API, Mobile, Web)](TRISUELLA-AIDLCA-rule-details/extensions/security/baseline/owasp-full-spectrum-appsec.md)**
 *   🛠️ **[Validator CLI Manual (`trisu`)](../tools/trisu-cli/README.md)**
 *   🤝 **[Multi-Agent System & Protocol (TRISUELLA-AIDLCAa)](../TRISUELLA-AIDLCAa/README.md)**
 
 ---
 
-*v3.3.0 — Security-first, AI-native. Built for the era of Agentic Autonomy.*
+*v3.4.0 — Continuous Trust & Assurance for Digital and AI Systems. Built for the era of Agentic Autonomy.*
 

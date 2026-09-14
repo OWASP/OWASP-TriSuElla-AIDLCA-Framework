@@ -5,7 +5,7 @@ Zero-dependency CLI tool for verifying TriSuElla framework artifacts,
 validating Zero Trust Code (ZTC) invariants, Open Source Security (OSS),
 policy manifests, and auditing blockers.
 
-Version: 3.3.0
+Version: 3.4.0
 Status: Production Gatekeeper & DevSecOps Engine
 Author: Bhaskar Puppala (PATEL)
 """
@@ -20,6 +20,7 @@ import urllib.request
 import urllib.parse
 from datetime import datetime, timezone
 from pathlib import Path
+import shutil
 
 # Ensure UTF-8 output encoding for cross-platform compatibility
 if sys.stdout.encoding != "utf-8":
@@ -29,7 +30,7 @@ if sys.stdout.encoding != "utf-8":
     except Exception:
         pass
 
-VERSION = "3.3.0"
+VERSION = "3.4.0"
 
 
 class Colors:
@@ -43,8 +44,8 @@ class Colors:
 def print_banner():
     banner = f"""{Colors.BLUE}{Colors.BOLD}
 ============================================================
-  OWASP TriSuElla-AIDLCA Policy Gate Validator v{VERSION}
-  Status: Institutionalized | Pillars: SISU, TILLIT, DUGNAD
+  OWASP TriSuElla Continuous Trust & Assurance Platform v{VERSION}
+  Engines: TRI (Trust), SU (Secure), ELLA (Evaluate-Learn-Look-Act)
 ============================================================{Colors.RESET}"""
     print(banner)
 
@@ -82,7 +83,8 @@ def print_usage_guide():
   {Colors.GREEN}shadow{Colors.RESET}       Audit for Shadow AI, undeclared models, and AI-BoM discrepancies
   {Colors.GREEN}oss{Colors.RESET}          Audit Open Source Security (OSS) & software supply chain integrity
   {Colors.GREEN}bom{Colors.RESET}          Generate CycloneDX AI v1.6 Bill of Materials (AI-BoM)
-  {Colors.GREEN}rules{Colors.RESET}        Validate all 212 TRISU-* rule identifiers and domain breakdown
+  {Colors.GREEN}rules{Colors.RESET}        Validate all TRISU-* rule identifiers and domain breakdown
+  {Colors.GREEN}matrix{Colors.RESET}       Display Unified Crosswalk & Lens Evaluation Matrix across standards
   {Colors.GREEN}init{Colors.RESET}         Scaffold TriSuElla templates into target directory
 
 {Colors.BOLD}Common Examples:{Colors.RESET}
@@ -94,6 +96,7 @@ def print_usage_guide():
   trisu oss                         # Run OSS & supply chain audit
   trisu bom --output ai-bom.json    # Generate CycloneDX AI-BoM
   trisu rules                       # Inspect all rule families & counts
+  trisu matrix                      # View unified compliance crosswalk matrix
   trisu init --target ./my-app      # Initialize governance in a new project
 
 Use {Colors.BLUE}trisu <command> --help{Colors.RESET} for detailed options on any command.
@@ -107,6 +110,8 @@ def cmd_check(root_dir: Path = None) -> int:
     
     required_artifacts = [
         "TRISUELLA_MASTER_RULES_AND_CHECKS.md",
+        "TRISUELLA-AIDLCA-docs/Unified-Trust-Risk-Compliance-Architecture.md",
+        "TRISUELLA-AIDLCA-docs/TriSuElla-Unified-Crosswalk-Matrix.md",
         "TRISUELLA-AIDLCA-Rules/README.md",
         "TRISUELLA-AIDLCA-Rules/CHARTER.md",
         "TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rules/core-workflow.md",
@@ -114,6 +119,9 @@ def cmd_check(root_dir: Path = None) -> int:
         "TRISUELLA-AIDLCAa/README.md",
         "TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rule-details/extensions/security/zero-trust/zero-trust-code.md",
         "TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rule-details/extensions/security/oss/open-source-security.md",
+        "TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rule-details/extensions/compliance/compliance-soc2-iso27001.md",
+        "TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rule-details/extensions/compliance/compliance-nist-ai-rmf.md",
+        "TRISUELLA-AIDLCA-Rules/TRISUELLA-AIDLCA-rule-details/extensions/security/baseline/owasp-full-spectrum-appsec.md",
         "trisuella.config.yaml",
         "ai-bom.json",
     ]
@@ -927,7 +935,7 @@ def export_sarif(findings: list, sarif_file: str, root_dir: Path):
 
 
 def cmd_init(target_dir: Path, framework_dir: Path = None) -> int:
-    """Scaffolds TriSuElla v3.3.0 templates and configuration into target project."""
+    """Scaffolds TriSuElla v3.4.0 templates and configuration into target project."""
     framework_dir = find_framework_root(framework_dir)
     print(f"{Colors.BOLD}[*] Initializing TriSuElla-AIDLCA v{VERSION} in: {target_dir}{Colors.RESET}")
     print(f"[*] Framework templates source: {framework_dir / 'templates'}")
@@ -1038,10 +1046,11 @@ def cmd_bom(root_dir: Path = None, output_file: str = "ai-bom.json") -> int:
                 "type": "data",
                 "name": "trisuella-master-rules",
                 "version": VERSION,
-                "description": "313 consolidated security, privacy, zero trust, and data literacy governance rules",
+                "description": "338 consolidated security, privacy, zero trust, and data literacy governance rules",
                 "properties": [
-                    {"name": "trisuella:total_checks", "value": "313"},
-                    {"name": "trisuella:unique_rules", "value": "212"},
+                    {"name": "trisuella:total_checks", "value": "338"},
+                    {"name": "trisuella:unique_rules", "value": "237"},
+                    {"name": "trisuella:domain_families", "value": "33"},
                     {"name": "trisuella:data_provenance_hash", "value": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
                     {"name": "trisuella:licensing", "value": "CC-BY-4.0"},
                     {"name": "trisuella:consent_attestation", "value": "verified_explicit_author_attestation"}
@@ -1088,8 +1097,44 @@ def cmd_rules(root_dir: Path = None) -> int:
         count = families[fam]
         print(f"  {Colors.BLUE}•{Colors.RESET} {fam:<16} : {count:>2} rules")
 
-    print(f"\n  {Colors.GREEN}✓{Colors.RESET} Discovered {len(unique_rules)} unique TRISU-* rule identifiers.")
-    print(f"  {Colors.GREEN}✓{Colors.RESET} Master rules index integrity valid (313 consolidated checks, 212 unique rules).")
+    print(f"\n  {Colors.GREEN}✓{Colors.RESET} Discovered {len(unique_rules)} unique TRISU-* rule identifiers across {len(families)} domains.")
+    print(f"  {Colors.GREEN}✓{Colors.RESET} Master rules index integrity valid (338 consolidated checks, {len(unique_rules)} unique rules).")
+    return 0
+
+
+def cmd_matrix(root_dir: Path = None) -> int:
+    """Displays the TriSuElla Unified Crosswalk & Lens Evaluation Matrix."""
+    root_dir = find_framework_root(root_dir)
+    print(f"\n{Colors.BOLD}{Colors.BLUE}========================================================================================{Colors.RESET}")
+    print(f"{Colors.BOLD}   TriSuElla — Continuous Trust & Assurance Platform for Digital and AI Systems (v{VERSION}){Colors.RESET}")
+    print(f"{Colors.BOLD}{Colors.BLUE}========================================================================================{Colors.RESET}")
+    print(f"{Colors.BOLD}Universal Formula:{Colors.RESET} TRUST → VERIFY → CONTROL → OBSERVE → VALIDATE\n")
+    
+    print(f"{Colors.BOLD}🔱 The TriSuElla Engine Triad:{Colors.RESET}")
+    print(f"  {Colors.GREEN}• TRI (TRUST){Colors.RESET}  : Identity, Provenance, Supply Chain, Governance, Ownership")
+    print(f"  {Colors.GREEN}• SU (SECURE){Colors.RESET}  : Cybersecurity, Application Security, Cloud Security, LLM Security, Agent Security, Data Security")
+    print(f"  {Colors.GREEN}• ELLA{Colors.RESET}         : Evaluate → Learn → Look → Act (Risk, Red Teaming, Drift Monitoring, Evidence, Remediation)\n")
+
+    layers = [
+        ("Layer 1: Core Enterprise GRC & Compliance", "SOC 2 Type II, ISO/IEC 27001:2022, ISO/IEC 27701, ISO 42001, ISO 23894, NIST CSF 2.0, NIST SP 800-53 Rev. 5, CIS Controls v8, COBIT, CSA CCM v4"),
+        ("Layer 2: AI Governance, Safety & Risk", "NIST AI RMF 1.0 (NIST 100-1), NIST GenAI Profile (IR 8596), EU AI Act (2024/1689), OECD AI Principles, AI Incident Mgmt, Model Inventory, Impact Assessments"),
+        ("Layer 3: Application & LLM/Agent Security", "OWASP Top 10 for LLM Applications (2025), OWASP Agentic AI, OWASP ASVS, OWASP API Security Top 10, OWASP SAMM, MITRE ATT&CK, MITRE ATLAS, CWE, CISA KEV"),
+        ("Layer 4: Software Supply-Chain Trust", "Code → Dependency → Package → Container → Build → Artifact → Deployment (CycloneDX AI v1.6, SPDX v2.3, SLSA Level 2+, Sigstore/Cosign, in-toto)"),
+        ("Layer 5: Cloud & Infrastructure Posture", "Multi-Cloud CSPM (AWS, Azure, GCP, Alibaba, OCI), KSPM, IaC Pre-flight (Checkov/Trivy), Secrets Lifecycle (Vault), CIEM, Zero Trust (NIST SP 800-207)"),
+        ("Layer 6: Privacy & Data Protection", "EU GDPR, India DPDP Act 2023, ISO/IEC 27701, NIST Privacy Framework, L0-L4 Data Classification, PII Detection, Lineage, Consent, Retention"),
+        ("Layer 7: Cyber Resilience & Operational Continuity", "Business Continuity, Disaster Recovery, Ransomware Readiness, WORM Backup Validation (ISO 22301, DORA, NIS2, SEBI/RBI CSCRF)"),
+        ("Layer 8: Third-Party & Vendor Risk (TPRM)", "Vendor → Product → Components → Data → AI → Controls → Risk → Evidence (SaaS, Cloud, AI/LLM Providers, Open-Source Dependencies)"),
+        ("Layer 9: Sector-Specific Compliance Packs", "Healthcare (HIPAA, HITRUST, FDA AI/ML), BFSI (PCI-DSS v4.0, DORA, FFIEC, RBI), Sovereign India (DPDPA, CERT-In, SEBI), Sovereign EU (GDPR, EU AI Act, NIS2, CRA)"),
+    ]
+
+    for title, frameworks in layers:
+        print(f"  {Colors.BLUE}{Colors.BOLD}▶ {title}{Colors.RESET}")
+        print(f"    {Colors.BOLD}Coverage :{Colors.RESET} {frameworks}\n")
+
+    print(f"{Colors.BOLD}[*] Continuous Assurance Closed Loop:{Colors.RESET}")
+    print(f"  DISCOVER (Map) --> ASSESS (Standards) --> ATTACK (Red Team) --> CONTROL (Guardrails)")
+    print(f"  --> OBSERVE (Telemetry) --> EVIDENCE (Audit Ledger) --> VALIDATE (Independent Assurance)\n")
+    print(f"  {Colors.GREEN}✓{Colors.RESET} Full crosswalk available at: TRISUELLA-AIDLCA-docs/TriSuElla-Unified-Crosswalk-Matrix.md")
     return 0
 
 
@@ -1118,51 +1163,72 @@ def main():
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     check_parser = subparsers.add_parser("check", help="Verify repository artifacts and templates")
-    check_parser.add_argument("--dir", default=None, help="Root directory (default: autodetected framework root)")
+    check_parser.add_argument("path", nargs="?", default=None, help="Root directory (default: autodetected framework root)")
+    check_parser.add_argument("--dir", "--target", dest="dir", default=None, help="Root directory (default: autodetected framework root)")
 
     audit_parser = subparsers.add_parser("audit", help="Audit for blocking security vulnerabilities and ZTC violations")
-    audit_parser.add_argument("--dir", default=None, help="Target directory to audit (default: current workspace)")
+    audit_parser.add_argument("path", nargs="?", default=None, help="Target directory to audit (default: current workspace)")
+    audit_parser.add_argument("--dir", "--target", dest="dir", default=None, help="Target directory to audit (default: current workspace)")
     audit_parser.add_argument("--sarif", default=None, help="File path to write OASIS SARIF report")
 
     shadow_parser = subparsers.add_parser("shadow", help="Audit for Shadow AI, undeclared models, and AI-BoM discrepancies")
-    shadow_parser.add_argument("--dir", default=None, help="Target directory to audit (default: current workspace)")
+    shadow_parser.add_argument("path", nargs="?", default=None, help="Target directory to audit (default: current workspace)")
+    shadow_parser.add_argument("--dir", "--target", dest="dir", default=None, help="Target directory to audit (default: current workspace)")
     shadow_parser.add_argument("--sarif", default=None, help="File path to write OASIS SARIF report")
 
     oss_parser = subparsers.add_parser("oss", help="Audit Open Source Security (OSS) & supply chain integrity")
-    oss_parser.add_argument("--dir", default=None, help="Target directory to audit (default: current workspace)")
+    oss_parser.add_argument("path", nargs="?", default=None, help="Target directory to audit (default: current workspace)")
+    oss_parser.add_argument("--dir", "--target", dest="dir", default=None, help="Target directory to audit (default: current workspace)")
     oss_parser.add_argument("--sarif", default=None, help="File path to write OASIS SARIF report")
 
     init_parser = subparsers.add_parser("init", help="Scaffold TriSuElla templates into target directory")
-    init_parser.add_argument("--target", default=".", help="Target repository directory to initialize")
+    init_parser.add_argument("target_pos", nargs="?", default=None, help="Target repository directory to initialize")
+    init_parser.add_argument("--target", "--dir", dest="target", default=None, help="Target repository directory to initialize")
     init_parser.add_argument("--framework-dir", default=None, help="Path to TriSuElla framework root (default: autodetected)")
 
     bom_parser = subparsers.add_parser("bom", help="Generate CycloneDX AI v1.6 AI-BoM")
-    bom_parser.add_argument("--dir", default=None, help="Root directory (default: autodetected framework root)")
+    bom_parser.add_argument("path", nargs="?", default=None, help="Root directory (default: autodetected framework root)")
+    bom_parser.add_argument("--dir", "--target", dest="dir", default=None, help="Root directory (default: autodetected framework root)")
     bom_parser.add_argument("--output", default="ai-bom.json", help="Path to write AI-BoM JSON")
 
     rules_parser = subparsers.add_parser("rules", help="Validate rule identifiers and master rules file")
-    rules_parser.add_argument("--dir", default=None, help="Root directory (default: autodetected framework root)")
+    rules_parser.add_argument("path", nargs="?", default=None, help="Root directory (default: autodetected framework root)")
+    rules_parser.add_argument("--dir", "--target", dest="dir", default=None, help="Root directory (default: autodetected framework root)")
+
+    matrix_parser = subparsers.add_parser("matrix", help="Display Unified Crosswalk & Lens Evaluation Matrix")
+    matrix_parser.add_argument("path", nargs="?", default=None, help="Root directory (default: autodetected framework root)")
+    matrix_parser.add_argument("--dir", "--target", dest="dir", default=None, help="Root directory (default: autodetected framework root)")
 
     args = parser.parse_args()
 
     if args.command == "check":
-        sys.exit(cmd_check(Path(args.dir) if args.dir else None))
+        chosen_dir = args.dir or args.path
+        sys.exit(cmd_check(Path(chosen_dir) if chosen_dir else None))
     elif args.command == "audit":
-        target = resolve_target_dir(args.dir)
+        chosen_dir = args.dir or args.path
+        target = resolve_target_dir(chosen_dir)
         sys.exit(cmd_audit(find_framework_root(), target_dir=target, sarif_file=args.sarif))
     elif args.command == "shadow":
-        target = resolve_target_dir(args.dir)
+        chosen_dir = args.dir or args.path
+        target = resolve_target_dir(chosen_dir)
         sys.exit(cmd_shadow(find_framework_root(), target_dir=target, sarif_file=args.sarif))
     elif args.command == "oss":
-        target = resolve_target_dir(args.dir)
+        chosen_dir = args.dir or args.path
+        target = resolve_target_dir(chosen_dir)
         sys.exit(cmd_oss(find_framework_root(), target_dir=target, sarif_file=args.sarif))
     elif args.command == "init":
+        chosen_target = args.target or args.target_pos or "."
         fw_dir = Path(args.framework_dir) if args.framework_dir else find_framework_root()
-        sys.exit(cmd_init(Path(args.target).resolve(), fw_dir))
+        sys.exit(cmd_init(Path(chosen_target).resolve(), fw_dir))
     elif args.command == "bom":
-        sys.exit(cmd_bom(Path(args.dir) if args.dir else None, output_file=args.output))
+        chosen_dir = args.dir or args.path
+        sys.exit(cmd_bom(Path(chosen_dir) if chosen_dir else None, output_file=args.output))
     elif args.command == "rules":
-        sys.exit(cmd_rules(Path(args.dir) if args.dir else None))
+        chosen_dir = args.dir or args.path
+        sys.exit(cmd_rules(Path(chosen_dir) if chosen_dir else None))
+    elif args.command == "matrix":
+        chosen_dir = args.dir or args.path
+        sys.exit(cmd_matrix(Path(chosen_dir) if chosen_dir else None))
 
 
 if __name__ == "__main__":

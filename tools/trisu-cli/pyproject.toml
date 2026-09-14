@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "trisuella-cli"
-version = "3.3.0"
-description = "OWASP TriSuElla-AIDLCA Policy Gate Validator CLI"
+version = "3.4.0"
+description = "OWASP TriSuElla Continuous Trust & Assurance Platform Validator CLI"
 readme = "README.md"
 requires-python = ">=3.8"
 authors = [

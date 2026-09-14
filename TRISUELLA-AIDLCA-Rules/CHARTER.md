@@ -55,12 +55,13 @@ The TRISU Charter governs:
 
 ---
 
-## 5. The TRISU Guardrail System
-TRISU enforces systemic integrity through four mandatory rule-extensions:
-1. **TRISU-BASE**: Fundamental system and interface hardening.
-2. **TRISU-SEC**: AI-Agentic and logic-specific security.
-3. **TRISU-DATA**: Data-centric isolation and privacy protection.
-4. **TRISU-TRUST**: Identity-driven architectural integrity.
+## 5. The TRISU Guardrail System & Engine Triad
+TRISU enforces systemic integrity across **9 solution layers** via the **TRI-SU-ELLA Engine Triad**:
+- **TRI (Trust)**: Identity, Provenance, Supply Chain, Governance, Ownership (`TRISU-TRUST`, `TRISU-OSS`, `TRISU-AIAM`, `TRISU-DLIT`).
+- **SU (Secure)**: Cybersecurity, AppSec, CloudSec, LLM Security, Agent Security, Data Security (`TRISU-BASE`, `TRISU-SEC`, `TRISU-DATA`, `TRISU-CLOUD`, `TRISU-CSPM`, `TRISU-INFRA`, `TRISU-API`, `TRISU-MOB`, `TRISU-WEB`).
+- **ELLA (Evaluate·Learn·Look·Act)**: Risk Assessment, Adversarial Testing, Continuous Telemetry, Cryptographic Evidence, Automated Remediation, Independent Validation (`TRISU-TEST`, `TRISU-AIRMF`, `TRISU-SOC2`, `TRISU-ISMS`, `TRISU-EUAI`).
+
+Formula: **TRUST → VERIFY → CONTROL → OBSERVE → VALIDATE**.
 
 ---
 

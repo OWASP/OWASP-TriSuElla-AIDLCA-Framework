@@ -1,7 +1,7 @@
-# 🔱 TRISUELLA-AIDLCA: Master Rules & Checks Reference
-**Version**: 3.0 | **Status**: Institutionalized | **Author**: Bhaskar Puppala (PATEL) ([LinkedIn](https://www.linkedin.com/in/bhaskerkpatel/)) | **Pillars**: SISU, TILLIT, DUGNAD
+# 🔱 TriSuElla: Continuous Trust & Assurance Platform
+**Version**: 3.4.0 | **Status**: Institutionalized | **Author**: Bhaskar Puppala (PATEL) ([LinkedIn](https://www.linkedin.com/in/bhaskerkpatel/)) | **Engines**: TRI (Trust), SU (Secure), ELLA (Evaluate-Learn-Look-Act)
 
-This document consolidates all TRISUELLA-AIDLCA rules, security checklists, and testing protocols into a single reference for secure AI-driven development.
+This document consolidates all TriSuElla rules, security checklists, and continuous validation protocols into a single reference for conventional enterprise systems, Generative AI, and autonomous multi-agent swarms.
 
 ## 📊 Summary of Rules & Checks
 | Section | Component | Rule/Check Count |
@@ -33,14 +33,25 @@ This document consolidates all TRISUELLA-AIDLCA rules, security checklists, and 
 | **Section 24** | Open Source & Supply Chain Security (OSS) | 6 |
 | **Section 25** | Shadow AI Discovery, Auditing & Inventory (SHADOW) | 6 |
 | **Section 26** | Data Literacy, Lineage, Integrity & Quality (DLIT) | 8 |
-| **GRAND TOTAL** | **Consolidated Rules & Checks** | **313** |
+| **Section 27** | Enterprise Assurance & ISMS (SOC 2 & ISO/IEC 27001) | 8 |
+| **Section 28** | NIST AI Risk Management & GenAI Profile (AIRMF) | 6 |
+| **Section 29** | OWASP Full-Spectrum AppSec (API, Mobile, Web) | 11 |
+| **GRAND TOTAL** | **Consolidated Rules & Checks** | **338** |
 
 ---
 
 ## 🔱 Section 0: Framework Charter & Philosophy
-The **TRISUELLA** framework establishes a unique architectural and governance model for autonomous AI systems, ensuring they operate with controlled execution, enforced trust, and coordinated collaboration.
+The **TriSuElla** framework establishes a unified Continuous Trust & Assurance Platform connecting risk, controls, technical reality, evidence, and independent validation across conventional, AI, and autonomous agent systems.
 
-### The Three Pillars (The Trident)
+### The Universal Operating Formula
+$$\textbf{TRUST} \longrightarrow \textbf{VERIFY} \longrightarrow \textbf{CONTROL} \longrightarrow \textbf{OBSERVE} \longrightarrow \textbf{VALIDATE}$$
+
+### The Three Core Engines (TRI - SU - ELLA)
+- **TRI (TRUST)**: Identity, Provenance, Supply Chain, Governance, Ownership.
+- **SU (SECURE)**: Cybersecurity, Application Security, Cloud Security, LLM Security, Agent Security, Data Security.
+- **ELLA (EVALUATE → LEARN → LOOK → ACT)**: Risk Assessment, Adversarial Testing, Continuous Telemetry, Evidence Collection, Remediation, Independent Validation.
+
+### The Three Operational Pillars (The Trident)
 - **🔴 SISU (Execution / Resilience)**: AI agents **SHALL** execute tasks with deterministic logic where safety is an invariant. Systems **MUST** demonstrate persistence and recoverability.
 - **🔵 TILLIT (Trust / Governance)**: "Never Trust, Always Verify." Uncompromising governance layer ensuring security, complete compliance (DPDPA, GDPR, HIPAA), and verifiable transparency.
 - **🟢 DUGNAD (Collaboration)**: Functional integrity model where AI agents and humans collaborate through structured, cross-verified, and authenticated workflows (HITL).
@@ -141,18 +152,20 @@ The **TRISUELLA** framework establishes a unique architectural and governance mo
 ---
 
 ## 🤖 Section 3: AI & Agentic Security (TRISU-SEC)
-*AI-Native Risks: OWASP LLM Top 10 v2025 Alignment*
+*AI-Native Risks: OWASP Top 10 for LLM Applications (2025 Standard) & NIST.IR.8596 Alignment*
 
-| TRISU-SEC Rule | OWASP LLM Top 10 Mapping |
+| TRISU-SEC / AGENT Rule | OWASP Top 10 for LLM Applications (2025) Mapping |
 | :--- | :--- |
-| SEC-01, SEC-12 | LLM01 – Prompt Injection |
-| SEC-06, SEC-22 | LLM02 – Insecure Output Handling |
-| SEC-09, SEC-10 | LLM03 – Training Data Poisoning |
-| SEC-18 | LLM05 – Supply Chain Vulnerabilities |
-| SEC-07, SEC-13 | LLM06 – Sensitive Information Disclosure |
-| SEC-03, SEC-08 | LLM07 – Insecure Plugin Design |
-| SEC-19 | LLM09 – Overreliance / Hallucination |
-| SEC-16, SEC-05 | LLM10 – Model Theft / Unauthorized Access |
+| SEC-01, SEC-02, SEC-12 | LLM01 – Prompt Injection |
+| SEC-07, SEC-13, DATA-01 | LLM02 – Sensitive Information Disclosure |
+| SEC-18, OSS-01..06, SHADOW-01 | LLM03 – Supply Chain |
+| SEC-09, SEC-10, DLIT-04 | LLM04 – Data and Model Poisoning |
+| SEC-06, SEC-22, ZTC-04 | LLM05 – Insecure Output Handling |
+| SEC-03, AIAM-02, MCP-02 | LLM06 – Excessive Agency |
+| SEC-02, TOOL-02 | LLM07 – System Prompt Leakage |
+| DLIT-03, SHADOW-06, SEC-10 | LLM08 – Vector and Embedding Weaknesses |
+| SEC-19, DLIT-05 | LLM09 – Misinformation |
+| SEC-08, MCP-05, CLOUD-10 | LLM10 – Unbounded Consumption |
 
 - **TRISU-SEC-01 [CRITICAL]**: **NHI Authentication**. Non-Human Identity authentication for all agent loops.
     - *Verification*: Each agent has a dedicated IAM role with mandatory NHI tags (Owner, Purpose).
@@ -907,6 +920,74 @@ The framework includes specialized tooling to visualize and enforce governance i
     - *Verification*: AST inspection confirms TTL configurations on Redis, vector cache, or in-memory session stores.
 - **TRISU-DLIT-08 [MEDIUM]**: **Enterprise Data Literacy & Role Ownership Attestation**. Every business dataset, feature store, and AI model domain MUST designate a named Data Steward and business owner in `trisuella.config.yaml`, establishing clear accountability, catalog discoverability, and data literacy governance.
     - *Verification*: `trisu check` verifies `data_literacy_governance` and `data_stewardship` configuration blocks in `trisuella.config.yaml`.
+
+---
+
+## 🏛️ Section 27: Enterprise Assurance & ISMS (SOC 2 & ISO/IEC 27001)
+*Continuous Control Validation, Operational Trust Services Criteria, and ISO/IEC 27001:2022 ISMS*
+
+- **TRISU-SOC2-01 [CRITICAL]**: **Trust Services Criteria Baseline & Control Mapping**. Every production service MUST maintain verified control mappings against AICPA Trust Services Criteria: Security (CC1–CC9), Availability (A1), Processing Integrity (PI1), Confidentiality (C1), and Privacy (P1–P8).
+    - *Verification*: `trisu audit --framework soc2` validates complete control coverage with zero unmapped critical assets.
+- **TRISU-SOC2-02 [HIGH]**: **Continuous Control Monitoring & Evidence Automation**. Continuous, automated collection of operational evidence (IAM reviews, MFA logs, vulnerability reports) hashed (SHA-256) into `audit.md` with freshness < 24h.
+    - *Verification*: Automated CI/CD evidence collector verifies fresh audit artifacts on every release.
+- **TRISU-SOC2-03 [CRITICAL]**: **Change Management & Segregation of Duties (CC8.1)**. Direct production commits prohibited; mandatory peer review, automated security gates, and dual-key deployment authorization.
+    - *Verification*: Pipeline audit verifies commit signatures and peer approval metadata before deployment.
+- **TRISU-SOC2-04 [HIGH]**: **System Availability, DR & RTO/RPO Assurance (A1.1–A1.3)**. Tested DR plans with daily encrypted WORM backups and quarterly restoration tests verifying RTO < 4h, RPO < 1h.
+    - *Verification*: Signed restoration drill report committed within the last 90 days.
+- **TRISU-ISMS-01 [CRITICAL]**: **Information Security Management System & Risk Leadership**. Formal, executive-approved Information Security Policy and defined roles/responsibilities adhering to ISO/IEC 27001 Clauses 4–6.
+    - *Verification*: Board/Executive approved ISMS charter committed and timestamped.
+- **TRISU-ISMS-02 [HIGH]**: **Risk Treatment & Statement of Applicability (SoA)**. Version-controlled Statement of Applicability (SoA) accounting for all 93 Annex A controls with zero unjustified omissions.
+    - *Verification*: SoA document in `docs/compliance/iso27001-soa.md` verified against repository components.
+- **TRISU-ISMS-03 [CRITICAL]**: **Technological Controls Verification (Annex A.8)**. Automated enforcement of privileged access (A.8.2), vulnerability management (A.8.8), network security (A.8.20), cryptography (A.8.24), and secure coding (A.8.28).
+    - *Verification*: `trisu audit` verifies 100% compliance with Annex A.8 technical invariants.
+- **TRISU-ISMS-04 [HIGH]**: **Internal Audit & Continual Improvement Cycle**. Bi-annual internal audits and root-cause corrective actions with strict SLAs (< 48h for Critical, < 30d for High).
+    - *Verification*: Audit log shows closed corrective actions and verified re-test artifacts.
+
+---
+
+## 🧭 Section 28: NIST AI Risk Management & GenAI Profile (AIRMF)
+*NIST AI 100-1 (GOVERN, MAP, MEASURE, MANAGE) and NIST.IR.8596 Generative AI Profile*
+
+- **TRISU-AIRMF-01 [CRITICAL]**: **Cultivating AI Risk Governance (GOVERN 1.1–1.6)**. Documented AI governance structures, transparent risk tolerances, and named AI Risk Stewards committed to repo.
+    - *Verification*: AI Governance Charter committed and signed by designated AI Risk Owner.
+- **TRISU-AIRMF-02 [HIGH]**: **Contextual AI Asset & Impact Mapping (MAP 1.1–1.5)**. Exhaustive inventory of AI models, vector stores, third-party APIs, and downstream harm assessments.
+    - *Verification*: Model impact assessment committed to `docs/compliance/nist-airmf-map.md`.
+- **TRISU-AIRMF-03 [CRITICAL]**: **Quantitative Metric Evaluation, Bias & Drift (MEASURE 1.1–2.11)**. Automated testing for demographic parity (DIR 0.8–1.2), statistical drift (KS-test / PSI), and benchmark evaluations.
+    - *Verification*: CI evaluation report with passing bias, drift, and performance thresholds.
+- **TRISU-AIRMF-04 [HIGH]**: **Risk Treatment & Residual Risk Management (MANAGE 1.1–4.2)**. Defense-in-depth mitigations (guardrails, sandboxing, rate limits) with operational circuit breakers.
+    - *Verification*: Active Risk Mitigation Register mapping each identified risk to an operational control.
+- **TRISU-AIRMF-05 [CRITICAL]**: **GenAI Risk Mitigation & Content Integrity (NIST.IR.8596)**. Multi-stage prompt injection isolation, SoR hallucination grounding, L7 toxic output filters, and C2PA synthetic content watermarking.
+    - *Verification*: Automated red-teaming test harness confirming 0 bypasses on safety guardrails.
+- **TRISU-AIRMF-06 [HIGH]**: **Empirical Red Teaming & Continuous Validation**. Pre-release adversarial testing batteries (PyRIT, Garak, promptfoo) covering jailbreaks, prompt leakage, and unauthorized tool calls.
+    - *Verification*: Signed Adversarial Evaluation Dossier attached to the release manifest.
+
+---
+
+## 🛡️ Section 29: OWASP Full-Spectrum Application Security (TRISU-APPSEC)
+*OWASP API Security Top 10 (2023), OWASP Mobile Top 10 (2024 / MASVS), and OWASP Web Top 10 (2021)*
+
+- **TRISU-API-01 [CRITICAL]**: **Broken Object Level Authorization (BOLA / IDOR) Defense**. Server-side authorization verification on every parameterized endpoint exposing records by ID (`WHERE id = :id AND tenant_id = :auth_tenant_id`).
+    - *Verification*: AST analysis confirms object authorization checks; DAST cross-tenant tests return 403.
+- **TRISU-API-02 [CRITICAL]**: **Broken Authentication & Token Verification**. Enforcement of asymmetric token signatures (RS256/ES256), rejecting `none` algorithm, and validating `aud`, `iss`, `exp` claims.
+    - *Verification*: API Gateway tests fail closed on malformed or unsigned tokens.
+- **TRISU-API-03 [HIGH]**: **Broken Object Property Level Authorization (BOPLA / Mass Assignment)**. Strict schema allowlists (Pydantic/Zod) preventing mass assignment of internal or privileged fields (`role`, `tenant_id`).
+    - *Verification*: Automated schema validation tests ensure unauthorized property injections are dropped.
+- **TRISU-API-04 [HIGH]**: **Unrestricted Resource Consumption & Adaptive Throttling**. Gateway-level rate limiting, payload byte-size caps, execution timeouts, and pagination limits.
+    - *Verification*: Load testing at 2x threshold triggers HTTP 429 with compliant `Retry-After` headers.
+- **TRISU-API-05 [CRITICAL]**: **Server-Side Request Forgery (SSRF) Prevention**. DNS resolution validation blocking loopback, private RFC 1918 subnets, and cloud metadata IPs (`169.254.169.254`).
+    - *Verification*: Automated SSRF fuzzing battery targeting cloud metadata returns HTTP 400 / 403.
+- **TRISU-MOB-01 [CRITICAL]**: **Improper Credential Usage & Zero Hardcoded Secrets**. Prohibiting static API keys or credentials in mobile binaries; runtime secrets stored exclusively in OS Keystore/Keychain.
+    - *Verification*: Static analysis (`trufflehog`, `mobsf`) on mobile build artifacts returns 0 secret findings.
+- **TRISU-MOB-02 [HIGH]**: **Insecure Data Storage & Local Database Encryption**. Local sensitive data encrypted via AES-256 (SQLCipher/EncryptedSharedPreferences) backed by hardware root-of-trust.
+    - *Verification*: Filesystem inspection of mobile emulator data directory reveals 0 plaintext PII or auth tokens.
+- **TRISU-MOB-03 [HIGH]**: **Insecure Communication & Dynamic Certificate Pinning**. Disabling cleartext traffic and enforcing TLS 1.3 with certificate pinning for sensitive API domains.
+    - *Verification*: Proxy interception test fails connection when non-pinned CA certificate is presented.
+- **TRISU-WEB-01 [CRITICAL]**: **Broken Access Control & Fail-Closed Architecture**. Server-side access control with default-deny routing and strictly bounded CORS policies (no wildcard `*` with credentials).
+    - *Verification*: Unauthenticated access tests across protected routes return HTTP 401/403.
+- **TRISU-WEB-02 [CRITICAL]**: **Cryptographic Failures & Secure Header Invariants**. HSTS (`max-age=31536000`), CSP, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, and `Secure; HttpOnly; SameSite=Strict` cookies.
+    - *Verification*: Automated header audit passes with 'A+' score on SecurityHeaders.
+- **TRISU-WEB-03 [CRITICAL]**: **Injection Flaws & Parameterized Context Invariants**. Mandatory use of ORMs or parameterized queries; prohibiting raw string concatenation in SQL or command execution.
+    - *Verification*: Static AST code scan detects zero string formatting in SQL/command execution statements.
 
 ---
 

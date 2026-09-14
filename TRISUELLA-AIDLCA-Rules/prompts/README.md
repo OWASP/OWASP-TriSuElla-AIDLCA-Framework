@@ -1,5 +1,5 @@
 # 🔱 TRISUELLA-AIDLCA Prompt Template Library
-> **Version**: 3.0.1 | **Status**: Production Library | **Mapped Checks**: 299 | **Rules**: 198 | **Domain Families**: 25  
+> **Version**: 3.4.0 | **Status**: Production Library | **Mapped Checks**: 338 | **Rules**: 237 | **Domain Families**: 33  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)  
 > **TRISUELLA-AIDLCA SDF** — Security-first, AI-native. From idea to production.
 
@@ -11,7 +11,7 @@ For the best results, these prompts assume the TRISUELLA-AIDLCA SDF core rules a
 
 ---
 
-## 📈 Prompt Library Coverage & Progress (v3.0.1)
+## 📈 Prompt Library Coverage & Progress (v3.4.0)
 
 | Category | Suite | Mapped Invariants | Status |
 |---|---|---|:---:|
@@ -31,9 +31,9 @@ For the best results, these prompts assume the TRISUELLA-AIDLCA SDF core rules a
 
 **Reviewing existing code for security** → B-02 (Security Code Review)
 
-**Applying Zero Trust Code (ZTC) Invariants** → See `extensions/security/system-baseline/zero-trust-code.md` (TRISU-ZTC-01..08)
+**Applying Zero Trust Code (ZTC) Invariants** → See `extensions/security/zero-trust/zero-trust-code.md` (TRISU-ZTC-01..08)
 
-**Auditing Open Source & Dependencies (OSS)** → See `extensions/security/system-baseline/open-source-security.md` (TRISU-OSS-01..06)
+**Auditing Open Source & Dependencies (OSS)** → See `extensions/security/oss/open-source-security.md` (TRISU-OSS-01..06)
 
 **Setting up a Docker container** → B-03 (Secure Dockerfile)
 
@@ -78,5 +78,5 @@ Instead of manually evaluating prompt templates and dependencies, generate an au
 trisu bom --output ai-bom.json
 ```
 
-## Total: 28+ prompts across 5 categories | Mapped to 299 Master Invariants (v3.0.1)
+## Total: 28+ prompts across 5 categories | Mapped to 338 Master Invariants across 33 Domains (v3.4.0)
 

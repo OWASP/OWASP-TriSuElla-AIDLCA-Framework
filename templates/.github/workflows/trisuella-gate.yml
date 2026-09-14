@@ -8,7 +8,7 @@ on:
 
 jobs:
   trisuella-gate:
-    name: "Enforce TriSuElla v3.0 Gates"
+    name: "Enforce TriSuElla v3.4.0 Gates"
     runs-on: ubuntu-latest
 
     permissions:
@@ -38,7 +38,7 @@ jobs:
         run: |
           python tools/trisu-cli/trisu_validator.py oss --sarif trisuella-oss.sarif
 
-      - name: Verify Rules Integrity (198 TRISU-* Identifiers)
+      - name: Verify Rules Integrity (237 TRISU-* Identifiers, 338 Checks)
         run: |
           python tools/trisu-cli/trisu_validator.py rules
 

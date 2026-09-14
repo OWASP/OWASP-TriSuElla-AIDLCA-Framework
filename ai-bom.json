@@ -5,12 +5,12 @@
   "serialNumber": "urn:uuid:6f9c2d18-8420-4a87-b651-7f912e4b85c1",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-09-13T18:25:38.110130+00:00",
+    "timestamp": "2026-09-14T12:44:21.391124+00:00",
     "tools": [
       {
         "vendor": "OWASP",
         "name": "TriSuElla-AIDLCA Gate Validator",
-        "version": "3.3.0"
+        "version": "3.4.0"
       }
     ],
     "authors": [
@@ -22,7 +22,7 @@
     "component": {
       "type": "application",
       "name": "TriSuElla-Governed-AI-System",
-      "version": "3.3.0",
+      "version": "3.4.0",
       "properties": [
         {
           "name": "trisuella:risk_tier",
@@ -88,16 +88,20 @@
     {
       "type": "data",
       "name": "trisuella-master-rules",
-      "version": "3.3.0",
-      "description": "313 consolidated security, privacy, zero trust, and data literacy governance rules",
+      "version": "3.4.0",
+      "description": "338 consolidated security, privacy, zero trust, and data literacy governance rules",
       "properties": [
         {
           "name": "trisuella:total_checks",
-          "value": "313"
+          "value": "338"
         },
         {
           "name": "trisuella:unique_rules",
-          "value": "212"
+          "value": "237"
+        },
+        {
+          "name": "trisuella:domain_families",
+          "value": "33"
         },
         {
           "name": "trisuella:data_provenance_hash",

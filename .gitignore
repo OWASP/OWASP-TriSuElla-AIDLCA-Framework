@@ -33,6 +33,8 @@ venv/
 .venv/
 pip-log.txt
 pip-delete-this-directory.txt
+*.egg-info/
+*.egg
 
 # Environment variables
 .env

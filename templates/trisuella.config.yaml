@@ -1,7 +1,8 @@
-# TriSuElla-AIDLCA Project Configuration (v3.3.0)
+# TriSuElla Continuous Trust & Assurance Platform Configuration (v3.4.0)
 # Place in repository root to customize policy enforcement
 
-version: "3.3.0"
+version: "3.4.0"
+platform: "TriSuElla Continuous Trust & Assurance Platform"
 project_name: "enterprise-ai-application"
 risk_tier: "Tier-1" # Tier-1 (High Assurance / Regulated), Tier-2 (Standard Enterprise), Tier-3 (Internal Prototype)
 
@@ -12,17 +13,90 @@ governance:
     - "CRITICAL"
     - "HIGH"
 
+# The 9 TriSuElla Solution Layers
+solution_layers:
+  layer1_enterprise_compliance:
+    soc2_type2: true
+    iso_27001_2022: true
+    iso_27701_privacy: true
+    iso_42001_aims: true
+    iso_23894_ai_risk: true
+    nist_csf_2: true
+    nist_sp_800_53: true
+    cis_controls_v8: true
+    cobit: false
+    csa_ccm_v4: true
+  layer2_ai_governance:
+    nist_ai_rmf: true
+    nist_genai_profile: true
+    eu_ai_act: true
+    oecd_ai_principles: true
+    ai_incident_management: true
+    ai_model_inventory: true
+    ai_impact_assessment: true
+    human_oversight_hitl: true
+  layer3_application_security:
+    owasp_llm_applications_2025: true
+    owasp_agentic_ai: true
+    owasp_asvs: true
+    owasp_api_top10: true
+    owasp_web_top10: true
+    owasp_mobile_top10: true
+    mitre_attack: true
+    mitre_atlas: true
+    cisa_kev: true
+  layer4_supply_chain_trust:
+    cyclonedx_ai_bom_v1_6: true
+    spdx_v2_3: false
+    slsa_level_2: true
+    sigstore_cosign: true
+    in_toto_attestation: true
+    dependency_pinning: true
+    license_governance: true
+  layer5_cloud_infrastructure:
+    multi_cloud_cspm: true
+    kspm_kubernetes: true
+    shift_left_iac: true
+    vault_secrets: true
+    zero_trust_architecture: true
+  layer6_privacy_data_protection:
+    gdpr_eu: true
+    dpdpa_india: true
+    iso_27701: true
+    nist_privacy: true
+    l0_l4_data_classification: true
+    pii_redaction: true
+    data_lineage_consent: true
+  layer7_cyber_resilience:
+    business_continuity_iso_22301: true
+    dora_resilience: true
+    nis2_directive: true
+    ransomware_worm_locks: true
+    disaster_recovery_testing: true
+  layer8_third_party_vendor_risk:
+    tprm_continuous_assessment: true
+    cloud_saas_ai_evaluation: true
+    open_source_component_audit: true
+  layer9_sector_packs:
+    healthcare_hipaa: false
+    bfsi_pci_dora_rbi: true
+    india_sovereign: true
+    eu_sovereign: true
+
+# Legacy mapping for backwards compatibility
 active_extensions:
-  base_security: true         # OWASP Top 10 API & Web Baseline
-  ai_agentic: true            # OWASP LLM Top 10, Semantic Guardrails, Tool-Use Sandboxing
-  sensitive_data: true        # PII Redaction, L0-L4 Data Classification
-  zero_trust: true            # SPIFFE/mTLS Workload Identity, Least Privilege
-  infra_cloud: true           # Container & Cloud Security Posture (CIS/NIST)
+  base_security: true
+  ai_agentic: true
+  sensitive_data: true
+  zero_trust: true
+  infra_cloud: true
   compliance:
-    dpdpa_india: true         # Digital Personal Data Protection Act (2023)
-    rbi_bfsi: false           # Reserve Bank of India AI & Cyber Resilience Directives
-    gdpr_eu: false            # EU General Data Protection Regulation
-    iso_42001: true           # Artificial Intelligence Management System (AIMS)
+    soc2_type2: true
+    iso_27001: true
+    nist_ai_rmf: true
+    eu_ai_act: true
+    dpdpa_india: true
+    iso_42001: true
 
 enforcement_gates:
   pre_commit: true
@@ -162,5 +236,3 @@ data_literacy_governance:
   enforce_differential_privacy: true           # TRISU-DLIT-06: Differential privacy & sanitization before embedding
   enforce_consent_attestation: true             # TRISU-DLIT-07: Explicit lawful consent basis and lineage linkage
   enforce_vector_store_poisoning_audit: true    # TRISU-DLIT-08: Continuous vector index integrity & poisoning audit
-
-

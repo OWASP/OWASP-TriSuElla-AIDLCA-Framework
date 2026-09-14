@@ -1,37 +1,36 @@
-# 📖 OWASP TriSuElla-AIDLCA Framework — Comprehensive Master Usage Guide (v3.3.0)
+# 📖 OWASP TriSuElla — Continuous Trust & Assurance Platform Master Usage Guide (v3.4.0)
 
-> **AI-Driven Development Life Cycle & Autonomous Agent Governance (LLMSecOps)**  
-> **Version**: 3.3.0 | **Status**: Institutionalized (Production & DevSecOps Ready) | **Total Checks**: 313 | **Rules**: 212 | **Domain Families**: 27  
+> **Continuous Trust, Security, AI & Compliance Platform for Digital and AI Systems**  
+> **Software Version**: 3.4.0 | **Framework Version**: 3.4.0 | **Status**: Institutionalized (Production & DevSecOps Ready)  
+> **Total Checks**: 338 | **Rules**: 237 | **Domain Families**: 33  
 > **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)  
 
 ---
 
-## 🧭 Executive Summary & Core Philosophy
+## 🧭 Strategic Positioning & The TriSuElla Universe
 
-The **OWASP TriSuElla-AIDLCA Framework** is an enterprise-grade, policy-as-code standard that ensures AI-assisted code generation, autonomous agent workflows, and cloud-native deployments operate within deterministic, Zero-Trust, policy-governed boundaries.
+The **OWASP TriSuElla Framework** is the **Continuous Trust & Assurance Platform** that connects:
 
-Rooted in three Nordic and Finnish governance pillars:
-- 🔴 **SISU (Resilience & Execution)**: Deterministic execution, automated crash recovery, non-negotiable safety invariants, and strict state rollbacks.
-- 🔵 **TILLIT (Trust, Zero-Trust & Compliance)**: Mutual cryptographic authentication, non-human identity (NHI) federation, multi-cloud CSPM, and statutory compliance (DPDPA-2023, GDPR, EU AI Act, RBI Cyber Resilience, HIPAA, PCI-DSS, SOC 2).
-- 🟢 **DUGNAD (Collaboration & Orchestration)**: Multi-agent coordination with **Dual-Key Human-in-the-Loop (HITL)** approval gates before irreversible actions.
+$$\textbf{Risk} \longrightarrow \textbf{Controls} \longrightarrow \textbf{Technical Reality} \longrightarrow \textbf{Evidence} \longrightarrow \textbf{Validation}$$
 
-The framework bridges the gap between fast-paced **vibe coding** and stringent **enterprise DevSecOps**, operating seamlessly across 3 development phases:
+### The TriSuElla Engine Triad (TRI - SU - ELLA)
+1. **TRI (TRUST)**: Identity, Provenance, Supply Chain, Governance, Ownership.
+2. **SU (SECURE)**: Cybersecurity, Application Security, Cloud Security, LLM Security, Agent Security, Data Security.
+3. **ELLA (EVALUATE → LEARN → LOOK → ACT)**: Risk Assessment, Adversarial Testing, Continuous Telemetry, Evidence Collection, Remediation, Independent Validation.
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                        TRISUELLA-AIDLCA v3.3.0                         │
-├───────────────────┬────────────────────────────┬───────────────────────┤
-│ Phase 1: INCEPTION│ Phase 2: CONSTRUCTION      │ Phase 3: OPERATIONS   │
-│ (Plan & Model)    │ (Design, Code & Verify)    │ (Deploy & Observe)    │
-├───────────────────┼────────────────────────────┼───────────────────────┤
-│ • Workspace Scan  │ • Functional Design        │ • CI/CD PR Gates      │
-│ • Requirements    │ • NFR & Cloud Architecture │ • Safe Deployment Plan│
-│ • STRIDE Threat   │ • Secrets by Design        │ • Observability Setup │
-│   Modeling (DREAD)│ • Code Gen + 20-Item Review│ • Incident Playbooks  │
-│ • User Stories    │ • SAST/DAST/Secret Scans   │ • Automated Drift     │
-│ • Unit Planning   │ • PyRIT / Garak AI Tests   │   Remediation         │
-└───────────────────┴────────────────────────────┴───────────────────────┘
-```
+### The Universal Operating Formula
+$$\textbf{TRUST} \longrightarrow \textbf{VERIFY} \longrightarrow \textbf{CONTROL} \longrightarrow \textbf{OBSERVE} \longrightarrow \textbf{VALIDATE}$$
+
+### The 9 Solution Layers
+- **Layer 1: Core Enterprise GRC & Compliance**: SOC 2 Type II, ISO/IEC 27001:2022, ISO/IEC 27701 (Privacy), ISO/IEC 42001 (AIMS), ISO/IEC 23894 (AI Risk), NIST CSF 2.0, NIST SP 800-53 Rev. 5, CIS Controls v8, COBIT, CSA CCM v4.
+- **Layer 2: AI Governance, Safety & Risk (Lifecycle Chain)**: NIST AI RMF 1.0, NIST GenAI Profile (NIST.IR.8596), EU AI Act (2024/1689), OECD AI Principles, AI Incident Mgmt, Model Inventory, Impact Assessments.
+- **Layer 3: Application & LLM/Agent Security (Empirical Resilience)**: OWASP Top 10 for LLM Applications (2025), OWASP Agentic AI Security, OWASP ASVS, OWASP API Security Top 10, OWASP SAMM, MITRE ATT&CK, MITRE ATLAS, CWE, CISA KEV.
+- **Layer 4: Software Supply-Chain Trust**: CycloneDX AI v1.6, SPDX v2.3, SLSA Level 2+, Sigstore / Cosign, in-toto attestation, hash-pinned lockfiles, license governance.
+- **Layer 5: Cloud & Infrastructure Posture**: CIS Benchmarks (AWS, Azure, GCP, Alibaba, OCI), KSPM, IaC pre-flight (Checkov/Trivy), Secrets Lifecycle (Vault), Zero Trust (NIST SP 800-207).
+- **Layer 6: Privacy & Data Protection**: EU GDPR, India DPDP Act 2023, ISO/IEC 27701, NIST Privacy Framework, L0-L4 Data Classification, PII Redaction, Data Lineage & Consent.
+- **Layer 7: Cyber Resilience & Operational Continuity**: Business Continuity (ISO 22301), DORA (EU), NIS2 Directive, Ransomware WORM Locks, DR Recovery Testing.
+- **Layer 8: Third-Party & Vendor Risk Management (TPRM)**: Continuous vendor diligence across SaaS, Cloud, and commercial AI/LLM providers.
+- **Layer 9: Sector-Specific Compliance Packs**: Healthcare (HIPAA/HITRUST/FDA), BFSI (PCI-DSS v4.0, DORA, RBI), Sovereign India (DPDPA/CERT-In/SEBI), Sovereign EU (GDPR, EU AI Act, NIS2, CRA).
 
 ---
 
@@ -117,15 +116,28 @@ trisu bom [--output ai-bom.json] [--dir <directory>]
 ---
 
 ### Command 6: `trisu rules` — Invariant Integrity & Domain Inspector
-Inspects all 212 rule identifiers across 27 domain families:
+Inspects all 237 rule identifiers across 33 domain families:
 ```bash
 trisu rules
 ```
-- Validates rule numbering, domain breakdown, and ensures zero broken rule anchors in the governance matrix (313 consolidated checks, 212 unique rules).
+- Validates rule numbering, domain breakdown, and ensures zero broken rule anchors in the governance matrix (338 consolidated checks, 237 unique rules across 33 domain families).
 
 ---
 
-### Command 7: `trisu init` — Instant Project Scaffolding
+### Command 7: `trisu matrix` — Unified Crosswalk & 9-Layer Architecture Matrix
+Visualizes the unified TRI-SU-ELLA engine alignment and crosswalk across all 9 solution layers:
+```bash
+trisu matrix
+```
+- Displays the continuous trust, security, AI, and compliance matrix spanning:
+  - **TRI (Trust)**: Identity, Provenance, Supply Chain, Governance, Ownership.
+  - **SU (Secure)**: Cybersecurity, AppSec, CloudSec, LLM/Agent Security, Data Security.
+  - **ELLA (Evaluate/Learn/Look/Act)**: Risk Assessment, Adversarial Testing, Continuous Telemetry, Evidence, Remediation, Independent Validation.
+  - **All 9 Layers**: Core GRC, AI Governance, Full-Spectrum AppSec, Supply Chain, Cloud Posture, Privacy/DPDP, Cyber Resilience, Vendor Risk, and Sovereign Sector Packs.
+
+---
+
+### Command 8: `trisu init` — Instant Project Scaffolding
 Scaffolds turnkey governance directives and CI/CD gates into any existing or new project in 30 seconds:
 ```bash
 trisu init --target /path/to/my-repo
@@ -598,7 +610,8 @@ You can run the CLI through any of these three frictionless methods:
 | `trisu shadow` | Audits for Shadow AI, undeclared model imports, hardcoded endpoints, and AI-BoM drift | Model integration & pre-release | `0` = Reconciled, `1` = Blocking `[CRITICAL]` |
 | `trisu shadow --sarif shadow.sarif` | Generates standardized OASIS SARIF v2.1.0 Shadow AI compliance report | CI/CD pipelines & auditing | Writes `shadow.sarif` |
 | `trisu bom --output ai-bom.json` | Catalogs models, datasets, and pipelines into CycloneDX AI v1.6 Bill of Materials | Before release / deployment | Writes `ai-bom.json` |
-| `trisu rules` | Validates master rules index and displays breakdown across all 27 domains and 212 rules | Post-update or audit verification | `0` = 212 rules valid |
+| `trisu rules` | Validates master rules index and displays breakdown across all 33 domains and 237 rules | Post-update or audit verification | `0` = 237 rules valid (338 checks) |
+| `trisu matrix` | Displays unified crosswalk matrix across 9 solution layers and TRI-SU-ELLA engines | Architectural inspection & audit | `0` = Matrix displayed |
 | `trisu init --target <dir>` | Scaffolds TriSuElla governance templates & config into a new or existing project | Project bootstrap | `0` = Governance active |
 
 ---
@@ -696,13 +709,15 @@ trisu rules
 **Sample Output:**
 ```text
 ============================================================
-  OWASP TriSuElla-AIDLCA Policy Gate Validator v3.3.0
-  Status: Institutionalized | Pillars: SISU, TILLIT, DUGNAD
+  OWASP TriSuElla Continuous Trust & Assurance Platform v3.4.0
+  Engines: TRI (Trust), SU (Secure), ELLA (Evaluate-Learn-Look-Act)
 ============================================================
 [*] Validating rules in TRISUELLA_MASTER_RULES_AND_CHECKS.md...
 
-[*] Rule Families Breakdown (27 domains, 212 rules):
+[*] Rule Families Breakdown (33 domains, 237 rules):
   • TRISU-AIAM       :  5 rules
+  • TRISU-AIRMF      :  6 rules
+  • TRISU-API        :  5 rules
   • TRISU-BASE       : 15 rules
   • TRISU-CHECK      :  1 rules
   • TRISU-CLOUD      : 10 rules
@@ -714,8 +729,10 @@ trisu rules
   • TRISU-EUAI       :  7 rules
   • TRISU-GATE       :  1 rules
   • TRISU-INFRA      : 16 rules
+  • TRISU-ISMS       :  4 rules
   • TRISU-LIFE       :  7 rules
   • TRISU-MCP        :  6 rules
+  • TRISU-MOB        :  3 rules
   • TRISU-OPS        :  5 rules
   • TRISU-OSS        :  6 rules
   • TRISU-PBD        :  5 rules
@@ -725,13 +742,15 @@ trisu rules
   • TRISU-SBD        :  5 rules
   • TRISU-SEC        : 22 rules
   • TRISU-SHADOW     :  6 rules
+  • TRISU-SOC2       :  4 rules
   • TRISU-TEST       : 10 rules
   • TRISU-TOOL       :  5 rules
   • TRISU-TRUST      : 14 rules
+  • TRISU-WEB        :  3 rules
   • TRISU-ZTC        :  8 rules
 
-  ✓ Discovered 212 unique TRISU-* rule identifiers.
-  ✓ Master rules index integrity valid (313 consolidated checks, 212 unique rules).
+  ✓ Discovered 237 unique TRISU-* rule identifiers across 33 domains.
+  ✓ Master rules index integrity valid (338 consolidated checks, 237 unique rules).
 ```
 
 ---
@@ -830,7 +849,7 @@ jobs:
         run: |
           python tools/trisu-cli/trisu_validator.py oss --sarif trisuella-oss.sarif
 
-      - name: Verify Rules Integrity (212 TRISU-* Identifiers)
+      - name: Verify Rules Integrity (237 TRISU-* Identifiers, 338 Checks)
         run: |
           python tools/trisu-cli/trisu_validator.py rules
 
@@ -996,9 +1015,9 @@ The `TRISUELLA-AIDLCA-Rules/prompts/` directory contains 28 production-ready pro
 
 ```
 OWASP-TriSuElla-AIDLCA-FrameWork/
-├── README.md                                    ← Main project entrypoint & quickstart (v3.3.0)
+├── README.md                                    ← Main project entrypoint & quickstart (v3.4.0)
 ├── Usage-Guide.md                               ← Canonical, comprehensive master usage guide (This File)
-├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (313 checks, 212 rules)
+├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (338 checks, 237 rules across 33 domains)
 ├── ai-bom.json                                  ← Machine-readable CycloneDX AI v1.6 BoM
 ├── trisuella.config.yaml                        ← Declarative policy & CSPM manifest
 ├── CLAUDE.md & .cursorrules                     ← Workspace rules for Claude Code & Cursor
@@ -1016,7 +1035,7 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 │
 ├── tools/                                       ← Governance tooling & runtime gatekeepers
 │   ├── trisu-cli/
-│   │   ├── trisu_validator.py                   ← Zero-dependency CLI (check, audit, oss, init, bom, rules)
+│   │   ├── trisu_validator.py                   ← Zero-dependency CLI (check, audit, oss, init, bom, rules, matrix)
 │   │   ├── pyproject.toml & setup.py            ← Pip package definition for global 'trisu' command
 │   │   └── README.md                            ← CLI documentation & usage guide
 │   └── sisu-ui/                                 ← Sisu Nexus visual compliance dashboard
@@ -1028,6 +1047,8 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 │   └── README.md                                ← Zero-Trust Protocol (ZTP), envelopes & Dual-Key HITL
 │
 ├── TRISUELLA-AIDLCA-docs/                       ← Operational state tracking & crosswalk matrices
+│   ├── Unified-Trust-Risk-Compliance-Architecture.md ← 9 Solution Layers & TRI-SU-ELLA Engine Architecture
+│   ├── TriSuElla-Unified-Crosswalk-Matrix.md          ← Multi-standard crosswalk matrix
 │   ├── TRISUELLA-AIDLCA-state.md                ← Runtime workflow state & extension tracking
 │   └── AICM-AIDLCA-Crosswalk.md                 ← CSA AICM v1.0.3 to TriSuElla crosswalk
 │
@@ -1052,7 +1073,7 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
     │   ├── operations/                          ← Phase 3: Deploy, observe, respond
     │   └── extensions/                          ← Modular opt-in extensions
     │       ├── security/                        ← Baseline, AI-Agentic, Cloud/CSPM, Infra, Privacy, Data, Zero-Trust, OSS
-    │       ├── compliance/                      ← DPDPA, India BFSI, AI-DLCA, GDPR, HIPAA, PCI-DSS
+    │       ├── compliance/                      ← SOC 2, ISO 27001, NIST AI RMF, DPDPA, India BFSI, AI-DLCA, GDPR, HIPAA, PCI-DSS
     │       └── testing/                         ← Property-Based Testing (PBT)
     │
     ├── prompts/                                 ← Turnkey prompt library across all stages
@@ -1097,7 +1118,9 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 
 ## 📚 Key Reference Documents
 
-- **Master Rules Specification (313 Checks, 212 Rules)**: [TRISUELLA_MASTER_RULES_AND_CHECKS.md](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
+- **Master Rules Specification (338 Checks, 237 Rules across 33 Domains)**: [TRISUELLA_MASTER_RULES_AND_CHECKS.md](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
+- **Unified Architecture Blueprint (9 Solution Layers & TRI-SU-ELLA Engine)**: [TRISUELLA-AIDLCA-docs/Unified-Trust-Risk-Compliance-Architecture.md](TRISUELLA-AIDLCA-docs/Unified-Trust-Risk-Compliance-Architecture.md)
+- **Multi-Standard Crosswalk Matrix**: [TRISUELLA-AIDLCA-docs/TriSuElla-Unified-Crosswalk-Matrix.md](TRISUELLA-AIDLCA-docs/TriSuElla-Unified-Crosswalk-Matrix.md)
 - **Detailed Developer Manual & CSPM Crosswalk**: [TRISUELLA-AIDLCA-Rules/FULL_README.md](TRISUELLA-AIDLCA-Rules/FULL_README.md)
 - **Framework Philosophy & Charter**: [TRISUELLA-AIDLCA-Rules/CHARTER.md](TRISUELLA-AIDLCA-Rules/CHARTER.md)
 - **Turnkey Prompt Library (28 Prompts)**: [TRISUELLA-AIDLCA-Rules/prompts/README.md](TRISUELLA-AIDLCA-Rules/prompts/README.md)
@@ -1106,4 +1129,4 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 
 ---
 
-*OWASP TriSuElla-AIDLCA Secure Development Framework v3.3.0 — Security-First, AI-Native. Built for Agentic Autonomy.*
+*OWASP TriSuElla-AIDLCA Secure Development Framework v3.4.0 — Security-First, AI-Native. Built for Agentic Autonomy.*

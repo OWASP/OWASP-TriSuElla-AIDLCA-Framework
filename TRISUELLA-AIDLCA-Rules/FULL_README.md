@@ -18,11 +18,11 @@ The name **TriSuElla** represents the convergence of three foundational forces, 
 
 **TRISUELLA-AIDLCA (AI-Driven Development Life Cycle)** — A modern methodology for software development that integrates generative AI throughout every stage of the building process: from threat modeling and requirements, through design, code generation, security testing, deployment, and incident response.
 
-**Version**: 3.1.0
+**Version**: 3.4.0
 **Author**: [Bhaskar Puppala (PATEL)](https://www.linkedin.com/in/bhaskerkpatel/)
-**Last Updated**: 2026-09-12
+**Last Updated**: 2026-09-14
 **Status**: Institutionalized Release (Production-Ready, DevSecOps-Ready & CI-Verified)
-**Total Consolidated Checks**: 299 (across 25 sections, 198 unique rules)
+**Total Consolidated Checks**: 338 (across 33 domains, 237 unique rules)
 
 ---
 
@@ -102,9 +102,9 @@ This framework is **platform-agnostic** — copy it once, use it with any AI ass
 
 ```
 OWASP-TriSuElla-AIDLCA-FrameWork/
-├── README.md                                    ← Main project entrypoint & quickstart (v3.0)
-├── Usage-Guide.md                                ← Turnkey setup & step-by-step usage guide
-├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (313 checks, 212 rules)
+├── README.md                                    ← Main project entrypoint & quickstart (v3.4.0)
+├── Usage-Guide.md                               ← Turnkey setup & step-by-step usage guide
+├── TRISUELLA_MASTER_RULES_AND_CHECKS.md         ← Unified master rulebook (338 checks, 237 rules across 33 domains)
 ├── ai-bom.json                                  ← Machine-readable CycloneDX AI v1.6 BoM
 ├── trisuella.config.yaml                        ← Declarative policy & CSPM manifest
 ├── CLAUDE.md & .cursorrules                     ← Workspace rules for Claude Code & Cursor
@@ -121,8 +121,8 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 │   └── .github/workflows/trisuella-gate.yml     ← GitHub Actions CI/CD blocking gate
 │
 ├── tools/                                       ← Governance tooling & runtime gatekeepers
-│   ├── trisu-cli/                               ← Policy gatekeeper CLI engine (v3.0.0)
-│   │   ├── trisu_validator.py                   ← Zero-dependency CLI (check, audit, oss, init, bom, rules)
+│   ├── trisu-cli/                               ← Policy gatekeeper CLI engine (v3.4.0)
+│   │   ├── trisu_validator.py                   ← Zero-dependency CLI (check, audit, oss, init, bom, rules, matrix)
 │   │   ├── pyproject.toml & setup.py            ← Pip packaging for global 'trisu' command
 │   │   └── README.md                            ← CLI manual & multi-CI integration guide
 │   └── sisu-ui/                                 ← Sisu Nexus visual compliance dashboard
@@ -133,7 +133,9 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 ├── TRISUELLA-AIDLCAa/                           ← 8-Stage Autonomous Multi-Agent Governance
 │   └── README.md                                ← Zero-Trust Protocol (ZTP), envelopes & Dual-Key HITL
 │
-├── TRISUELLA-AIDLCA-docs/                       ← Operational state tracking & crosswalk matrices
+├── TRISUELLA-AIDLCA-docs/                       ← Operational state tracking, architecture & crosswalk matrices
+│   ├── Unified-Trust-Risk-Compliance-Architecture.md ← 9 Solution Layers & TRI-SU-ELLA Engine Architecture
+│   ├── TriSuElla-Unified-Crosswalk-Matrix.md          ← Multi-standard crosswalk matrix
 │   ├── TRISUELLA-AIDLCA-state.md                ← Runtime workflow state & extension tracking
 │   └── AICM-AIDLCA-Crosswalk.md                 ← CSA AICM v1.0.3 to TriSuElla crosswalk
 │
@@ -354,25 +356,30 @@ Closes the loop from code to running production system with full observability a
 
 ## 🛡️ Security Coverage & Consolidated Invariants
 
-The framework enforces **299 consolidated checks** across 25 sections with **198 unique TRISU-* rule identifiers**, combining built-in lifecycle gates, modular extensions, and multi-cloud posture standards:
+The framework enforces **338 consolidated checks** across 33 sections with **237 unique TRISU-* rule identifiers**, combining built-in lifecycle gates, modular extensions, multi-cloud posture standards, and unified continuous trust crosswalks:
 
 | Extension / Domain | Rules | What It Covers | Primary Standards |
 |---|---|---|---|
 | **Security Baseline** | 15 | Encryption, access control, input validation, supply chain, authentication, HTTP security headers, logging, misconfiguration prevention | OWASP Top 10 (2026) |
-| **AI / Agentic / ML Security** | 11 | Prompt injection, secure agent tool use, memory guardrails, LLM I/O validation, model poisoning, RAG security, AI-Driven Collusion, Model-on-Model risks, Video KYC Deepfake Detection [CRITICAL] | OWASP LLM Top 10 (2025) |
+| **AI / Agentic / ML Security** | 11 | Prompt injection, secure agent tool use, memory guardrails, LLM I/O validation, model poisoning, RAG security, AI-Driven Collusion, Model-on-Model risks, Video KYC Deepfake Detection [CRITICAL] | OWASP Top 10 for LLM Applications (2025 Standard) |
 | **Privacy + Secure + Safety by Design** | 10 | Data minimization, purpose limitation, privacy-by-default, data subject rights, retention, secure architecture, fail-safe defaults, misuse scenarios, human oversight | GDPR Art. 25, NIST SP 800-160 |
 | **Cloud Security & Multi-Cloud CSPM** | 24 | Part A: 10 platform-agnostic cloud rules; Part B: 14 multi-cloud CSPM auditing standards (KSPM, DSPM, AI-CSPM/CWPP, CIEM, Edge WAF, Shift-Left IaC, WORM, HSM, Sovereignty) across AWS, Azure, GCP, Alibaba Cloud, and OCI | CIS Level 2, NIST SP 800-53, ISO 27001 |
 | **Infrastructure Security** | 16 | Network zones, OS hardening, secrets at rest, IaC security, container supply chain (Cosign/SLSA), CI/CD (OIDC), logging/FIM, K8s RBAC, Docker, NTP synchronization for forensic integrity [INFRA-SEC-16] | CIS Controls v8, NIST SP 800-53, ISO 27001:2022 |
 | **Sensitive Information Security** | 10 | Data classification (L0–L4), PII handling, financial, health, sensitive data in logs & AI, Automated Tagging [CRITICAL], Endpoint activity lockdown | GDPR, DPDPA, HIPAA, PCI-DSS, CCPA/CPRA |
 | **Zero Trust Architecture & Code** | 22 | Identity, continuous authorization, device trust, micro-segmentation, ZT for AI agents, policy-as-code, and 8 in-code invariants (TRISU-ZTC-01..08) | CISA ZT Maturity Model, NIST SP 800-207, ASVS |
-| **Compliance Mapping** | 41 | DPDPA India (8 rules COMP-DPDPA-01-08), India BFSI (7 rules CERT-In 6h, 5y Retention, .bank.in), PCI-DSS v4, HIPAA, GDPR, SOC 2, ISO 27001 | DPDPA 2023, RBI Cyber Resilience, PCI-DSS |
+| **Compliance Mapping & BFSI** | 41 | DPDPA India (8 rules COMP-DPDPA-01-08), India BFSI (7 rules CERT-In 6h, 5y Retention, .bank.in), PCI-DSS v4, HIPAA, GDPR | DPDPA 2023, RBI Cyber Resilience, PCI-DSS |
+| **Core Enterprise GRC: SOC 2 & ISO 27001** | 8 | SOC 2 Type II criteria CC6.1..CC8.1 (`TRISU-SOC2-01..04`), ISO/IEC 27001:2022 ISMS Controls A.5..A.8 (`TRISU-ISMS-01..04`) | AICPA SOC 2 Type II, ISO/IEC 27001:2022 |
+| **AI Risk Management (NIST AI RMF)** | 6 | NIST AI RMF 1.0 GOVERN, MAP, MEASURE, MANAGE (`TRISU-AIRMF-01..04`), GenAI Profile NIST.IR.8596 (`TRISU-AIRMF-05`), Red Teaming (`TRISU-AIRMF-06`) | NIST AI 100-1, NIST.IR.8596 |
+| **Full-Spectrum AppSec Suite** | 11 | OWASP API Security Top 10 (`TRISU-API-01..05`), Mobile Top 10 (`TRISU-MOB-01..03`), Web & ASVS v4.0 (`TRISU-WEB-01..03`) | OWASP ASVS v4.0, API Top 10, Mobile Top 10 |
+| **Data Literacy & Integrity (TRISU-DLIT)** | 8 | Training/RAG dataset provenance, production data air-gap defense, vector context pre-retrieval ACL, data profiling/drift monitoring, machine unlearning, differential privacy, consent attestation, vector poisoning defense | ISO 5259, DPDPA 2023, EU AI Act |
+| **Shadow AI & Model Discovery (TRISU-SHADOW)** | 6 | AST & regex scan, CycloneDX AI-BOM model reconciliation, GenAI Gateway bypass detection, supplier whitelisting, prompt egress sanitization | Shadow AI Governance, NIST AI RMF |
 | **Property-Based Testing** | 10 | Round-trip, invariant, idempotency, oracle, stateful testing, generator quality, shrinking, reproducibility, framework selection | Property-based testing standards |
 | **Model Context Protocol Security (TRISU-MCP)** | 6 | MCP Tool Schema Sanitization, Recursive Call Loop Prevention, Out-of-Band Human Authorization, Dynamic Credential Scoping, Server Origin Verification, Data Leak Prevention | Anthropic MCP Spec, OWASP Agentic Top 10 |
 | **EU AI Act High-Risk Compliance (TRISU-EUAI)** | 7 | Risk Management (Art. 9), Data Governance (Art. 10), Technical Docs (Art. 11), Automatic Logging (Art. 12), Transparency (Art. 13), Human Oversight (Art. 14), Accuracy & Cybersecurity (Art. 15) | EU Regulation 2024/1689 |
 | **Agentic Identity & Token Delegation (TRISU-AIAM)** | 5 | Ephemeral subagent tokens, RFC 8693 Token Exchange, SPIFFE/mTLS workload identity, blast radius containment, non-exportable cryptographic attestations | RFC 8693, SPIFFE/SPIRE, NIST SP 800-204 |
 | **Open Source & Supply Chain Security (TRISU-OSS)** | 6 | Cryptographic lockfile pinning, SCA advisory gating (CVSS >= 7.0), license contamination defense, typosquatting prevention, CycloneDX AI-BoM, SLSA Level 2+ attestations | OpenSSF, NIST SP 800-218, SLSA v1.0, CycloneDX v1.6 |
 
-**Grand Total: 299 Consolidated Checks | 198 Unique TRISU-* Rule Identifiers**
+**Grand Total: 338 Consolidated Checks | 237 Unique TRISU-* Rule Identifiers across 33 Domains**
 
 ### Built-in Security (no extension needed)
 
@@ -511,7 +518,7 @@ These artifacts double as compliance evidence: `audit.md` supports SOC 2 change 
 
 | Document | What It Covers |
 |---|---|
-| [`docs/how-to-use.md`](docs/how-to-use.md) | Complete integration guide — setup for Cursor, Copilot, Claude, TRISUELLA-AIDLCAA agents; phase-by-phase walkthrough; tips |
+| [`Usage-Guide.md`](../Usage-Guide.md) | Complete master integration & usage guide — CLI reference, setup for Cursor, Copilot, Claude, TRISUELLA-AIDLCAa agents; phase walkthrough; rule inventory |
 | [`docs/vibe-coding-guide.md`](docs/vibe-coding-guide.md) | Streamlined guide for vibe coders — mindset, Claude Project setup, iterative workflow, 7-day SaaS example |
 | [`docs/faq.md`](docs/faq.md) | 25+ frequently asked questions — general, setup, rules enforcement, AI-specific, vibe coding |
 | [`docs/benefits.md`](docs/benefits.md) | Benefits by role (vibe coder / developer / CTO), by phase, comparison with alternatives, 4 real-world scenarios |
@@ -533,6 +540,17 @@ Ready-to-use prompts for every stage of the TRISUELLA-AIDLCA workflow. Copy, fil
 ---
 
 ## 🔄 Changelog
+
+### v3.4.0 (2026-09-14) - Continuous Trust, Security, AI & Compliance Platform
+- **Strategic Evolution into 9 Solution Layers** — Unified Core Enterprise GRC, AI Governance, AppSec, Supply Chain, Cloud Infrastructure Posture, Privacy & Data Protection, Cyber Resilience, Third-Party Vendor Risk (TPRM), and Sovereign Sector Packs.
+- **The TRI-SU-ELLA Engine Triad** — Formalized TRI (Trust: Identity, Provenance, Supply Chain, Governance), SU (Secure: Cybersecurity, AppSec, CloudSec, LLM/Agent/Data Security), and ELLA (Evaluate-Learn-Look-Act: Risk, Red Teaming, Continuous Telemetry, Evidence, Remediation, Independent Validation).
+- **Universal Operating Formula** — Codified: `TRUST → VERIFY → CONTROL → OBSERVE → VALIDATE`.
+- **Core Enterprise GRC Extension (`TRISU-SOC2`/`ISMS`)** — Codified 8 rules covering SOC 2 Type II trust criteria (`TRISU-SOC2-01..04`) and ISO/IEC 27001:2022 ISMS Annex A controls (`TRISU-ISMS-01..04`).
+- **AI Risk Management Extension (`TRISU-AIRMF`)** — Codified 6 rules covering NIST AI RMF 1.0 (GOVERN, MAP, MEASURE, MANAGE), GenAI Profile (NIST.IR.8596), and continuous red teaming.
+- **Full-Spectrum AppSec Suite (`TRISU-API`/`MOB`/`WEB`)** — Codified 11 rules covering OWASP API Security Top 10 (`TRISU-API-01..05`), Mobile Top 10 (`TRISU-MOB-01..03`), and Web ASVS v4.0 (`TRISU-WEB-01..03`).
+- **Unified Crosswalk Matrix & Architecture Blueprint** — Published comprehensive architecture blueprints and multi-standard crosswalk matrices in `TRISUELLA-AIDLCA-docs/`.
+- **Automated CLI Matrix Inspection (`trisu matrix`)** — Added terminal command visualizing the 9 solution layers and TRI-SU-ELLA engine crosswalks.
+- **Master Rulebook Inventory** — Recalibrated full master rules specification to **338 consolidated checks** across **33 domains** and **237 unique rules**.
 
 ### v3.3.0 (2026-09-13) - Data Literacy, Lineage & Quality Assurance
 - **Data Literacy & Integrity Domain (`TRISU-DLIT-01..08`)** — Codified 8 non-negotiable rules covering training & RAG dataset provenance, production data air-gap defense, vector context pre-retrieval authorization, data profiling/drift monitoring, machine unlearning/RTBF, differential privacy, consent attestation, and continuous vector store poisoning defense across 27 security domains (212 unique rules, 313 consolidated checks).
