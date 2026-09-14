@@ -319,7 +319,7 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 ├── CLAUDE.md & .cursorrules               # Local IDE workspace assistant rules
 ├── trisu.cmd & trisu                      # Turnkey CLI wrappers for Windows & Unix
 ├── CONTRIBUTING.md                        # Community contribution guidelines & legal terms
-├── LICENSE                                # Product Notice & Copyright Declaration
+├── LICENSE                                # Apache-2.0 Community License & Commercial Reservation
 ├── templates/                             # Drop-in templates for all IDEs & CI/CD
 │   ├── .cursorrules                       # Cursor IDE rules
 │   ├── CLAUDE.md                          # Claude Code instructions
@@ -361,6 +361,15 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 TriSuElla operates on a strict **Binary Enforcement Principle**:
 - **`[CRITICAL]` / `[HIGH]`**: **Atomic Stop Gate**. Execution halts immediately. Code generation and deployment pipelines block until remediated.
 - **`[MEDIUM]` / `[LOW]`**: Advisory. Requires documented justification and signed human steward acceptance in `audit.md`.
+
+---
+
+## ⚖️ Licensing & Commercial Boundary
+
+- **Community Core**: Open-source and licensed under the permissive [Apache License, Version 2.0](LICENSE). Free for personal, academic, and commercial application.
+- **Inbound Contributions**: All contributions are welcomed and governed under Apache-2.0 with standard Developer Certificate of Origin (DCO) sign-off. See [CONTRIBUTING.md](CONTRIBUTING.md).
+- **Commercial Edition Reservation**: The copyright holder, **Bhaskar Puppala (PATEL)**, reserves the exclusive right to develop, package, and distribute separate enterprise editions, hosted multi-tenant SaaS platforms (*Sisu Nexus Enterprise*), and SLA-backed support.
+- **Trademarks**: "TriSuElla", "TriSuElla-AIDLCA", and "Sisu Nexus" are protected trademarks of Bhaskar Puppala.
 
 ---
 
