@@ -318,7 +318,8 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 ├── trisuella.config.yaml                  # Declarative policy & Multi-Cloud CSPM manifest
 ├── CLAUDE.md & .cursorrules               # Local IDE workspace assistant rules
 ├── trisu.cmd & trisu                      # Turnkey CLI wrappers for Windows & Unix
-├── LICENSE                                # Open-source Apache-2.0 license
+├── CONTRIBUTING.md                        # Community contribution guidelines & legal terms
+├── LICENSE                                # Product Notice & Copyright Declaration
 ├── templates/                             # Drop-in templates for all IDEs & CI/CD
 │   ├── .cursorrules                       # Cursor IDE rules
 │   ├── CLAUDE.md                          # Claude Code instructions
