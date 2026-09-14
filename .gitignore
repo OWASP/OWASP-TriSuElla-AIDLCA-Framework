@@ -46,3 +46,4 @@ pip-delete-this-directory.txt
 *.sarif
 /tmp/
 assets/
+scratch/
