@@ -377,6 +377,6 @@ TriSuElla operates on a strict **Binary Enforcement Principle**:
 
 - **Author & Framework Architect**: **Bhaskar Puppala (PATEL)**
 - **LinkedIn**: [linkedin.com/in/bhaskerkpatel](https://www.linkedin.com/in/bhaskerkpatel/)
-- **Organization**: [OWASP TriSuElla Working Group](https://github.com/OWASP/OWASP-TriSuElla-AIDLCA-Framework)
+- **Organization**: [OWASP TriSuElla Working Group](https://github.com/OWASP/TriSuElla-AIDLCA-Framework)
 
 *v3.4.0 Institutionalized Release — Continuous Trust & Assurance for Digital and AI Systems. Built for the era of Agentic Autonomy.*
