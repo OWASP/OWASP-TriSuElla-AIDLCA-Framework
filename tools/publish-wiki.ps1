@@ -14,7 +14,7 @@ $WikiSourceDir = Join-Path $ProjectRoot "wiki"
 
 $WikiRemotes = @{
     "origin" = "https://github.com/thundel/TriSuElla-AIDLCA-Framework.wiki.git"
-    "owasp"  = "https://github.com/OWASP/OWASP-TriSuElla-AIDLCA-Framework.wiki.git"
+    "owasp"  = "https://github.com/OWASP/TriSuElla-AIDLCA-Framework.wiki.git"
 }
 
 Write-Host "============================================================" -ForegroundColor Cyan
@@ -60,6 +60,8 @@ function Publish-To-Wiki {
         Copy-Item -Path "$WikiSourceDir\*" -Destination $TempDir -Recurse -Force
 
         Push-Location $TempDir
+        & git config user.name "Bhaskar Puppala (PATEL)"
+        & git config user.email "bhaskar@trisuella.org"
         & git add .
         $status = & git status --porcelain
         if (-not $status) {

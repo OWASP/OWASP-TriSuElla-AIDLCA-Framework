@@ -12,7 +12,7 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 WIKI_SOURCE_DIR="$PROJECT_ROOT/wiki"
 
 ORIGIN_WIKI_URL="https://github.com/thundel/TriSuElla-AIDLCA-Framework.wiki.git"
-OWASP_WIKI_URL="https://github.com/OWASP/OWASP-TriSuElla-AIDLCA-Framework.wiki.git"
+OWASP_WIKI_URL="https://github.com/OWASP/TriSuElla-AIDLCA-Framework.wiki.git"
 
 echo "============================================================"
 echo "  OWASP TriSuElla GitHub Wiki Publisher v3.4.0"
@@ -43,6 +43,8 @@ publish_to_wiki() {
     cp -r "$WIKI_SOURCE_DIR"/* "$temp_dir/"
 
     cd "$temp_dir"
+    git config user.name "Bhaskar Puppala (PATEL)"
+    git config user.email "bhaskar@trisuella.org"
     git add .
     if git diff --cached --quiet; then
         echo "[✓] Wiki for $name is already up to date."
