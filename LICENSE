@@ -1,15 +1,41 @@
-Copyright (c) 2026 Bhaskar Puppala (PATEL) (https://www.linkedin.com/in/bhaskerkpatel/)
+================================================================================
+PRODUCT NOTICE & COPYRIGHT DECLARATION
+================================================================================
+Product Variant: TriSuElla-AIDLCA Platform v3.4.0 (Commercial/Enterprise Edition)
+Consolidated Invariants: 338 Checks | Rules: 237 | Domain Families: 33
+Authored by: Bhaskar Puppala (PATEL)
 
+--------------------------------------------------------------------------------
+PART 1: PROPRIETARY EXTENSIONS & CREATIVE ASSETS (ALL RIGHTS RESERVED)
+--------------------------------------------------------------------------------
+Copyright (c) 2026 Bhaskar Puppala (PATEL) (https://www.linkedin.com/in/bhaskerkpatel/)
 ALL RIGHTS RESERVED.
 
-This repository contains proprietary software frameworks, creative works, 
-designs, and documentation. All content is confidential and protected 
-under copyright law.
+This repository contains proprietary software frameworks, custom orchestrations, 
+creative works, UI/UX designs, and documentation. All content unique to this 
+distribution is confidential and protected under international copyright law.
 
-Unauthorized copying, distribution, modification, public display, or 
-performance of this framework and its associated creative assets, via 
-any medium, is strictly prohibited without express written permission 
-from the copyright holder.
+Unauthorized copying, distribution, modification, public display, or performance 
+of these proprietary assets, via any medium, is strictly prohibited without 
+express written permission from the copyright holder.
 
-THE WORKS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS 
-OR IMPLIED.
+THE PROPRIETARY WORKS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+
+--------------------------------------------------------------------------------
+PART 2: OPEN-SOURCE LINEAGE & BRANDING ATTRIBUTION (COMPLIANCE NOTICE)
+--------------------------------------------------------------------------------
+This platform is built upon and incorporates elements of the open-source 
+"TriSuElla-AIDLCA Framework", originally authored by Bhaskar Puppala (PATEL) 
+and hosted by the OWASP Foundation. 
+
+1. Core Open-Source Lineage: The underlying community codebase is utilized 
+   and modified under the permissive terms of the Apache License, Version 2.0 
+   and Creative Commons. A copy of the Apache-2.0 open-source terms can be found 
+   intact within this distribution's legal directory.
+   
+2. Trademark & Vendor Neutrality: This repository is an independent commercial 
+   distribution managed solely by the copyright holder. It is not officially 
+   endorsed, sponsored, or operated by the OWASP Foundation. The "OWASP" wordmark 
+   is a trademark of the OWASP Foundation and is used here strictly for upstream 
+   project attribution as required by the Apache-2.0 license.
+================================================================================
