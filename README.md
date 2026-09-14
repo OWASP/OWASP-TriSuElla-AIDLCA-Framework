@@ -11,6 +11,7 @@
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2.svg?logo=linkedin)](https://www.linkedin.com/in/bhaskerkpatel/)
 [![Standards: SOC 2 / ISO 27001 / NIST AI RMF / EU AI Act](https://img.shields.io/badge/Standards-SOC%202%20%7C%20ISO%2027001%20%7C%20NIST%20AI%20RMF%20%7C%20EU%20AI%20Act-green.svg)](TRISUELLA_MASTER_RULES_AND_CHECKS.md)
 [![BOM: CycloneDX AI v1.6](https://img.shields.io/badge/AI--BoM-CycloneDX%20v1.6-purple.svg)](ai-bom.json)
+[![Wiki: Documentation](https://img.shields.io/badge/GitHub-Wiki%20Docs-blueviolet.svg)](wiki/Home.md)
 
 ---
 
@@ -349,6 +350,7 @@ OWASP-TriSuElla-AIDLCA-FrameWork/
 │   ├── TriSuElla-Unified-Crosswalk-Matrix.md # Multi-standard crosswalk (SOC2, ISO, NIST, EU AI, AppSec)
 │   ├── TRISUELLA-AIDLCA-state.md          # Runtime workflow state & extension tracking
 │   └── AICM-AIDLCA-Crosswalk.md           # CSA AICM v1.0.3 to TriSuElla crosswalk
+├── wiki/                                  # GitHub Wiki documentation suite & publishing guide
 └── Data-Source/                           # Regulatory baselines (RBI, ISO 42001, CSA AICM)
 ```
 
